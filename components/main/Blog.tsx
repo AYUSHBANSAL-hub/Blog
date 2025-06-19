@@ -1,20 +1,18 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-// Blog data for the featured post
-const featuredBlog = {
+const initialFeaturedBlog = {
   title: "Lorem ipsum dolor sit amet consectetur.",
   date: "May 2025",
   category: "Models",
   image: "/images/Overlay.png",
 };
 
-// Blog data for the smaller posts
 const blogPosts = [
   {
     title: "Lorem ipsum dolor sit amet consectetur.",
@@ -55,10 +53,12 @@ const blogPosts = [
 ];
 
 const BlogSection = () => {
+  const [featuredBlog, setFeaturedBlog] = useState(initialFeaturedBlog);
+
   return (
     <section className="w-full max-w-[1296px] pb-20 px-4 mx-auto">
       <div className="flex flex-col md:flex-row gap-12 min-h-[700px]">
-        {/* Featured blog post */}
+        {/* Featured Blog */}
         <div className="flex-1 pt-16 flex flex-col gap-9">
           <div className="flex flex-col gap-4">
             <h2 className="font-['Figtree',Helvetica] font-semibold text-black text-[40px] tracking-[-0.51px] leading-10">
@@ -100,11 +100,16 @@ const BlogSection = () => {
           </Card>
         </div>
 
-        {/* Blog posts list */}
+        {/* Blog List */}
         <div className="flex-1 pt-16 max-h-[1000px] overflow-y-auto scroll-smooth pr-2 custom-scrollbar-hide">
           <div className="flex flex-col gap-6">
             {blogPosts.map((post, index) => (
-              <div key={index} className="relative">
+              <div key={index} className="relative cursor-pointer" onClick={() => setFeaturedBlog({
+                title: post.title,
+                date: post.date,
+                category: post.categories[0], // default to first category
+                image: post.image,
+              })}>
                 <div className="flex gap-8 py-6">
                   <div className="flex-1">
                     <h3 className="font-['Figtree',Helvetica] font-semibold text-black text-[30.9px] tracking-[-0.51px] leading-[33.9px] mb-4">
