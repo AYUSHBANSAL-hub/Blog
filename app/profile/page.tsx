@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-
 import { Avatar } from "@radix-ui/react-avatar";
 import { Separator } from "@radix-ui/react-separator";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -71,13 +70,13 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row mt-16 px-4 md:px-8 gap-6 w-full">
+    <div className="flex flex-col md:flex-row mt-16 px-4 md:px-6 gap-4 w-full">
       {/* Profile Card */}
       <div className="w-full md:w-1/3">
         <Card className="shadow">
-          <CardContent className="p-6 flex flex-col items-center">
-            <div className="my-4">
-              <Avatar className="w-24 h-24 border-4 border-blue-100">
+          <CardContent className="p-4 flex flex-col items-center">
+            <div className="my-3">
+              <Avatar className="w-20 h-20 border-4 border-blue-100">
                 <img
                   src="/images/profile/img-1.png"
                   alt="Profile"
@@ -86,26 +85,24 @@ const ProfilePage = () => {
               </Avatar>
             </div>
 
-            <h2 className="font-black text-2xl text-gray-900 leading-8">{profileData.name}</h2>
-            <p className="text-base text-gray-600 mb-6">{profileData.username}</p>
+            <h2 className="font-black text-xl text-gray-900 leading-7">{profileData.name}</h2>
+            <p className="text-sm text-gray-600 mb-4">{profileData.username}</p>
 
-            {/* Stats */}
-            <div className="flex justify-between w-full mb-6">
+            <div className="flex justify-between w-full mb-4">
               {profileData.stats.map((stat, index) => (
                 <div key={index} className="flex flex-col items-center w-1/3">
-                  <span className="font-black text-xl text-gray-900">{stat.value}</span>
-                  <span className="text-sm text-gray-600">{stat.label}</span>
+                  <span className="font-bold text-lg text-gray-900">{stat.value}</span>
+                  <span className="text-xs text-gray-600">{stat.label}</span>
                 </div>
               ))}
             </div>
 
-            <Separator className="my-4" />
+            <Separator className="my-3" />
 
-            {/* Details */}
-            <div className="w-full space-y-4 mb-4">
+            <div className="w-full space-y-3 mb-3">
               {profileData.details.map((detail, index) => (
                 <div key={index} className="flex items-center">
-                  <img className="w-4 h-4 mr-4" src={detail.icon} alt="" />
+                  <img className="w-4 h-4 mr-3" src={detail.icon} alt="" />
                   <span className={`text-sm ${detail.isLink ? "text-blue-600" : "text-gray-600"}`}>
                     {detail.text}
                   </span>
@@ -113,77 +110,80 @@ const ProfilePage = () => {
               ))}
             </div>
 
-            <Separator className="my-4" />
+            <Separator className="my-3" />
 
             <div className="w-full">
-              <h3 className="text-base text-gray-900 mb-2">About</h3>
+              <h3 className="text-sm text-gray-900 mb-1">About</h3>
               <p className="text-sm text-gray-600">{profileData.about}</p>
             </div>
           </CardContent>
-          <CardFooter className="p-6 pt-0">
+          <CardFooter className="p-4 pt-0">
             <Button className="w-full bg-blue-600 hover:bg-blue-700">Edit Profile</Button>
           </CardFooter>
         </Card>
       </div>
 
       {/* Blog Posts Section */}
-      <div className="w-full md:w-2/3 flex flex-col gap-6">
+      <div className="w-full md:w-2/3 flex flex-col gap-4">
         <Card className="shadow">
-          <CardContent className="p-6">
-            <h2 className="text-xl font-black text-gray-900 mb-4">My Blog Posts</h2>
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-sm font-medium">
+          <CardContent className="p-4">
+            <h2 className="text-lg font-bold text-gray-900 mb-2">My Blog Posts</h2>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-xs font-medium">
                 24 Posts
               </span>
-              <span className="text-sm text-gray-600">Total views: 15.2k</span>
-              <span className="text-sm text-gray-600">Total likes: 892</span>
+              <span className="text-xs text-gray-600">Total views: 15.2k</span>
+              <span className="text-xs text-gray-600">Total likes: 892</span>
             </div>
           </CardContent>
         </Card>
 
-        {blogPosts.map((post, index) => {
-          const colorClasses = getBadgeColorClasses(post.category.color);
-          return (
-            <Card key={index} className="shadow overflow-hidden">
-              <CardContent className="p-6">
-                <div className="flex flex-wrap justify-between items-center mb-4 gap-y-2">
-                  <span
-                    className={`${colorClasses.bg} ${colorClasses.text} rounded-full px-3 py-1 text-xs font-medium`}
-                  >
-                    {post.category.name}
-                  </span>
-                  <span className="text-sm text-gray-500">{post.date}</span>
-                </div>
+        <div className="max-h-[700px] overflow-y-auto scroll-smooth pr-1 space-y-4 scrollbar-hide">
+  {blogPosts.map((post, index) => {
+    const colorClasses = getBadgeColorClasses(post.category.color);
+    return (
+      <Card key={index} className="shadow overflow-hidden">
+        <CardContent className="p-4">
+          <div className="flex flex-wrap justify-between items-center mb-3 gap-y-1">
+            <span
+              className={`${colorClasses.bg} ${colorClasses.text} rounded-full px-3 py-1 text-xs font-medium`}
+            >
+              {post.category.name}
+            </span>
+            <span className="text-xs text-gray-500">{post.date}</span>
+          </div>
 
-                <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">{post.title}</h3>
-                <p className="text-base text-gray-600 mb-4">{post.description}</p>
+          <h3 className="text-base font-semibold text-gray-900 mb-1">{post.title}</h3>
+          <p className="text-sm text-gray-600 mb-2">{post.description}</p>
 
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-500">
-                    <span className="flex items-center gap-1">
-                      <img src="/images/profile/img-6.png" alt="Views" className="w-4 h-3.5" />
-                      {post.stats.views} views
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <img src="/images/profile/img-7.png" alt="Likes" className="w-4 h-3.5" />
-                      {post.stats.likes} likes
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <img src="/images/profile/img-8.png" alt="Comments" className="w-4 h-3.5" />
-                      {post.stats.comments} comments
-                    </span>
-                  </div>
-                  <Button variant="link" className="text-blue-600 text-sm p-0">
-                    Read More
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div className="flex flex-wrap gap-3 text-xs text-gray-500">
+              <span className="flex items-center gap-1">
+                <img src="/images/profile/img-6.png" alt="Views" className="w-4 h-3.5" />
+                {post.stats.views} views
+              </span>
+              <span className="flex items-center gap-1">
+                <img src="/images/profile/img-7.png" alt="Likes" className="w-4 h-3.5" />
+                {post.stats.likes} likes
+              </span>
+              <span className="flex items-center gap-1">
+                <img src="/images/profile/img-8.png" alt="Comments" className="w-4 h-3.5" />
+                {post.stats.comments} comments
+              </span>
+            </div>
+            <Button variant="link" className="text-blue-600 text-sm p-0">
+              Read More
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  })}
+</div>
 
-        <div className="flex justify-center mt-4">
-          <Button variant="secondary" className="text-gray-700 font-medium">
+
+        <div className="flex justify-center mt-2 mb-7">
+          <Button variant="secondary" className="text-gray-700 font-medium text-sm">
             Load More Posts
           </Button>
         </div>

@@ -4,15 +4,7 @@ import "./globals.css";
 import  Navbar  from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -27,13 +19,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full flex flex-col `}
+        className={`antialiased h-full flex flex-col `}
       >
         <div className="fixed top-0 left-0 right-0 z-50">
           <Navbar />
         </div>
         
-        <main className="flex-1 mt-8 p-2">
+        <main className="flex-1 mt-8">
           {children}
         </main>
         

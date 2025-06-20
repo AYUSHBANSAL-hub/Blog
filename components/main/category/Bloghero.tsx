@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
+import { useEffect } from "react";
 
 const blogData = [
   {
@@ -16,12 +17,22 @@ const blogData = [
 ];
 
 export default function BlogHero() {
+  const controls = useAnimation();
+
+  useEffect(() => {
+    controls.start({
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    });
+  }, [controls]);
+
   return (
     <section className="relative flex flex-col items-center justify-center px-4 py-10 sm:px-6 lg:px-8">
       {blogData.map((blog, index) => (
         <div
           key={index}
-          className="relative w-full max-w-7xl flex flex-col md:flex-row items-center justify-center md:justify-start"
+          className="relative w-full max-w-7xl flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start"
         >
           {/* Image Section */}
           <div className="relative w-full h-[300px] sm:h-[360px] md:h-[480px] md:w-[75%] rounded-2xl overflow-hidden shadow-xl">
@@ -34,16 +45,15 @@ export default function BlogHero() {
             />
           </div>
 
-          {/* Animated Card */}
+          {/* Animated Overlapping Card (Only overlapping on md and above) */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            initial={{ opacity: 0, x: 100 }}
+            animate={controls}
             className={`
               w-[90%] max-w-md
-              -mt-16 md:mt-0
+              mt-6 md:mt-0
+              md:absolute md:right-0  md:top-1/2 md:-translate-y-1/2 md:w-[35%]
               z-10
-              md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2 md:w-[35%]
             `}
           >
             <Card className="rounded-2xl shadow-xl p-6 bg-white">

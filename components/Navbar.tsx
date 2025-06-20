@@ -36,7 +36,7 @@ const Navbar = () => {
                   item.active ? "bg-[#eeeeee]" : ""
                 }`}
               >
-                <span className="font-['Figtree'] text-sm text-[#343434] font-medium whitespace-nowrap">
+                <span className="text-sm text-[#343434] font-medium whitespace-nowrap">
                   {item.label}
                 </span>
               </div>
