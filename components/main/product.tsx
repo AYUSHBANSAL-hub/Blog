@@ -2,66 +2,66 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
+
+
 
 const blogCards = [
   {
-    category: "Product",
-    title: "Loreum Ipsum: Lorem ipsum dolor sit amet.",
-    imagePath: "/images/product-1.png",
+    category: "PRODUCT",
+    title: "Loreum Ipsum: Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra",
+    imagePath: "/images/landing/Product-1.svg",
   },
   {
-    category: "YouTube",
-    title: "Fueling India's Musical Renaissance",
-    imagePath: "/images/product-2.png",
+    category: "YOUTUBE",
+    title: "Fueling India's Musical Renaissance: YouTube's Commitment to Artists,Fans, and the Future",
+    imagePath: "/images/landing/Product-2.svg",
   },
   {
     category: "AI & ML",
-    title: "75% of Indians desire a daily growth collaborator",
-    imagePath: "/images/product-3.png",
+    title: "75% of Indians desire a daily growth collaborator: Google-Kantar report",
+    imagePath: "/images/landing/Product-3.svg",
   },
 ];
 
 const ProductSection = ({ onProductClick }: { onProductClick: (category: string) => void }) => {
   return (
-    <section className="flex flex-col w-full items-center gap-6 py-6">
-      <div className="flex flex-col w-full max-w-[1260px] items-start">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+    <section className="flex flex-col w-full items-center gap-7 py-6">
+      <div className="w-full max-w-[1270px]">
+        <div className="grid grid-cols-1 md:grid-cols-3 md:mt-3 gap-10 ">
           {blogCards.map((blog, index) => (
-            <Card
+            <div
               key={index}
               onClick={() => onProductClick(blog.category)}
-              className="cursor-pointer flex flex-col w-full border border-[#dadce0] rounded-lg overflow-hidden hover:shadow-lg transition-shadow"
+              className=" flex roboto flex-col font-normal pt-5 justify-between border min-h-[420px] border-[#dadce0] rounded-[12px] overflow-hidden hover:shadow-md transition-shadow bg-white"
             >
-              <CardHeader className="pt-1 pb-2 px-9">
-                <CardTitle className="text-[#1a73e8] text-sm leading-[48px] font-medium">
+              <div className="px-9 pt-5 flex flex-col gap-7">
+                <p className="text-[#1a73e8] text-sm font-medium uppercase tracking-wide">
                   {blog.category}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col justify-between h-full p-0">
-                <div className="px-9 text-[#202124] text-xl leading-7">
+                </p>
+                <p className="text-[#202124] text-[19.3px] font-normal leading-[1.4] mt-2 ">
                   {blog.title}
-                </div>
-                <div className="relative w-full h-[218px] mt-4 border-t border-[#dadce0]">
-                  <Image
-                    src={blog.imagePath}
-                    alt={blog.title}
-                    fill
-                    className="object-center"
-                  />
-                </div>
-              </CardContent>
-            </Card>
+                </p>
+              </div>
+
+              <div className="relative border-t-2 w-full mt-2 h-[182px]">
+                <Image
+                  src={blog.imagePath}
+                  alt={blog.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </div>
           ))}
         </div>
       </div>
 
       <Button
         variant="outline"
-        className="min-w-[250px] max-w-[380px] min-h-12 px-[58px] py-2.5 rounded-[48px] border border-solid border-[#5f6368] bg-white"
+        className="min-w-[250px]  font-medium size-[24px] max-w-[380px] min-h-12 px-[58.44px] py-[12px] rounded-full border border-[#5F6368] text-[#1A73E8] hover:bg-[#f1f3f4]"
       >
-        <span className="text-[#1a73e8] text-base font-medium">Load more Blogs</span>
+        Load more Blogs
       </Button>
     </section>
   );

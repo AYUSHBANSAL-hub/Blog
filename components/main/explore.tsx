@@ -6,7 +6,7 @@ const ExplorePage = () => {
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center px-4 ">
       {/* Heading */}
-      <h2 className="font-semibold text-[#202124] text-[40px] md:text-[56px] text-center leading-[72px] md:mb-0 mb-10 ">
+      <h2 className="font-semibold text-[#202124]  text-7xl text-center leading-[72px] md:mb-0 mb-10 ">
         Products to Explore
       </h2>
 

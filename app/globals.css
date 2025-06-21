@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -140,6 +141,14 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+/* Set Figtree as the default font */
+body {
+  font-family: 'Figtree', sans-serif;
+}
 
+/* Use this class wherever Roboto is needed */
+.roboto {
+  font-family: 'Roboto', sans-serif;
+}
 
 

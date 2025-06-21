@@ -85,8 +85,8 @@ const BlogSection = () => {
             </div>
           </div>
 
-          <Card className="rounded-2xl overflow-hidden">
-            <CardContent className="p-0">
+          <div className="rounded-2xl overflow-hidden">
+            <div className="p-0">
               <div className="relative w-full h-[622px]">
                 <Image
                   src={featuredBlog.image}
@@ -96,8 +96,8 @@ const BlogSection = () => {
                 />
                 <div className="absolute inset-0 bg-[#00000017]" />
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
 
         {/* Blog List */}
@@ -140,8 +140,8 @@ const BlogSection = () => {
                     </div>
                   </div>
 
-                  <Card className="w-44 h-44 rounded-2xl overflow-hidden border-0 relative">
-                    <CardContent className="p-0 h-full">
+                  <div className="w-44 h-44 rounded-2xl overflow-hidden border-0 relative">
+                    <div className="p-0 h-full">
                       <div className="relative h-full w-full">
                         <Image
                           src={post.image}
@@ -151,8 +151,8 @@ const BlogSection = () => {
                         />
                         <div className="absolute inset-0 bg-[#00000017]" />
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 </div>
 
                 {index < blogPosts.length - 1 && (

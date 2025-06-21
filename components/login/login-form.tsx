@@ -1,7 +1,6 @@
 "use client";
 import { EyeIcon, MailIcon } from "lucide-react";
 import React, { useState } from "react";
-import { Card, CardContent } from "../ui/card";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
@@ -11,19 +10,19 @@ const LoginFormSection = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <Card className="w-full max-w-[551px] border-none shadow-shadow rounded-2xl">
-            <CardContent className="p-6 space-y-3">
-                <div className="space-y-3">
-                    <h1 className="text-3xl font-semibold text-zinc-950 leading-tight font-['Figtree',Helvetica]">
+        <div className="w-full max-w-[600px]  shadow-shadow rounded-2xl">
+            <div className=" space-y-6">
+                <div className="space-y-5">
+                    <h1 className="text-4xl font-semibold text-[#09090B] leading-tight ">
                         Log in
                     </h1>
 
-                    <div className="space-y-3">
+                    <div className="space-y-5">
                         {/* Email Field */}
-                        <div className="space-y-1">
+                        <div className="flex flex-col gap-2">
                             <label
                                 htmlFor="email"
-                                className="font-black text-sm text-zinc-800 leading-5 font-['Figtree',Helvetica]"
+                                className="font-semibold text-sm text-zinc-800 leading-5 "
                             >
                                 Email
                             </label>
@@ -36,10 +35,10 @@ const LoginFormSection = () => {
                         </div>
 
                         {/* Password Field */}
-                        <div className="space-y-1">
+                        <div className="flex flex-col gap-2">
                             <label
                                 htmlFor="password"
-                                className="font-medium text-sm text-zinc-800 leading-5 font-['Figtree',Helvetica]"
+                                className="font-semibold text-sm text-zinc-800 leading-5 "
                             >
                                 Password
                             </label>
@@ -100,8 +99,8 @@ const LoginFormSection = () => {
                         Policy.
                     </p>
                 </div>
-            </CardContent>
-        </Card>
+            </div>
+        </div>
     );
 };
 
