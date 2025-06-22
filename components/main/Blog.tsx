@@ -10,7 +10,7 @@ const initialFeaturedBlog = {
   title: "Lorem ipsum dolor sit amet consectetur.",
   date: "May 2025",
   category: "Models",
-  image: "/images/Overlay.png",
+  image: "/images/Overlay.svg",
 };
 
 const blogPosts = [
@@ -18,37 +18,37 @@ const blogPosts = [
     title: "Lorem ipsum dolor sit amet consectetur.",
     date: "June 2025",
     categories: ["Models"],
-    image: "/images/model-1.png",
+    image: "/images/model-1.svg",
   },
   {
     title: "Lorem ipsum dolor sit amet consectetur.",
     date: "May 2025",
     categories: ["Models"],
-    image: "/images/model-2.png",
+    image: "/images/model-2.svg",
   },
   {
     title: "Lorem ipsum dolor sit amet consectetur.",
     date: "May 2025",
     categories: ["Labs"],
-    image: "/images/model-3.png",
+    image: "/images/model-3.svg",
   },
   {
     title: "Lorem ipsum dolor sit amet consectetur.",
     date: "May 2025",
     categories: ["Labs", "Models"],
-    image: "/images/model-4.png",
+    image: "/images/model-4.svg",
   },
   {
     title: "Lorem ipsum dolor sit amet consectetur.",
     date: "May 2025",
     categories: ["Labs", "Models"],
-    image: "/images/model-4.png",
+    image: "/images/model-4.svg",
   },
   {
     title: "Lorem ipsum dolor sit amet consectetur.",
     date: "May 2025",
     categories: ["Labs", "Models"],
-    image: "/images/model-4.png",
+    image: "/images/model-4.svg",
   },
 ];
 
@@ -56,7 +56,7 @@ const BlogSection = () => {
   const [featuredBlog, setFeaturedBlog] = useState(initialFeaturedBlog);
 
   return (
-    <section className="w-full max-w-[1296px] pb-20 px-4 mx-auto">
+    <section className="w-full max-w-[1296px] pb-6 px-4 mx-auto">
       <div className="flex flex-col md:flex-row gap-12 min-h-[700px]">
         {/* Featured Blog */}
         <div className="flex-1 pt-16 flex flex-col gap-9">
@@ -78,7 +78,7 @@ const BlogSection = () => {
                 variant="outline"
                 className="h-9 rounded-[100px] border-[#00000029] backdrop-blur-[5px] ml-4"
               >
-                <span className="font-['Inter',Helvetica] font-medium text-[#232323] text-[13.9px] tracking-[0.11px] leading-[21px]">
+                <span className="font-['Inter',Helvetica] font-semibold text-[#232323] text-[13.9px] tracking-[0.11px] leading-[21px]">
                   Learn more
                 </span>
               </Button>
@@ -101,7 +101,7 @@ const BlogSection = () => {
         </div>
 
         {/* Blog List */}
-        <div className="flex-1 pt-16 max-h-[1000px] overflow-y-auto scroll-smooth pr-2 custom-scrollbar-hide">
+        <div className="flex-1 pt-16 max-h-[1000px] border-b-2 overflow-y-auto scroll-smooth pr-2 custom-scrollbar-hide">
           <div className="flex flex-col gap-6">
             {blogPosts.map((post, index) => (
               <div key={index} className="relative cursor-pointer" onClick={() => setFeaturedBlog({
@@ -133,7 +133,7 @@ const BlogSection = () => {
                       </div>
 
                       <Button variant="link" className="p-0 h-9 text-[#004fce]">
-                        <span className="font-['Inter',Helvetica] font-medium text-[13.9px] tracking-[0.11px] leading-[21px]">
+                        <span className="font-['Inter',Helvetica] font-semibold text-[13.9px] tracking-[0.11px] leading-[21px]">
                           Learn more
                         </span>
                       </Button>

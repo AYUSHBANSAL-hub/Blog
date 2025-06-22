@@ -10,10 +10,10 @@ const LoginFormSection = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <div className="w-full max-w-[600px]  shadow-shadow rounded-2xl">
+        <div className="w-full max-w-[600px] px-2  shadow-shadow rounded-2xl">
             <div className=" space-y-6">
-                <div className="space-y-5">
-                    <h1 className="text-4xl font-semibold text-[#09090B] leading-tight ">
+                <div className="flex flex-col gap-7">
+                    <h1 className="text-4xl font-semibold pt-4 text-[#09090B] leading-tight ">
                         Log in
                     </h1>
 
@@ -76,6 +76,7 @@ const LoginFormSection = () => {
                     </div>
 
                     {/* Login Button */}
+                    <div className="flex flex-col gap-3">
                     <div className="w-full">
                         <Button className="w-full min-h-9 px-4 py-2 bg-zinc-950 text-neutral-50 rounded-lg flex gap-2">
                             <MailIcon className="w-4 h-4" />
@@ -98,6 +99,7 @@ const LoginFormSection = () => {
                         By clicking Continue, you agree to our Terms of Service and Privacy
                         Policy.
                     </p>
+                    </div>
                 </div>
             </div>
         </div>

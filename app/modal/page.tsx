@@ -36,8 +36,8 @@ const Modal = () => {
 
     return (
         <div className="w-full min-h-screen bg-white mt-16 flex items-center justify-center p-4">
-            <Card className="relative w-full max-w-[1200px] h-[965px] rounded-[32px] overflow-hidden border border-solid border-[#19191a] shadow-2xl">
-                <CardContent className="p-0 relative h-full rounded-[32px]">
+            <div className="relative w-full max-w-[1200px] h-[965px] rounded-[32px] overflow-hidden  shadow-2xl">
+                <div className="p-0 relative h-full rounded-[32px]">
                     {/* Background images with overlay and transition */}
                     <div className="absolute w-full h-full top-0 left-0 rounded-[32px] overflow-hidden">
                         <div className="relative h-full">
@@ -93,8 +93,8 @@ const Modal = () => {
                             onCtaClick={handleCtaClick}
                         />
                     </div>
-                </CardContent>
-            </Card>
+                </div>
+            </div>
         </div>
     );
 };

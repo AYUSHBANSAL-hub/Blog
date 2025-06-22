@@ -12,7 +12,7 @@ const SubCategoryBlogs = () => {
         "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
-      image: "/images/blog-1.png",
+      image: "/images/blog-1.svg",
     },
     {
       id: 2,
@@ -22,7 +22,7 @@ const SubCategoryBlogs = () => {
         "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
-      image: "/images/blog-1.png",
+      image: "/images/blog-1.svg",
     },
     {
       id: 3,
@@ -32,7 +32,7 @@ const SubCategoryBlogs = () => {
         "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
-      image: "/images/blog-1.png",
+      image: "/images/blog-1.svg",
     },
     {
       id: 4,
@@ -42,7 +42,7 @@ const SubCategoryBlogs = () => {
         "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
-      image: "/images/blog-1.png",
+      image: "/images/blog-1.svg",
     },
     {
       id: 5,
@@ -52,7 +52,7 @@ const SubCategoryBlogs = () => {
         "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
-      image: "/images/blog-1.png",
+      image: "/images/blog-1.svg",
     },
     {
       id: 6,
@@ -62,48 +62,51 @@ const SubCategoryBlogs = () => {
         "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
-      image: "/images/blog-1.png",
+      image: "/images/blog-1.svg",
     },
   ];
 
   return (
-    <section className="w-full px-4 py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-[1260px] mx-auto">
-        {featuredContent.map((content) => (
-          <Card
-            key={content.id}
-            className="flex flex-col rounded-2xl overflow-hidden border border-[#dadce0] shadow-sm hover:shadow-md transition-shadow duration-300"
-          >
-            <div
-              className="h-[200px] bg-cover bg-center"
-              style={{ backgroundImage: `url(${content.image})` }}
-            />
+    <section className=" py-12">
+            <div className="max-w-[1260px] mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-14">
+                    {featuredContent.map((content) => (
+                        <div key={content.id} className="flex justify-center">
+                            <div className="flex flex-col gap-5 max-w-[334.22px] w-full h-full rounded-2xl overflow-hidden border border-[#dadce0] shadow-sm hover:shadow-md transition-shadow duration-300">
+                                {/* Image */}
+                                <div
+                                    className="h-[187.98px] w-[334.2200012207031px] bg-cover bg-center"
+                                    style={{ backgroundImage: `url(${content.image})` }}
+                                />
 
-            <CardContent className="flex flex-col gap-4 p-6 flex-1 justify-between">
-              <div className="text-[#1a73e8] text-sm font-medium tracking-wide uppercase">
-                {content.category}
-              </div>
+                                {/* Content */}
+                                <div className="flex flex-col gap-4 p-6 flex-1">
+                                    <div className="text-[#1a73e8] text-sm pb-4 font-medium tracking-wide uppercase">
+                                        {content.category}
+                                    </div>
 
-              <h3 className="text-[#202124] text-lg font-semibold leading-snug">
-                {content.title}
-              </h3>
+                                    <h3 className="text-[#202124] text-lg pb-3 font-medium leading-1.5">
+                                        {content.title}
+                                    </h3>
 
-              <p className="text-[#5f6368] text-sm leading-relaxed whitespace-pre-line">
-                {content.description}
-              </p>
+                                    <p className="text-[#5f6368] text-sm leading-6 line-clamp-4">
+                                        {content.description}
+                                    </p>
 
-              <div className="flex items-center justify-between pt-4 border-t border-gray-200 mt-auto">
-                <div className="text-[#5f6368] text-sm font-medium leading-5">
-                  Posted by {content.author} - {content.date}
+                                    {/* Footer always sticks at bottom */}
+                                    <div className=" pt-4  mt-12 flex items-center justify-between">
+                                        <div className="text-[#5f6368] text-sm font-medium leading-5">
+                                            Posted by {content.author} - {content.date}
+                                        </div>
+                                        <img src="/images/blackArrow.svg" alt="Arrow Icon" className="w-4 h-4" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
-
-                <ArrowRightIcon className="w-5 h-5 text-[#5f6368]" />
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-    </section>
+            </div>
+        </section>
   );
 };
 

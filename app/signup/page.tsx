@@ -14,7 +14,7 @@ const LogIn = () => {
         {/* Left Section */}
         <div className="relative w-full max-w-[50%] hidden lg:block z-10">
           {/* Heading */}
-          <h1 className="font-['Figtree',Helvetica] font-semibold text-zinc-950 text-5xl leading-[64px] mb-12">
+          <h1 className=" font-semibold text-zinc-950 text-5xl leading-[64px] mb-12">
             Discover,
             <br />
             connect, and grow
@@ -23,12 +23,12 @@ const LogIn = () => {
           {/* Floating card visuals */}
           <div className="relative mt-28 w-full h-[500px]">
             <img
-              src="/images/login-img-4.png"
+              src="/images/Frame-1.svg"
               alt="Start Journey"
               className="absolute top-0 left-0 w-[360px] rounded-2xl shadow-xl z-10"
             />
             <img
-              src="/images/login-img-3.png"
+              src="/images/Frame-2.svg"
               alt="Member Process"
               className="absolute top-[180px] left-[260px] w-[300px] rounded-xl shadow-md z-20"
             />
@@ -36,7 +36,7 @@ const LogIn = () => {
         </div>
 
         {/* Right Section - Login Form */}
-        <div className="relative w-full max-w-[480px] bg-white rounded-2xl shadow-md p-8 z-30 -mt-20 lg:-ml-20">
+        <div className="relative w-full max-w-[551px] bg-white rounded-2xl shadow-md p-8 z-30 mt-10 lg:-ml-20">
           <SignUpFormSection/>
         </div>
       </div>

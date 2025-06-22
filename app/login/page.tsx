@@ -8,12 +8,15 @@ const LogIn = () => {
       <div className="absolute w-60 h-60 top-10 left-[30%] rounded-full blur-[60px] bg-gradient-to-br from-green-100 to-blue-100 opacity-40 z-0" />
       <div className="absolute w-[560px] h-[560px] top-[216px] left-[70%] rounded-full blur-[80px] bg-gradient-to-br from-blue-100 to-green-100 opacity-30 z-0" />
       <div className="absolute w-60 h-60 top-40 left-[85%] rounded-full blur-[40px] bg-gradient-to-br from-green-100 to-blue-100 opacity-50 z-0" />
+      
+      <img src='images/Ellipse-2.svg' className="absolute "/>
 
-      <div className="relative w-full flex flex-col lg:flex-row items-center justify-center px-4 md:px-8 lg:px-[161px] py-20 bg-neutral-50 z-10">
+      <div className="relative w-full flex flex-col lg:flex-row items-center justify-center px-4 md:px-8 lg:px-[161px] py-20 bg-neutral-50 ">
         {/* Left Section */}
-        <div className="relative w-full max-w-[50%] hidden lg:block z-10">
+        <div className="relative w-full max-w-[50%] hidden lg:block">
+          {/* <img src='images/Ellipse-1.svg' className="absolute top-10 -left-20 z-20"/> */}
           {/* Heading */}
-          <h1 className="font-['Figtree',Helvetica] font-semibold text-zinc-950 text-5xl leading-[64px] mb-12">
+          <h1 className="font-['Figtree',Helvetica] z-60 font-semibold text-zinc-950 text-5xl leading-[64px] mb-12">
             Discover,
             <br />
             connect, and grow
@@ -35,7 +38,7 @@ const LogIn = () => {
         </div>
 
         {/* Right Section - Login Form */}
-        <div className="relative w-full max-w-[480px] bg-white rounded-2xl shadow-md p-8 z-30 -mt-20 lg:-ml-20">
+        <div className="relative w-full max-w-[551px] bg-white rounded-2xl shadow-md p-8 z-30 lg:-ml-20">
           <LoginFormSection />
         </div>
       </div>

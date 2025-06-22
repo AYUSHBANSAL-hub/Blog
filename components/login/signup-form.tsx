@@ -11,12 +11,12 @@ const SignUpFormSection = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     return (
-        <div className="w-full max-w-[600px]  py-4 flex flex-col gap-8 bg-white">
-            <h1 className="text-4xl font-semibold text-zinc-950 font-['Figtree',Helvetica]">
+        <div className="w-full max-w-[551px] px-2 flex flex-col gap-8 bg-white">
+            <h1 className="text-4xl pt-5 font-semibold text-zinc-950 ">
                 Sign Up
             </h1>
 
-            <form className="space-y-3">
+            <form className="flex flex-col gap-4">
                 {/* Full Name */}
                 <div className="flex flex-col gap-2">
                     <label htmlFor="name" className="text-sm font-semibold text-zinc-800">
@@ -118,7 +118,8 @@ const SignUpFormSection = () => {
                 </div>
 
                 {/* Submit Button */}
-                <Button className="w-full min-h-[36px] px-4 py-2 bg-zinc-950 text-neutral-50 mt-5 rounded-md flex items-center justify-center gap-2">
+                <div className="flex flex-col gap-4">
+                <Button className="w-full min-h-[36px] px-4 py-2 bg-zinc-950 text-neutral-50 mt-2 rounded-md flex items-center justify-center gap-2">
                     <MailIcon className="w-4 h-4" />
                     <span className="text-sm">Log in with email</span>
                 </Button>
@@ -136,6 +137,7 @@ const SignUpFormSection = () => {
                 <p className="text-xs text-center text-[#71717b] leading-4">
                     By clicking Continue, you agree to our Terms of Service and Privacy Policy.
                 </p>
+                </div>
             </form>
         </div>
     );

@@ -48,7 +48,7 @@ const Footer = () => {
   return (
     <section>
       {/* Footer */}
-      <footer className="w-full bg-zinc-100 border-t border-gray-200 pt-16 pb-14 min-h-[480px]">
+      <footer className="w-full bg-zinc-100 border-t border-[#E5E7EB] rounded-t-2xl pt-16 pb-14 min-h-[480px]">
         <div className="max-w-[1200px] mx-auto px-6">
           <h3 className="font-['Figtree',Helvetica] font-semibold text-gray-900 text-xl mb-8">
             Our Products

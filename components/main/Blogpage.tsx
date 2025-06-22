@@ -42,12 +42,18 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="mt-14">
+    <div>
       {!selectedCategory ? (
         <>
+          <div className="mt-14">
           <BlogSection />
+          </div>
+          <div>
           <ProductSection onProductClick={handleProductClick} />
-          <Overlay />
+          </div>
+          <div className="mt-20">
+            <Overlay />
+          </div>
         </>
       ) : !selectedSubcategory ? (
         <CategoryPage
