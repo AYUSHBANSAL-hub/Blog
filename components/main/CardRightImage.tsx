@@ -17,7 +17,7 @@ const CardRightImage: React.FC<CardProps> = ({ title, description, image, badge 
           absolute 
           w-[80px] h-[80px] 
           sm:w-[90px] sm:h-[90px] 
-          md:w-[110px] md:h-[110px] 
+          md:w-[130px] md:h-[130px] 
           rounded-[14px] z-30 
           -top-[40px] left-1/2 -translate-x-1/2 
           md:top-[-20px] md:right-[-55px] md:left-auto md:translate-x-0
@@ -29,7 +29,7 @@ const CardRightImage: React.FC<CardProps> = ({ title, description, image, badge 
             style={{ backgroundImage: `url(${image})` }}
           />
           {badge && (
-            <div className="absolute top-[-10px] right-[-10px] z-40 px-2 py-[2px] rounded-full bg-white border border-black text-[10px] font-medium">
+            <div className="absolute top-[-10px] right-[10px]  z-40 px-3 py-[3px] rounded-full bg-white border border-black text-[12px] font-medium">
               {badge.text}
             </div>
           )}

@@ -87,7 +87,7 @@ const BlogSection = () => {
 
           <div className="rounded-2xl overflow-hidden">
             <div className="p-0">
-              <div className="relative w-full h-[622px]">
+              <div className="relative w-full h-[422px] md:h-[622px]">
                 <Image
                   src={featuredBlog.image}
                   alt={featuredBlog.title}

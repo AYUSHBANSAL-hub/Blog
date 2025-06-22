@@ -15,7 +15,7 @@ interface Props {
 
 const NavigationBreadcrumbSection = ({ items, onBreadcrumbClick }: Props) => {
   return (
-    <nav className="flex w-fit mt-16 ml-16 items-start p-0.5 overflow-x-auto">
+    <nav className="flex w-fit mt-7 ml-6 md:mt-16 md:ml-16 items-start p-0.5 overflow-x-auto">
       <Breadcrumb className="h-12 w-full">
         <BreadcrumbList className="flex items-center">
           <BreadcrumbItem>

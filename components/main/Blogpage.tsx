@@ -45,7 +45,7 @@ export default function BlogPage() {
     <div>
       {!selectedCategory ? (
         <>
-          <div className="mt-14">
+          <div className="md:mt-14">
           <BlogSection />
           </div>
           <div>

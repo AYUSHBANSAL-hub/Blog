@@ -10,21 +10,21 @@ interface CardProps {
 
 const CardLeftImage: React.FC<CardProps> = ({ title, description, image, badge }) => {
   return (
-    <div className="relative w-full max-w-full md:max-w-[600px]">
+    <div className="relative w-full max-w-full   md:max-w-[600px]">
       {/* Floating Image */}
       <div
         className="
           absolute 
           w-[80px] h-[80px] 
           sm:w-[90px] sm:h-[90px] 
-          md:w-[110px] md:h-[110px] 
+          md:w-[130px] md:h-[130px] 
           rounded-[14px] overflow-hidden z-10 shadow-md 
           -top-[40px] left-1/2 -translate-x-1/2 
           md:top-[-20px] md:left-[-55px] md:translate-x-0
         "
       >
         <div
-          className="w-full h-full bg-cover bg-center rounded-[14px]"
+          className="w-full h-full  bg-cover bg-center rounded-[14px]"
           style={{ backgroundImage: `url(${image})` }}
         />
         {badge && (

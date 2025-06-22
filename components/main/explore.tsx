@@ -6,13 +6,13 @@ const ExplorePage = () => {
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center px-4 ">
       {/* Heading */}
-      <h2 className="font-semibold text-[#202124]  text-7xl text-center leading-[72px] md:mb-0 mb-10 ">
+      <h2 className="font-semibold text-[#202124]  text-3xl md:text-7xl text-center leading-[72px] md:mb-0 mb-10 ">
         Products to Explore
       </h2>
 
       {/* Wrapper that perfectly centers the two columns */}
-      <div className="w-full max-w-7xl flex justify-center">
-        <div className="flex flex-col md:flex-row md:gap-40 w-full justify-center items-center">
+      <div className="w-full max-w-6xl flex justify-center">
+        <div className="flex flex-col md:flex-row md:gap-64 w-full justify-center items-center">
           {/* Left Column */}
           <div className="flex justify-center  items-center w-full md:w-[50%]">
             <ExploreOnePage />

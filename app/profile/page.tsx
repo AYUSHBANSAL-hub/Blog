@@ -74,9 +74,9 @@ const ProfilePage = () => {
       {/* Profile Card */}
       <div className="w-full md:w-1/3">
         <Card className="shadow p-2">
-          <CardContent className=" px-7 flex flex-col items-center">
+          <CardContent className=" px-7 pt-5 flex flex-col items-center">
             <div >
-              <Avatar className="w-20 h-20 border-4 border-blue-100">
+              <Avatar className="w-20 h-20 ">
                 <img
                   src="/images/profile/img.svg"
                   alt="Profile"
@@ -184,7 +184,7 @@ const ProfilePage = () => {
 </div>
 
 
-        <div className="flex justify-center mt-2 mb-7">
+        <div className="flex justify-center mt-2 md:mb-7">
           <Button variant="secondary" className="text-gray-700 font-bold h-[48px] w-[168.953125px]">
             Load More Posts
           </Button>
