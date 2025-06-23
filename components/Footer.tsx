@@ -58,13 +58,13 @@ const Footer = () => {
           <div className="flex flex-wrap w-full justify-between mb-8">
             {productCategories.map((category, index) => (
               <div key={index} className="w-[220px]">
-                <div className="flex items-center gap-2 mb-4">
-                  <img className="w-4 h-4" src={category.icon} alt="" />
+                <div className="flex items-center gap-[8px] mb-4">
+                  <img className="w-[17.5px] h-[14px]" src={category.icon} alt="" />
                   <span className="font-[500] text-[#111827] text-[16px]">
                     {category.title}
                   </span>
                 </div>
-                <ul className="space-y-2">
+                <ul className="mt-[15px] flex flex-col gap-[10px]">
                   {category.items.map((item, idx) => (
                     <li key={idx} className="text-[#4B5563] font-[400] text-[14px]" style={{ fontFamily: 'var(--font-roboto)' }}>
                       {item}
@@ -79,7 +79,7 @@ const Footer = () => {
           <div className="flex flex-wrap gap-[40.25px] border-t border-gray-200 pt-6 mb-12">
             {resourceLinks.map((link, idx) => (
               <div key={idx} className="flex items-center gap-1">
-                <img src={link.icon} className="w-4 h-4" alt="" />
+                <img src={link.icon} className="w-[12px] h-[12px]" alt="" />
                 <span className="text-[14px] text-[#4B5563] font-[400]" style={{ fontFamily: 'var(--font-roboto)' }}>{link.title}</span>
               </div>
             ))}
