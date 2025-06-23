@@ -9,10 +9,10 @@ import ProductsExplore from "@/components/main/explore";
 import SubscriptionBanner from "@/components/main/Subscription-Banner";
 import Overlay from "@/components/main/overlay";
 import Image from "next/image";
-import vector1 from "/images/landing/vector-1.svg";
+
 
 const socialIcons = [
-  { icon: vector1, alt: "Discord" },
+  { icon: "/images/landing/vector-1.svg", alt: "Discord" },
   { icon: "/images/landing/vector-2.svg", alt: "Twitter" },
   { icon: "/images/landing/vector-3.svg", alt: "Group" },
   { icon: "/images/landing/vector-4.svg", alt: "Telegram" },
@@ -92,11 +92,11 @@ const LandingPage = () => {
                   >
                     {icon.alt === "Group" ? (
                       <div className="relative w-3.5 h-3.5">
-                        <Image
+                        <img
                           className="absolute top-px left-0"
                           alt={icon.alt}
                           src={icon.icon}
-                          fill
+                        
                         />
                       </div>
 
