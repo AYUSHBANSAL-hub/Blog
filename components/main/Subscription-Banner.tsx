@@ -3,11 +3,12 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Mail } from "lucide-react"
+import { Checkbox } from "../ui/checkbox"
 
 const SubscriptionBanner = () => {
   return (
     <div className="w-full flex justify-center mb-10 sm:mb-20 px-4">
-      <div className="relative w-full max-w-[1193px] min-h-[200px] sm:min-h-[480px] md:h-[478px] bg-[#3890dec4] rounded-[24px] px-4 py-10 sm:px-6 sm:py-8 md:px-12 md:py-6 overflow-visible">
+      <div className="relative w-full max-w-[1193px] min-h-[200px] sm:min-h-[478px] md:h-[478px] bg-[#3890dec4] rounded-[24px] px-4 py-10 sm:px-6 sm:py-8 md:px-12 md:py-6 overflow-visible">
 
         <Image
           src="/images/banner-img.png"
@@ -61,19 +62,15 @@ const SubscriptionBanner = () => {
           </div>
           {/* Terms */}
           <div className="flex items-center mt-4 gap-2 w-full max-w-md sm:max-w-none md:w-auto h-auto">
-            {/* Circular Checkbox */}
-            <label className="relative inline-block w-[18px] h-[18px]">
-              <input
-                type="checkbox"
-                className="peer appearance-none w-full h-full rounded-full border border-white bg-transparent checked:bg-white checked:border-[#3890DE] cursor-pointer"
-              />
-              <span
-                className="pointer-events-none absolute inset-0 flex items-center justify-center text-[#3890DE] text-[13px] font-bold opacity-0 peer-checked:opacity-100"
-              >
-                ✔
-              </span>
-            </label>
-
+            <Checkbox
+          id="terms"
+          className="
+            h-[19.5px] w-[19.5px] rounded-full 
+            data-[state=checked]:bg-white 
+            data-[state=checked]:text-[#63b3ed]
+            focus:outline-none focus-visible:ring-0
+          "
+        />
             {/* Single-line Text */}
             <label
               htmlFor="terms-checkbox"

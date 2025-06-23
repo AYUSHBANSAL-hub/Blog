@@ -26,14 +26,14 @@ const blogCards = [
 
 const ProductSection = ({ onProductClick }: { onProductClick: (category: string) => void }) => {
   return (
-    <section className="flex flex-col w-full items-center gap-7 py-6">
+    <section className="flex flex-col w-full items-center gap-3 py-6">
       <div className="w-full max-w-[1270px]">
-        <div className="grid grid-cols-1 md:grid-cols-3 md:mt-3 gap-10 ">
+        <div className="grid grid-cols-1 md:grid-cols-3 md:mt-3 gap-6 ">
           {blogCards.map((blog, index) => (
             <div
               key={index}
               onClick={() => onProductClick(blog.category)}
-              className=" flex  flex-col font-normal  justify-between border min-h-[420px] border-[#dadce0] rounded-[12px] overflow-hidden hover:shadow-md transition-shadow bg-white"
+              className=" flex  flex-col font-normal  justify-between border min-h-[420px] border-[#dadce0] rounded-[8px] overflow-hidden hover:shadow-md transition-shadow bg-white"
             >
               <div className="px-9 pt-5 flex flex-col gap-4" style={{ fontFamily: 'var(--font-roboto)' }}>
                 <p className="text-[#1A73E8] !font-roboto cursor-default text-[14px] font-[500] uppercase leading-[48px] tracking-[0.25px] ">

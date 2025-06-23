@@ -76,9 +76,9 @@ const Footer = () => {
           </div>
 
           {/* Resources */}
-          <div className="flex flex-wrap gap-6 border-t border-gray-200 pt-6 mb-12">
+          <div className="flex flex-wrap gap-[40.25px] border-t border-gray-200 pt-6 mb-12">
             {resourceLinks.map((link, idx) => (
-              <div key={idx} className="flex items-center gap-2">
+              <div key={idx} className="flex items-center gap-1">
                 <img src={link.icon} className="w-4 h-4" alt="" />
                 <span className="text-[14px] text-[#4B5563] font-[400]" style={{ fontFamily: 'var(--font-roboto)' }}>{link.title}</span>
               </div>
