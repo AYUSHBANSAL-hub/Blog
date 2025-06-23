@@ -34,7 +34,7 @@ export default function BlogHero() {
           className="relative w-full max-w-screen-xl mx-auto flex flex-col md:flex-row items-center md:item-start justify-center md:justify-start"
         >
           {/* Image Section */}
-          <div className="relative w-full md:-ml-10 h-[300px] sm:h-[360px] md:h-[507.67px] md:w-[950px] rounded-2xl overflow-hidden shadow-xl">
+          <div className="relative w-full md:-ml-10 h-[300px] sm:h-[360px] md:h-[507.67px] md:w-[950px] rounded-2xl overflow-hidden ">
             <Image
               src={blog.image}
               alt={blog.title}
