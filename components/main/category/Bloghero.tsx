@@ -11,7 +11,7 @@ const blogData = [
     category: "PRODUCT",
     title: "Lorem ipsum dolor sit amet consectetur.",
     description: "Lorem ipsum dolor sit amet consectetur.",
-    image: "/images/landing/hero-img.svg",
+    image: "/images/blog-2.svg",
   },
 ];
 
