@@ -17,11 +17,11 @@ const roboto = Roboto({
 });
 
 const socialIcons = [
-  { icon: "/images/landing/icon-1.png", alt: "Discord" },
-  { icon: "/images/landing/icon-2.png", alt: "Twitter" },
-  { icon: "/images/landing/icon-3.png", alt: "Group" },
-  { icon: "/images/landing/icon-4.png", alt: "Telegram" },
-  { icon: "/images/landing/icon-5.png", alt: "Facebook" },
+  { icon: "/images/landing/vector-1.svg", alt: "Discord" },
+  { icon: "/images/landing/vector-2.svg", alt: "Twitter" },
+  { icon: "/images/landing/vector-3.svg", alt: "Group" },
+  { icon: "/images/landing/vector-4.svg", alt: "Telegram" },
+  { icon: "/images/landing/vector-5.svg", alt: "Facebook" },
 ];
 
 const transition = { duration: 1.1, ease: "easeInOut" };
@@ -43,7 +43,7 @@ const LandingPage = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ ...transition, delay: 0.1 }}
-                className="font-bold text-[#2a2a2a] text-[42px] md:text-6xl lg:text-8xl tracking-[-0.5px] leading-[1.05]"
+                className="font-bold cursor-default text-[#2a2a2a] text-[42px] md:text-6xl lg:text-8xl tracking-[-0.5px] lleading-[92px]"
               >
                 Lorem ipsum dolor sit
               </motion.h1>
@@ -52,22 +52,25 @@ const LandingPage = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ ...transition, delay: 0.2 }}
-                className={`${roboto.variable} font-[var(--font-roboto)] text-[#6d6d6d] md:mt-7 text-[18px] md:text-[20px] leading-[1.4] max-w-[587px]`}
+                className={` font-roboto font-normal text-[#6d6d6d] md:mt-6 text-[22px] leading-[28px] max-w-[587px]`}
               >
                 Loreum Ipsum: Lorem ipsum dolor sit amet consectetur. Sed est
                 blandit pharetra.
               </motion.p>
+
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ ...transition, delay: 0.3 }}
               >
-                <Button className="w-[216px] md:mb-2 mt-7 h-[55px] bg-[#3a71fd] rounded-[90px] text-[#fbfcfc] font-button-1 flex items-center justify-center gap-3 text-base hover:scale-[1.02] transition-transform duration-300 ease-in-out">
-                  <span>Start Reading</span>
-                  <img src="images/arrow.svg"/>
+                <Button className="w-[216px] md:mb-2 mt-7 h-[55px] px-[24px] py-[16px] bg-[#3B71FE] rounded-[90px] text-[#fbfcfc] flex items-center justify-center gap-3 hover:scale-[1.02] transition-transform duration-300 ease-in-out">
+                  <span className="font-bold text-base leading-[16px] text-center">
+                    Start Reading
+                  </span>
+                  <img src="images/arrow.svg" />
                 </Button>
-                <div className="w-4 h-4 bg-[url(/mi-arrow-forward-no-bg.svg)] bg-contain bg-no-repeat" />
+
 
               </motion.div>
             </div>
@@ -77,9 +80,9 @@ const LandingPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ ...transition, delay: 0.4 }}
-              className="mt-4 md:mt-14 flex flex-col gap-2"
+              className="mt-4 md:mt-[175px] flex flex-col gap-2"
             >
-              <p className="roboto text-[#6d6d6d] text-[18px] md:text-[20px] leading-7">
+              <p className="roboto font-normal text-[#6d6d6d] text-[22px] leading-[28px]">
                 Follow us
               </p>
 
@@ -117,7 +120,7 @@ const LandingPage = () => {
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ ...transition, delay: 0.2 }}
-            className="w-full md:max-w-[738px] max-w-[500px] h-[300px] md:h-[680px] object-center rounded-2xl"
+            className="w-full md:max-w-[738px] max-w-[500px] h-[300px] md:h-[738px] object-center rounded-2xl"
             autoPlay
             muted
             loop
@@ -130,14 +133,14 @@ const LandingPage = () => {
 
       <ProductSection />
       <div className="md:mt-5">
-       <BlogHero />
+        <BlogHero />
       </div>
       <div className="md:mt-9">
-       <ProductsExplore />
+        <ProductsExplore />
       </div>
       <SubscriptionBanner />
       <div>
-      <Overlay />
+        <Overlay />
       </div>
     </div>
   );
