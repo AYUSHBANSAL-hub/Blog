@@ -33,13 +33,13 @@ const ProductSection = ({ onProductClick }: { onProductClick: (category: string)
             <div
               key={index}
               onClick={() => onProductClick(blog.category)}
-              className=" flex roboto flex-col font-normal pt-5 justify-between border min-h-[420px] border-[#dadce0] rounded-[12px] overflow-hidden hover:shadow-md transition-shadow bg-white"
+              className=" flex roboto flex-col font-normal  justify-between border min-h-[420px] border-[#dadce0] rounded-[12px] overflow-hidden hover:shadow-md transition-shadow bg-white"
             >
-              <div className="px-9 pt-5 flex flex-col gap-7">
-                <p className="text-[#1a73e8] text-sm font-medium uppercase tracking-wide">
+              <div className="px-9 pt-5 flex flex-col gap-4">
+                <p className="text-[#1A73E8] cursor-default text-[14px] font-[500] uppercase leading-[48px] tracking-[0.25px] font-roboto">
                   {blog.category}
                 </p>
-                <p className="text-[#202124] text-[19.3px] font-normal leading-[1.4] mt-2 ">
+                <p className="text-[#202124] cursor-default w-[330px] text-[20px] font-roboto  font-[400] leading-[1.4] ">
                   {blog.title}
                 </p>
               </div>
@@ -59,7 +59,7 @@ const ProductSection = ({ onProductClick }: { onProductClick: (category: string)
 
       <Button
         variant="outline"
-        className="min-w-[250px]  font-medium size-[24px] max-w-[380px] min-h-12 px-[58.44px] py-[12px] rounded-full border border-[#5F6368] text-[#1A73E8] hover:bg-[#f1f3f4]"
+        className="min-w-[250px] font-[500]  font-figtree text-[16px] max-w-[380px] min-h-12 px-[58.44px] py-[12px] rounded-full border border-[#5F6368] text-[#1A73E8] hover:bg-[#f1f3f4]"
       >
         Load more Blogs
       </Button>

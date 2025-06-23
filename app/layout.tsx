@@ -1,9 +1,24 @@
 import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Head from "next/head";
+import { Figtree } from 'next/font/google';
+import { Roboto } from 'next/font/google';
+
+const figtree = Figtree({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-figtree',
+  display: 'swap',
+});
+
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-roboto',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -16,14 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`h-full`}>
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-      <body className="antialiased h-full flex flex-col">
+    <html lang="en" className={` ${figtree.variable} ${roboto.variable}`}>
+      <body className="antialiased font-figtree h-full flex flex-col">
         <div className="fixed top-0 left-0 right-0 z-50">
           <Navbar />
         </div>

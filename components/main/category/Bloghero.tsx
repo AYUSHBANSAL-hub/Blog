@@ -27,7 +27,7 @@ export default function BlogHero() {
   }, [controls]);
 
   return (
-    <section className="relative flex flex-col  items-start justify-center  px-4 py-10 md:px-1 overflow-x-hidden">
+    <section className="relative flex flex-col  items-start justify-center  px-4 py-6 md:px-1 overflow-x-hidden">
       {blogData.map((blog, index) => (
         <div
           key={index}
@@ -55,18 +55,18 @@ export default function BlogHero() {
               z-10
             `}
           >
-            <Card className="rounded-2xl w-full md:w-[476px] h-auto md:h-[320px] pt-6 shadow-xl px-6 pb-6 bg-white">
+            <Card className="rounded-2xl w-full md:w-[476px] h-auto md:h-[320px] pt-6 shadow-xl px-8 pb-6 bg-white">
               <CardContent className="px-0">
                 <div className="text-[#1A73E8] py-4 md:pt-4 font-roboto text-sm font-medium">
                   {blog.category}
                 </div>
-                <h2 className="text-xl sm:text-2xl md:text-4xl font-medium text-[#202124] md:pt-4 text-center md:text-left">
+                <h2 className="text-xl cursor-default  md:text-[35.58px] font-medium text-[#202124]  md:pt-1 text-center md:text-left">
                   {blog.title}
                 </h2>
-                <p className="text-sm md:text-base md:mt-6 text-[#5F6368] mt-2 text-center md:text-left">
+                <p className="text-sm md:text-base md:mt-3 text-[#5F6368] mt-2 text-center md:text-left">
                   {blog.description}
                 </p>
-                <div className="flex justify-center md:justify-end pt-4">
+                <div className="flex justify-center md:justify-end pt-10">
                   <img src="/images/landing/Vector-6.svg" alt="Arrow" />
                 </div>
               </CardContent>

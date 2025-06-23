@@ -141,16 +141,6 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-/* Set Figtree as the default font */
-body {
-  font-family: 'Figtree', sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-}
 
-/* Use this class wherever Roboto is needed */
-.roboto {
-  font-family: 'Roboto', sans-serif;
-}
 
 
