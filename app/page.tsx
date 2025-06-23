@@ -9,6 +9,7 @@ import ProductsExplore from "@/components/main/explore";
 import SubscriptionBanner from "@/components/main/Subscription-Banner";
 import Overlay from "@/components/main/overlay";
 import { Roboto } from "next/font/google";
+import Image from "next/image";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -96,12 +97,15 @@ const LandingPage = () => {
                   >
                     {icon.alt === "Group" ? (
                       <div className="relative w-3.5 h-3.5">
-                        <img
-                          className="absolute w-3.5 h-3 top-px left-0"
+                        <Image
+                          className="absolute top-px left-0"
                           alt={icon.alt}
                           src={icon.icon}
+                          width={14}  // 3.5 * 4 (Tailwind spacing units = 1rem = 16px, so 3.5 = 14px)
+                          height={12} // h-3 = 0.75rem = 12px
                         />
                       </div>
+
                     ) : (
                       <img
                         className="w-3.5 h-3.5"

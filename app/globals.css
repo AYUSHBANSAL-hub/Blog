@@ -144,6 +144,8 @@ body {
 /* Set Figtree as the default font */
 body {
   font-family: 'Figtree', sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 /* Use this class wherever Roboto is needed */
