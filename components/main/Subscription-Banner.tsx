@@ -7,7 +7,7 @@ import { Mail } from "lucide-react"
 const SubscriptionBanner = () => {
   return (
     <div className="w-full flex justify-center mb-10 sm:mb-20 px-4">
-      <div className="relative w-full max-w-[1193px] min-h-[200px] sm:min-h-[480px] md:h-[478px] bg-[#3890dec4] rounded-[32px] px-4 py-10 sm:px-6 sm:py-8 md:px-12 md:py-6 overflow-visible">
+      <div className="relative w-full max-w-[1193px] min-h-[200px] sm:min-h-[480px] md:h-[478px] bg-[#3890dec4] rounded-[24px] px-4 py-10 sm:px-6 sm:py-8 md:px-12 md:py-6 overflow-visible">
 
         <Image
           src="/images/banner-img.png"
@@ -40,11 +40,14 @@ const SubscriptionBanner = () => {
           <div className="flex flex-col w-full max-w-full md:max-w-[497px] gap-4 mt-6 md:mt-8 lg:mt-12">
             <div className="flex flex-col md:flex-row items-center gap-3 sm:gap-4 w-full">
               {/* Email Box */}
-              <div className="flex items-center w-full md:w-[358px] rounded-[72px] border border-[#ffffff66] px-3 md:px-[18px] md:py-[16px] gap-1">
-                <Mail className="w-5 h-5 text-[#ffffff99] flex-shrink-0" />
+              <div className="flex items-center w-full md:w-[358px] rounded-[72px] border border-[#ffffff66] px-3 md:px-[18px] md:py-[16px] gap-3">
+                <div className="relative w-6 h-5">
+                  <Image src="/images/landing/sms-notification.svg" alt="SMS" fill className="object-contain" />
+                </div>
+
                 <input
                   type="email"
-                  className="appearance-none border-none outline-none ring-0 focus:outline-none focus:ring-0 focus:ring-offset-0 hover:border-none hover:ring-0 shadow-none bg-transparent font-roboto font-medium text-[#ffffffcc] text-base placeholder:text-[#ffffffcc] p-0 h-auto w-full"
+                  className="appearance-none border-none outline-none ring-0 focus:outline-none focus:ring-0 focus:ring-offset-0 hover:border-none hover:ring-0 shadow-none bg-transparent font-roboto font-medium text-[#ffffffcc] text-base placeholder:text-[#FFFFFF99] placeholder:text-[18px] p-0 h-auto w-full"
                   placeholder="Email address"
                 />
               </div>
