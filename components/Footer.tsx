@@ -64,7 +64,7 @@ const Footer = () => {
                     {category.title}
                   </span>
                 </div>
-                <ul className="mt-[15px] flex flex-col gap-[10px]">
+                <ul className="mt-[13px] flex flex-col gap-[8px]">
                   {category.items.map((item, idx) => (
                     <li key={idx} className="text-[#4B5563] font-[400] text-[14px]" style={{ fontFamily: 'var(--font-roboto)' }}>
                       {item}
@@ -76,9 +76,9 @@ const Footer = () => {
           </div>
 
           {/* Resources */}
-          <div className="flex flex-wrap gap-[40.25px] border-t border-gray-200 pt-6 mb-12">
+          <div className="flex flex-wrap gap-[19px] border-t border-gray-200 pt-6 mb-12">
             {resourceLinks.map((link, idx) => (
-              <div key={idx} className="flex items-center gap-1">
+              <div key={idx} className="flex items-center gap-[4px]">
                 <img src={link.icon} className="w-[12px] h-[12px]" alt="" />
                 <span className="text-[14px] text-[#4B5563] font-[400]" style={{ fontFamily: 'var(--font-roboto)' }}>{link.title}</span>
               </div>
