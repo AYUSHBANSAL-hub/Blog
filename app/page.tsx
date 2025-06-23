@@ -8,14 +8,7 @@ import BlogHero from "@/components/main/category/Bloghero";
 import ProductsExplore from "@/components/main/explore";
 import SubscriptionBanner from "@/components/main/Subscription-Banner";
 import Overlay from "@/components/main/overlay";
-import { Roboto } from "next/font/google";
 import Image from "next/image";
-
-const roboto = Roboto({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-roboto",
-});
 
 const socialIcons = [
   { icon: "/images/landing/vector-1.svg", alt: "Discord" },
@@ -53,7 +46,8 @@ const LandingPage = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ ...transition, delay: 0.2 }}
-                className={` font-roboto font-[400]  text-[#6d6d6d] md:mt-6 text-[22px] leading-[28px] max-w-[587px]`}
+                className={`font-[400]  text-[#6d6d6d] md:mt-6 text-[22px] leading-[28px] max-w-[587px]`}
+                style={{ fontFamily: 'var(--font-roboto)' }}
               >
                 Loreum Ipsum: Lorem ipsum dolor sit amet consectetur. Sed est
                 blandit pharetra.
@@ -83,7 +77,7 @@ const LandingPage = () => {
               transition={{ ...transition, delay: 0.4 }}
               className="mt-4 md:mt-[180px] flex flex-col gap-2"
             >
-              <p className="font-roboto font-normal text-[#6d6d6d] text-[22px] leading-[28px]">
+              <p className="font-normal text-[#6d6d6d] text-[22px] leading-[28px]" style={{ fontFamily: 'var(--font-roboto)' }}>
                 Follow us
               </p>
 

@@ -23,16 +23,16 @@ const SubscriptionBanner = () => {
         <div className="relative z-20 container mt-4 sm:mt-7 mx-0 px-0">
           {" "}
           <div className="inline-flex items-center justify-center px-[20px] py-[6px] bg-[#ffffff33] rounded-full">
-            <span className="font-figtree font-[700]  text-white text-sm sm:text-[16px]">Highlight</span>
+            <span className="font-[700]  text-white text-sm sm:text-[16px]">Highlight</span>
           </div>
           {/* Heading & description */}
           <div className="flex flex-col w-full max-w-full md:max-w-[499px] gap-3 sm:gap-4 mt-2 sm:mt-1">
-            <h2 className="font-figtree font-bold text-white text-[28px] sm:text-[32px] md:text-[48px] leading-tight sm:leading-snug">
+            <h2 className="font-bold text-white text-[28px] sm:text-[32px] md:text-[48px] leading-tight sm:leading-snug">
               Subscribe to our
               <br />
               Blogs for updates
             </h2>
-            <p className="font-figtree font-[400] text-white text-sm sm:text-base md:text-[18px] leading-relaxed sm:leading-normal">
+            <p className=" font-[400] text-white text-sm sm:text-base md:text-[18px] leading-relaxed sm:leading-normal">
               Stay informed with the latest news, insights, and updates delivered straight to your inbox
             </p>
           </div>
@@ -47,13 +47,14 @@ const SubscriptionBanner = () => {
 
                 <input
                   type="email"
-                  className="appearance-none border-none outline-none ring-0 focus:outline-none focus:ring-0 focus:ring-offset-0 hover:border-none hover:ring-0 shadow-none bg-transparent font-roboto font-medium text-[#ffffffcc] text-base placeholder:text-[#FFFFFF99] placeholder:text-[18px] p-0 h-auto w-full"
+                  className="appearance-none border-none outline-none ring-0 focus:outline-none focus:ring-0 focus:ring-offset-0 hover:border-none hover:ring-0 shadow-none bg-transparent font-medium text-[#ffffffcc] text-base placeholder:text-[#FFFFFF99] placeholder:text-[18px] p-0 h-auto w-full"
+                  style={{ fontFamily: 'var(--font-roboto)' }}
                   placeholder="Email address"
                 />
               </div>
 
               {/* Submit Button */}
-              <Button className="w-full md:w-auto h-[50px] md:h-[54px] px-6 md:px-8 py-3 md:py-4 bg-white hover:bg-gray-100 rounded-[80px] font-figtree font-bold text-[#3891DEC4] text-base sm:text-lg flex-shrink-0">
+              <Button className="w-full md:w-auto h-[50px] md:h-[54px] px-6 md:px-8 py-3 md:py-4 bg-white hover:bg-gray-100 rounded-[80px]  font-bold text-[#3891DEC4] text-base sm:text-lg flex-shrink-0">
                 Submit
               </Button>
             </div>
@@ -76,7 +77,7 @@ const SubscriptionBanner = () => {
             {/* Single-line Text */}
             <label
               htmlFor="terms-checkbox"
-              className="font-figtree font-[400] text-white text-xs sm:text-sm md:text-[18px] leading-snug sm:leading-[120%] cursor-pointer"
+              className="font-[400] text-white text-xs sm:text-sm md:text-[18px] leading-snug sm:leading-[120%] cursor-pointer"
             >
               I agree with the{" "}
               <span className="underline underline-offset-2 decoration-solid">Terms and condition</span>

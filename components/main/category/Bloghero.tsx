@@ -57,13 +57,13 @@ export default function BlogHero() {
           >
             <Card className="rounded-2xl w-full md:w-[476px] h-auto md:h-[320px] pt-6 shadow-xl px-8 pb-6 bg-white">
               <CardContent className="px-0">
-                <div className="text-[#1A73E8] py-4 md:pt-4 font-roboto text-sm font-medium">
+                <div className="text-[#1A73E8] py-4 md:pt-4 text-sm font-medium" style={{ fontFamily: 'var(--font-roboto)' }}>
                   {blog.category}
                 </div>
                 <h2 className="text-xl cursor-default  md:text-[35.58px] font-medium text-[#202124]  md:pt-1 text-center md:text-left">
                   {blog.title}
                 </h2>
-                <p className="text-sm md:text-base md:mt-3 text-[#5F6368] mt-2 text-center md:text-left">
+                <p className="text-sm md:text-base md:mt-3 text-[#5F6368] mt-2 text-center md:text-left" style={{ fontFamily: 'var(--font-roboto)' }}>
                   {blog.description}
                 </p>
                 <div className="flex justify-center md:justify-end pt-10">

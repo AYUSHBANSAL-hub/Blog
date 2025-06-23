@@ -35,8 +35,8 @@ const ProductSection = ({ onProductClick }: { onProductClick: (category: string)
               onClick={() => onProductClick(blog.category)}
               className=" flex  flex-col font-normal  justify-between border min-h-[420px] border-[#dadce0] rounded-[12px] overflow-hidden hover:shadow-md transition-shadow bg-white"
             >
-              <div className="px-9 pt-5 flex flex-col gap-4">
-                <p className="text-[#1A73E8] font-roboto cursor-default text-[14px] font-[500] uppercase leading-[48px] tracking-[0.25px] ">
+              <div className="px-9 pt-5 flex flex-col gap-4" style={{ fontFamily: 'var(--font-roboto)' }}>
+                <p className="text-[#1A73E8] !font-roboto cursor-default text-[14px] font-[500] uppercase leading-[48px] tracking-[0.25px] ">
                   {blog.category}
                 </p>
                 <p className="text-[#202124] cursor-default w-[330px] text-[20px] font-roboto  font-[400] leading-[1.4] ">

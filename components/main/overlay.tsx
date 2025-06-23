@@ -3,8 +3,8 @@ import { Button } from '../ui/button';
 
 const Overlay = () => {
   return (
-    <div className="flex flex-col w-full items-center gap-10 pb-7 relative px-4 sm:px-6">
-      <div className="w-full max-w-[1200px] h-auto md:h-[383.43px] rounded-[32px] overflow-hidden relative shadow-xl">
+    <div className="flex flex-col mb-7 w-full items-center gap-10 pb-7 relative px-4 sm:px-6">
+      <div className="w-full max-w-[1200px] h-auto md:h-[383.43px] rounded-[32px] overflow-hidden relative ">
         <div className="relative w-full h-full">
           {/* Background Image */}
           <img
@@ -19,10 +19,10 @@ const Overlay = () => {
           {/* Content */}
           <div className="relative flex flex-col items-center justify-center pt-10 px-4 sm:px-6 z-10">
             <div className="flex flex-col items-center gap-6 sm:gap-8 md:gap-6 max-w-[1114px]">
-              <h2 className="font-bold font-figtree text-white text-[28px] sm:text-[32px] md:text-[58px] leading-tight ">
+              <h2 className="font-bold  text-white text-[28px] sm:text-[32px] md:text-[58px] leading-tight ">
                 Ready to Transform Your Workflow?
               </h2>
-              <p className="max-w-[808px] mt-3 font-roboto font-normal text-[#aeaeae] text-sm sm:text-base text-center leading-relaxed">
+              <p className="max-w-[808px] mt-3 font-normal text-[#aeaeae] text-sm sm:text-base text-center leading-relaxed" style={{ fontFamily: 'var(--font-roboto)' }}>
                 Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.
                 Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.
                 Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.

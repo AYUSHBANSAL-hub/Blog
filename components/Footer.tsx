@@ -48,25 +48,25 @@ const Footer = () => {
   return (
     <section>
       {/* Footer */}
-      <footer className="w-full bg-zinc-100 border-t border-[#E5E7EB] rounded-t-2xl pt-16 pb-14 min-h-[480px]">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <h3 className="font-['Figtree',Helvetica] font-semibold text-gray-900 text-xl mb-8">
+      <footer className="w-full bg-[#F9FAFB] border-t-[2px] px-[112px] pt-[61px] border-[#CED4DA] rounded-t-2xl pb-14 min-h-[535px]">
+        <div className="max-w-[1200px] mx-auto ">
+          <h3 className="font-[600]  text-[#111827]  text-[32px] mb-8">
             Our Products
           </h3>
 
           {/* Product Grid */}
-          <div className="flex flex-wrap gap-8 mb-8">
+          <div className="flex flex-wrap w-full justify-between mb-8">
             {productCategories.map((category, index) => (
               <div key={index} className="w-[220px]">
                 <div className="flex items-center gap-2 mb-4">
                   <img className="w-4 h-4" src={category.icon} alt="" />
-                  <span className="font-medium text-gray-900 text-sm">
+                  <span className="font-[500] text-[#111827] text-[16px]">
                     {category.title}
                   </span>
                 </div>
                 <ul className="space-y-2">
                   {category.items.map((item, idx) => (
-                    <li key={idx} className="text-gray-600 text-sm">
+                    <li key={idx} className="text-[#4B5563] font-[400] text-[14px]" style={{ fontFamily: 'var(--font-roboto)' }}>
                       {item}
                     </li>
                   ))}
@@ -76,21 +76,21 @@ const Footer = () => {
           </div>
 
           {/* Resources */}
-          <div className="flex flex-wrap gap-6 border-t border-gray-200 pt-6 mb-8">
+          <div className="flex flex-wrap gap-6 border-t border-gray-200 pt-6 mb-12">
             {resourceLinks.map((link, idx) => (
               <div key={idx} className="flex items-center gap-2">
                 <img src={link.icon} className="w-4 h-4" alt="" />
-                <span className="text-sm text-gray-600">{link.title}</span>
+                <span className="text-[14px] text-[#4B5563] font-[400]" style={{ fontFamily: 'var(--font-roboto)' }}>{link.title}</span>
               </div>
             ))}
           </div>
 
           {/* Footer bottom */}
-          <div className="flex justify-between items-center border-t border-gray-200 pt-4">
-            <p className="text-sm text-gray-500">
+          <div className="flex justify-between items-center border-t border-gray-200 pt-8">
+            <p className="text-sm text-gray-500" style={{ fontFamily: 'var(--font-roboto)' }}>
               © 2024 Your Company. All rights reserved.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-6">
               {socialIcons.map((icon, i) => (
                 <img key={i} src={icon} alt={`icon-${i}`} className="w-4 h-4" />
               ))}
