@@ -63,14 +63,15 @@ const SubscriptionBanner = () => {
           {/* Terms */}
           <div className="flex items-center mt-4 gap-2 w-full max-w-md sm:max-w-none md:w-auto h-auto">
             <Checkbox
-              id="terms"
-              className="
-          h-[19.5px] w-[19.5px] rounded-full border-2 border-white
-          data-[state=checked]:bg-white 
-          data-[state=checked]:text-[#63b3ed]
-          focus:outline-none focus-visible:ring-0
-        "
-            />
+          id="terms"
+          className="
+h-[19.5px] w-[19.5px] rounded-full border-2 border-white
+data-[state=checked]:bg-white 
+data-[state=checked]:text-[#63b3ed]
+data-[state=checked]:border-white
+focus-visible:ring-0 focus-visible:ring-offset-0
+"
+        />
             {/* Single-line Text */}
             <label
               htmlFor="terms-checkbox"
