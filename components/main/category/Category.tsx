@@ -19,7 +19,7 @@ const CategoryPage = ({ breadcrumbs, onSubcategoryClick, onBreadcrumbClick }: Pr
       />
       <BlogHero />
       <SubcategoryList onSubcategoryClick={onSubcategoryClick} />
-      <div className="mb-16">
+      <div className="mb-16 pt-9">
       <CategoryBlogs />
       </div>
     </div>

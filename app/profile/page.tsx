@@ -72,8 +72,8 @@ const ProfilePage = () => {
   return (
     <div className="flex flex-col md:flex-row mt-16 mb-20 px-4 md:px-30 md:pt-5 gap-9 w-full">
       {/* Profile Card */}
-      <div className="w-full md:w-1/3">
-        <Card className="shadow p-2">
+      <div className="w-full md:w-[384px]">
+        <Card className="p-2 border-[#E5E7EB] border-2 rounded-[12px]">
           <CardContent className=" px-7 pt-5 flex flex-col items-center">
             <div >
               <Avatar className="w-20 h-20 ">
@@ -105,7 +105,7 @@ const ProfilePage = () => {
               {profileData.details.map((detail, index) => (
                 <div key={index} className="flex items-center gap-1 ">
                   <img className="w-4 h-4 mr-3" src={detail.icon} alt="" />
-                  <span className={`text-sm font-bold ${detail.isLink ? "text-blue-600" : "text-gray-600"}`}>
+                  <span className={`text-sm font-bold ${detail.isLink ? "text-blue-600" : "text-gray-600"}`} style={{ fontFamily: 'var(--font-roboto)' }}>
                     {detail.text}
                   </span>
                 </div>
@@ -116,11 +116,11 @@ const ProfilePage = () => {
 
             <div className="w-full border-t-2 flex flex-col gap-2 ">
               <h3 className="text-lg font-semibold text-gray-900 mt-5 mb-1">About</h3>
-              <p className="text-sm font-bold text-gray-600">{profileData.about}</p>
+              <p className="text-sm font-bold text-gray-600" style={{ fontFamily: 'var(--font-roboto)' }}>{profileData.about}</p>
             </div>
           </CardContent>
           <CardFooter className="p-4  pt-0">
-            <Button className="w-full py-1 bg-blue-600 hover:bg-blue-700">Edit Profile</Button>
+            <Button className="w-full py-3 text-[16px] font-[500] bg-[#2563EB] hover:bg-blue-700">Edit Profile</Button>
           </CardFooter>
         </Card>
       </div>
@@ -128,14 +128,14 @@ const ProfilePage = () => {
       {/* Blog Posts Section */}
       <div className="w-full md:w-2/3 flex flex-col gap-4">
         <Card className="shadow">
-          <CardContent className="px-8 flex flex-col gap-2">
-            <h2 className="text-xl font-black text-gray-900 mb-2">My Blog Posts</h2>
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="bg-blue-100 font-black text-blue-800 rounded-full px-3 py-1 text-xs ">
+          <CardContent className="px-8 flex flex-col gap-[15.1px]">
+            <h2 className="text-[20px] font-[900] text-[#111827] ">My Blog Posts</h2>
+            <div className="flex flex-wrap items-center gap-4">
+              <span className="bg-blue-100 font-[500] text-[#1E40AF] rounded-full px-3 py-1 text-[14px] ">
                 24 Posts
               </span>
-              <span className="text-xs font-black text-[#4B5563]">Total views: 15.2k</span>
-              <span className="text-xs font-black text-[#4B5563]">Total likes: 892</span>
+              <span className="text-[14px] font-[900] text-[#4B5563]"  style={{ fontFamily: 'var(--font-roboto)' }}>Total views: 15.2k</span>
+              <span className="text-[14px] font-[900] text-[#4B5563]"  style={{ fontFamily: 'var(--font-roboto)' }}>Total likes: 892</span>
             </div>
           </CardContent>
         </Card>
@@ -146,34 +146,34 @@ const ProfilePage = () => {
     return (
       <Card key={index} className="shadow overflow-hidden">
         <CardContent className="px-8 ">
-          <div className="flex flex-wrap justify-between items-center mb-3 gap-y-1">
+          <div className="flex flex-wrap justify-between items-center gap-y-1">
             <span
-              className={`${colorClasses.bg} ${colorClasses.text} rounded-full px-3 py-1 text-xs font-bold`}
+              className={`${colorClasses.bg} ${colorClasses.text} rounded-full px-3 py-1 text-[12px] font-[500]`}
             >
               {post.category.name}
             </span>
-            <span className="text-xs font-black text-gray-500">{post.date}</span>
+            <span className="text-[14px] font-[900] text-[#6B7280]" style={{ fontFamily: 'var(--font-roboto)' }}>{post.date}</span>
           </div>
 
-          <h3 className="text-xl py-2 font-semibold text-gray-900 mb-1">{post.title}</h3>
-          <p className=" font-normal text-gray-600 mb-2">{post.description}</p>
+          <h3 className="text-[20px] mt-[10.8px] font-[700] text-[#111827] ">{post.title}</h3>
+          <p className=" font-[400] text-[16px] text-[#4B5563] mt-[14.44px]" style={{ fontFamily: 'var(--font-roboto)' }}>{post.description}</p>
 
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div className="flex flex-col sm:flex-row justify-between mt-[14.76px] items-start sm:items-center gap-3">
             <div className="flex flex-wrap gap-3 text-xs font-black text-gray-500">
-              <span className="flex items-center  gap-1">
+              <span className="flex items-center text-[14px] font-[900] gap-1"  style={{ fontFamily: 'var(--font-roboto)' }}>
                 <img src="/images/profile/img-6.svg" alt="Views" className="w-4 h-3.5" />
                 {post.stats.views} views
               </span>
-              <span className="flex items-center gap-1">
+              <span className="flex items-center text-[14px] font-[900] gap-1"  style={{ fontFamily: 'var(--font-roboto)' }}>
                 <img src="/images/profile/img-7.svg" alt="Likes" className="w-4 h-3.5" />
                 {post.stats.likes} likes
               </span>
-              <span className="flex items-center gap-1">
+              <span className="flex items-center text-[14px] font-[900] gap-1"  style={{ fontFamily: 'var(--font-roboto)' }}>
                 <img src="/images/profile/img-8.svg" alt="Comments" className="w-4 h-3.5" />
                 {post.stats.comments} comments
               </span>
             </div>
-            <Button variant="link" className="text-blue-600 text-sm p-0">
+            <Button variant="link" className="text-[#2563EB] text-[14px] font-[500] p-0" style={{ fontFamily: 'var(--font-roboto)' }} >
               Read More
             </Button>
           </div>
@@ -185,7 +185,7 @@ const ProfilePage = () => {
 
 
         <div className="flex justify-center mt-2 md:mb-7">
-          <Button variant="secondary" className="text-gray-700 font-bold h-[48px] w-[168.953125px]">
+          <Button variant="secondary" className="text-[#374151] text-[16px] rounded-[8px] font-[500] h-[48px] w-[168.953125px]">
             Load More Posts
           </Button>
         </div>

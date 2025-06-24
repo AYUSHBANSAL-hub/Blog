@@ -12,14 +12,14 @@ const SignUpFormSection = () => {
 
     return (
         <div className="w-full max-w-[551px] px-2 flex flex-col gap-8 bg-white">
-            <h1 className="text-4xl pt-5 font-semibold text-zinc-950 ">
+            <h1 className="text-4xl font-semibold text-[#09090B] ">
                 Sign Up
             </h1>
 
-            <form className="flex flex-col gap-4">
+            <form className="flex flex-col gap-[16px]">
                 {/* Full Name */}
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="name" className="text-sm font-semibold text-zinc-800">
+                <div className="flex flex-col gap-[8px]">
+                    <label htmlFor="name" className="text-sm font-[700] text-[#27272A]">
                         Full Name
                     </label>
                     <Input
@@ -31,8 +31,8 @@ const SignUpFormSection = () => {
                 </div>
 
                 {/* Email */}
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="email" className="text-sm font-semibold text-zinc-800">
+                <div className="flex flex-col gap-[8px]">
+                    <label htmlFor="email" className="text-sm font-[700] text-[#27272A]">
                         Email
                     </label>
                     <Input
@@ -44,8 +44,8 @@ const SignUpFormSection = () => {
                 </div>
 
                 {/* Phone Number */}
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="phone" className="text-sm font-semibold text-zinc-800">
+                <div className="flex flex-col gap-[8px]">
+                    <label htmlFor="phone" className="text-sm font-[700] text-[#27272A]">
                         Phone Number
                     </label>
                     <Input
@@ -57,8 +57,8 @@ const SignUpFormSection = () => {
                 </div>
 
                 {/* Password */}
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="password" className="text-sm font-semibold text-zinc-800">
+                <div className="flex flex-col gap-[8px]">
+                    <label htmlFor="password" className="text-sm font-[700] text-[#27272A]">
                         Password
                     </label>
                     <div className="relative">
@@ -82,7 +82,7 @@ const SignUpFormSection = () => {
 
                 {/* Confirm Password */}
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="confirm-password" className="text-sm font-semibold text-zinc-800">
+                    <label htmlFor="confirm-password" className="text-sm font-[700] text-[#27272A]">
                         Confirm Password
                     </label>
                     <div className="relative">
@@ -102,9 +102,7 @@ const SignUpFormSection = () => {
                             <EyeIcon className="w-4 h-4" />
                         </Button>
                     </div>
-                </div>
-
-                {/* Remember Me & Forgot */}
+                    {/* Remember Me & Forgot */}
                 <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2">
                         <Checkbox id="remember" className="w-4 h-4" />
@@ -116,12 +114,13 @@ const SignUpFormSection = () => {
                         Forgot password?
                     </Button>
                 </div>
+                </div>  
 
                 {/* Submit Button */}
-                <div className="flex flex-col gap-4">
-                <Button className="w-full min-h-[36px] px-4 py-2 bg-zinc-950 text-neutral-50 mt-2 rounded-md flex items-center justify-center gap-2">
+                <div className="flex flex-col mt-[8px] gap-4">
+                <Button className="w-full min-h-[36px] px-4 py-3 bg-[#09090B] text-neutral-50 mt-2 rounded-md flex items-center justify-center gap-2">
                     <MailIcon className="w-4 h-4" />
-                    <span className="text-sm">Log in with email</span>
+                    <span className="text-sm font-medium">Log in with email</span>
                 </Button>
 
                 {/* Sign In Link */}

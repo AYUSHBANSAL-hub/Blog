@@ -6,6 +6,7 @@ import ProductSection from "./product";
 import Overlay from "./overlay";
 import CategoryPage from "./category/Category";
 import SubCategory from "./SubCategory/subCategoryBlogs";
+import CategoryProductSection from "./CategoryProduct";
 
 
 export default function BlogPage() {
@@ -48,8 +49,8 @@ export default function BlogPage() {
           <div className="md:mt-14">
           <BlogSection />
           </div>
-          <div>
-          <ProductSection onProductClick={handleProductClick} />
+          <div className="mt-3">
+          <CategoryProductSection onProductClick={handleProductClick} />
           </div>
           <div className="mt-20">
             <Overlay />

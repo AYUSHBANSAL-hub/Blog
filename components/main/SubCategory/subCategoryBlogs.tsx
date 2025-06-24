@@ -17,7 +17,9 @@ const SubCategory = ({ breadcrumbs, onBreadcrumbClick }: Props) => {
         onBreadcrumbClick={onBreadcrumbClick}
       />
       <BlogHero />
+      <div className="pb-16 pt-7">
       <SubCategoryBlogs />
+      </div>
     </div>
   );
 };

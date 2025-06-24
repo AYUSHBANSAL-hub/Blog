@@ -38,61 +38,50 @@ const blogPosts = [
     categories: ["Labs", "Models"],
     image: "/images/model-4.svg",
   },
-  {
-    title: "Lorem ipsum dolor sit amet consectetur.",
-    date: "May 2025",
-    categories: ["Labs", "Models"],
-    image: "/images/model-4.svg",
-  },
-  {
-    title: "Lorem ipsum dolor sit amet consectetur.",
-    date: "May 2025",
-    categories: ["Labs", "Models"],
-    image: "/images/model-4.svg",
-  },
+  
 ];
 
 const BlogSection = () => {
   const [featuredBlog, setFeaturedBlog] = useState(initialFeaturedBlog);
 
   return (
-    <section className="w-full max-w-[1296px] pb-6 px-4 mx-auto">
-      <div className="flex flex-col md:flex-row gap-12 min-h-[700px]">
+    <section className="w-full max-w-[1296px] pb-6 px-2 mx-auto">
+      <div className="flex flex-col md:flex-row gap-[48px] min-h-[700px]">
         {/* Featured Blog */}
-        <div className="flex-1 pt-16 flex flex-col gap-9">
+        <div className="flex-1 pt-12 flex flex-col gap-[16px]">
           <div className="flex flex-col gap-4">
-            <h2 className="font-['Figtree',Helvetica] font-semibold text-black text-[40px] tracking-[-0.51px] leading-10">
+            <h2 className="font-[600] text-black text-[40px] tracking-[-0.51px] leading-[40px]">
               {featuredBlog.title}
             </h2>
 
-            <div className="flex items-center gap-4 h-[38px]">
-              <span className="text-[13.6px] font-['Inter',Helvetica] font-light text-[#232323] tracking-[0.16px] leading-[21px]">
+            <div className="flex items-center gap-[19.56px] h-[38px]">
+              <span className="text-[13.6px] font-[300] text-[#232323] tracking-[0.16px] leading-[21px]"style={{ fontFamily: 'var(--font-roboto)' }}>
                 {featuredBlog.date}
               </span>
 
-              <span className="font-['Inter',Helvetica] font-light text-[#232323] text-sm tracking-[0.16px] leading-[21px]">
+              <span className="font-['Inter',Helvetica] font-light text-[#232323] text-sm tracking-[0.16px] leading-[21px]"style={{ fontFamily: 'var(--font-roboto)' }}>
                 {featuredBlog.category}
               </span>
 
               <Button
                 variant="outline"
-                className="h-9 rounded-[100px] border-[#00000029] backdrop-blur-[5px] ml-4"
+                className="h-9 rounded-[100px] pt-[6.5px] pb-[7.48px] pr-[9px] pl-[16px] backdrop-blur-[10px]  border-[#00000029]"
               >
-                <span className="font-['Inter',Helvetica] font-semibold text-[#232323] text-[13.9px] tracking-[0.11px] leading-[21px]">
+                <span className="font-[500] text-[#232323] text-[13.9px] tracking-[0.11px] leading-[21px]"style={{ fontFamily: 'var(--font-roboto)' }}>
                   Learn more
                 </span>
               </Button>
             </div>
           </div>
 
-          <div className="rounded-2xl overflow-hidden">
-            <div className="p-0">
-              <div className="relative w-full h-[422px] md:h-[622px]">
+          <div className=" mt-[25px] rounded-[16px] overflow-hidden">
+            <div className="">
+              <div className="relative w-full  max-w-[622px] h-[422px] md:h-[622px]">
                 <Image
                   src={featuredBlog.image}
                   alt={featuredBlog.title}
                   fill
-                  className="object-cover"
+                  className="object-cover "
                 />
                 <div className="absolute inset-0 bg-[#00000017]" />
               </div>
@@ -101,8 +90,8 @@ const BlogSection = () => {
         </div>
 
         {/* Blog List */}
-        <div className="flex-1 pt-16 max-h-[1000px] border-b-2 overflow-y-auto scroll-smooth pr-2 custom-scrollbar-hide">
-          <div className="flex flex-col gap-6">
+        <div className="flex-1 pt-12 max-h-[1000px] border-b-2 overflow-y-auto scroll-smooth pr-2 custom-scrollbar-hide">
+          <div className="flex flex-col gap-10 ">
             {blogPosts.map((post, index) => (
               <div key={index} className="relative cursor-pointer" onClick={() => setFeaturedBlog({
                 title: post.title,
@@ -110,37 +99,38 @@ const BlogSection = () => {
                 category: post.categories[0], // default to first category
                 image: post.image,
               })}>
-                <div className="flex gap-8 py-6">
+                <div className="flex w-full max-w-[624px] pb-10 gap-[48px]">
                   <div className="flex-1">
-                    <h3 className="font-['Figtree',Helvetica] font-semibold text-black text-[30.9px] tracking-[-0.51px] leading-[33.9px] mb-4">
+                    <h3 className="font-[600] mt-3 text-black text-[30.8px] tracking-[-0.51px] leading-[33.9px] mb-4">
                       {post.title}
                     </h3>
 
                     <div className="flex flex-wrap items-center gap-4">
-                      <span className="text-[13.6px] font-['Inter',Helvetica] font-light text-[#232323] tracking-[0.16px] leading-[21px]">
+                      <span className="text-[13.6px]  font-[300] text-[#232323] tracking-[0.16px] leading-[21px]" style={{ fontFamily: 'var(--font-roboto)' }}>
                         {post.date}
                       </span>
 
-                      <div className="flex gap-2">
+                      <div className="flex">
                         {post.categories.map((category, catIndex) => (
                           <span
                             key={catIndex}
-                            className="font-['Inter',Helvetica] font-light text-[#232323] text-sm tracking-[0.16px] leading-[21px]"
+                            className="text-[14.06px] font-light text-[#232323] text-sm tracking-[0.16px] leading-[21px]"
+                            style={{ fontFamily: 'var(--font-roboto)' }}
                           >
                             {category}
                           </span>
                         ))}
                       </div>
 
-                      <Button variant="link" className="p-0 h-9 text-[#004fce]">
-                        <span className="font-['Inter',Helvetica] font-semibold text-[13.9px] tracking-[0.11px] leading-[21px]">
+                      <Button variant="link" className="p-0 h-9 text-[#004FCF]">
+                        <span className="font-[600] text-[13.9px] tracking-[0.11px] leading-[21px]" style={{ fontFamily: 'var(--font-roboto)' }}>
                           Learn more
                         </span>
                       </Button>
                     </div>
                   </div>
 
-                  <div className="w-44 h-44 rounded-2xl overflow-hidden border-0 relative">
+                  <div className="w-[176px] h-[176px] rounded-[16px] overflow-hidden border-0 relative">
                     <div className="p-0 h-full">
                       <div className="relative h-full w-full">
                         <Image

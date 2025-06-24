@@ -67,12 +67,12 @@ const CategoryBlogs = () => {
     ];
 
     return (
-        <section className=" py-12">
+      <section className=" py-12">
             <div className="max-w-[1260px] mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-14">
+                <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-10">
                     {featuredContent.map((content) => (
                         <div key={content.id} className="flex justify-center">
-                            <div className="flex flex-col gap-5 max-w-[334.22px] w-full h-full rounded-2xl overflow-hidden border border-[#dadce0] shadow-sm hover:shadow-md transition-shadow duration-300">
+                            <div className="flex flex-col gap-[24px] max-w-[334.22px] w-full h-full rounded-2xl overflow-hidden border border-[#dadce0] shadow-sm hover:shadow-md transition-shadow duration-300">
                                 {/* Image */}
                                 <div
                                     className="h-[187.98px] w-[334.2200012207031px] bg-cover bg-center"
@@ -80,26 +80,29 @@ const CategoryBlogs = () => {
                                 />
 
                                 {/* Content */}
-                                <div className="flex flex-col gap-4 p-6 flex-1">
-                                    <div className="text-[#1a73e8] text-sm pb-4 font-medium tracking-wide uppercase">
+                                <div>
+                                <div className="flex flex-col gap-[16px] px-[24px] flex-1">
+                                    <div className="text-[#1A73E8] text-[13.67px] font-[500] tracking-[0.25px] leading-[48px] uppercase">
                                         {content.category}
                                     </div>
 
-                                    <h3 className="text-[#202124] text-lg pb-3 font-medium leading-1.5">
+                                    <div className="flex flex-col gap-[16px]">
+                                    <h3 className="text-[#202124] text-[19.84px] pb-3 font-[500] leading-[28px]">
                                         {content.title}
                                     </h3>
 
-                                    <p className="text-[#5f6368] text-sm leading-6 line-clamp-4">
+                                    <p className="text-[#5F6368] text-[13.89px] font-[400] leading-[24px] tracking-[0.25px] line-clamp-4">
                                         {content.description}
                                     </p>
-
-                                    {/* Footer always sticks at bottom */}
-                                    <div className=" pt-4  mt-12 flex items-center justify-between">
-                                        <div className="text-[#5f6368] text-sm font-medium leading-5">
+                                    </div>
+                               </div>
+                               {/* Footer always sticks at bottom */}
+                                <div className="pb-[37px] pt-[80px] px-[24px] flex items-center justify-between">
+                                        <div className="text-[#5f6368] text-[14px] font-[500] leading-[20px]">
                                             Posted by {content.author} - {content.date}
                                         </div>
                                         <img src="/images/blackArrow.svg" alt="Arrow Icon" className="w-4 h-4" />
-                                    </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -107,8 +110,6 @@ const CategoryBlogs = () => {
                 </div>
             </div>
         </section>
-
-
     );
 };
 

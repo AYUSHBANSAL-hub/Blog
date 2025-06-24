@@ -10,16 +10,17 @@ const LoginFormSection = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <div className="w-full max-w-[600px] px-2  shadow-shadow rounded-2xl">
-            <div className=" space-y-6">
-                <div className="flex flex-col gap-7">
-                    <h1 className="text-4xl font-semibold pt-4 text-[#09090B] leading-tight ">
+        <div className="w-full max-w-[600px] shadow-shadow rounded-2xl">
+            <div className="">
+                <div className="flex flex-col gap-[24px]">
+                    <h1 className="text-4xl font-semibold text-[#09090B] leading-tight ">
                         Log in
                     </h1>
 
-                    <div className="space-y-5">
+                    <div>
+                    <div className="flex flex-col gap-[16px]">
                         {/* Email Field */}
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-[8px]">
                             <label
                                 htmlFor="email"
                                 className="font-semibold text-sm text-zinc-800 leading-5 "
@@ -35,7 +36,7 @@ const LoginFormSection = () => {
                         </div>
 
                         {/* Password Field */}
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-[8px]">
                             <label
                                 htmlFor="password"
                                 className="font-semibold text-sm text-zinc-800 leading-5 "
@@ -59,10 +60,11 @@ const LoginFormSection = () => {
                                     <EyeIcon className="h-4 w-4" />
                                 </Button>
                             </div>
-                        </div>
+                        </div>                        
+                    </div>
 
-                        {/* Remember and Forgot */}
-                        <div className="flex items-center justify-between text-sm">
+                    {/* Remember and Forgot */}
+                        <div className="flex items-center mt-[8px] justify-between text-sm">
                             <div className="flex items-center gap-2">
                                 <Checkbox id="remember" className="w-4 h-4" />
                                 <label htmlFor="remember" className="text-[#52525c]">
@@ -73,10 +75,9 @@ const LoginFormSection = () => {
                                 Forgot password?
                             </Button>
                         </div>
-                    </div>
 
                     {/* Login Button */}
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col mt-[24px] gap-3">
                     <div className="w-full">
                         <Button className="w-full min-h-9 px-4 py-2 bg-zinc-950 text-neutral-50 rounded-lg flex gap-2">
                             <MailIcon className="w-4 h-4" />
@@ -99,6 +100,7 @@ const LoginFormSection = () => {
                         By clicking Continue, you agree to our Terms of Service and Privacy
                         Policy.
                     </p>
+                    </div>
                     </div>
                 </div>
             </div>
