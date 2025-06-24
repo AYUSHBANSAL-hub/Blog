@@ -38,7 +38,7 @@ const LogIn = () => {
         </div>
 
         {/* Right Section - Login Form */}
-        <div className="relative w-full max-w-[551px] bg-white rounded-lg border-2 shadow-md p-[40px] z-30 lg:-ml-20">
+        <div className="relative w-[551px] bg-white rounded-lg border-2 shadow-md p-[40px] z-30 lg:-ml-20">
           <LoginFormSection />
         </div>
       </div>

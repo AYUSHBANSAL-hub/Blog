@@ -11,12 +11,14 @@ const SignUpFormSection = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     return (
-        <div className="w-full max-w-[551px] px-2 flex flex-col gap-8 bg-white">
+        <div className="w-[471px] flex flex-col gap-8 bg-white">
             <h1 className="text-4xl font-semibold text-[#09090B] ">
                 Sign Up
             </h1>
 
-            <form className="flex flex-col gap-[16px]">
+            <form className="flex flex-col">
+
+                <div className="flex flex-col gap-[16px]">
                 {/* Full Name */}
                 <div className="flex flex-col gap-[8px]">
                     <label htmlFor="name" className="text-sm font-[700] text-[#27272A]">
@@ -26,7 +28,7 @@ const SignUpFormSection = () => {
                         id="name"
                         type="text"
                         placeholder="Enter your Full Name"
-                        className="min-h-[34px] px-3 py-1 text-sm rounded-md"
+                        className="min-h-[40px] px-[12px] py-[10px] text-sm rounded-md"
                     />
                 </div>
 
@@ -39,7 +41,7 @@ const SignUpFormSection = () => {
                         id="email"
                         type="email"
                         placeholder="Enter your email"
-                        className="min-h-[34px] px-3 py-1 text-sm rounded-md"
+                        className="min-h-[40px] px-[12px] py-[10px] text-sm rounded-md"
                     />
                 </div>
 
@@ -52,7 +54,7 @@ const SignUpFormSection = () => {
                         id="phone"
                         type="tel"
                         placeholder="Enter your Phone Number"
-                        className="min-h-[34px] px-3 py-1 text-sm rounded-md"
+                        className="min-h-[40px] px-[12px] py-[10px] text-sm rounded-md"
                     />
                 </div>
 
@@ -66,7 +68,7 @@ const SignUpFormSection = () => {
                             id="password"
                             type={showPassword ? "text" : "password"}
                             placeholder="Enter your password"
-                            className="min-h-[34px] px-3 py-1 text-sm rounded-md"
+                            className="min-h-[40px] px-[12px] py-[10px] text-sm rounded-md"
                         />
                         <Button
                             type="button"
@@ -90,7 +92,7 @@ const SignUpFormSection = () => {
                             id="confirm-password"
                             type={showConfirmPassword ? "text" : "password"}
                             placeholder="Enter your password"
-                            className="min-h-[34px] px-3 py-1 text-sm rounded-md"
+                            className="min-h-[40px] px-[12px] py-[10px] text-sm rounded-md"
                         />
                         <Button
                             type="button"
@@ -118,25 +120,28 @@ const SignUpFormSection = () => {
 
                 {/* Submit Button */}
                 <div className="flex flex-col mt-[8px] gap-4">
-                <Button className="w-full min-h-[36px] px-4 py-3 bg-[#09090B] text-neutral-50 mt-2 rounded-md flex items-center justify-center gap-2">
-                    <MailIcon className="w-4 h-4" />
+                <Button className="w-full min-h-[40px] px-4 py-[10px] bg-[#09090B] text-neutral-50 mt-2 rounded-md flex items-center justify-center gap-2">
+                    <MailIcon className="w-[20px] h-[20px]" />
                     <span className="text-sm font-medium">Log in with email</span>
                 </Button>
 
+                </div>
+                </div>
+
                 {/* Sign In Link */}
-                <div className="flex items-center justify-center text-sm gap-1">
+                <div className="flex items-center justify-center mt-[18px] text-sm gap-[16px]">
                     <span className="text-[#71717b]">Already have an account?</span>
                     <Link href="/login">
-                        <Button variant="ghost" className="h-8 px-2 py-1 text-[#52525c]">
+                        <div  className="h-8 px-2 py-1 text-[#52525c] hover:text-black">
                             Sign In
-                        </Button>
+                        </div>
                     </Link>
                 </div>
                 {/* Terms */}
-                <p className="text-xs text-center text-[#71717b] leading-4">
+                <p className="text-xs text-center mt-[18px] text-[#71717b] leading-4">
                     By clicking Continue, you agree to our Terms of Service and Privacy Policy.
                 </p>
-                </div>
+                
             </form>
         </div>
     );

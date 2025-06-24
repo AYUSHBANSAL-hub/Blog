@@ -67,15 +67,15 @@ const SubCategoryBlogs = () => {
   ];
 
   return (
-    <section className=" py-12">
+     <section className=" py-12">
             <div className="max-w-[1260px] mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-x-[84px] gap-y-[47px]">
                     {featuredContent.map((content) => (
                         <div key={content.id} className="flex justify-center">
                             <div className="flex flex-col gap-[24px] max-w-[338.22px] w-full h-full rounded-2xl overflow-hidden border border-[#dadce0] shadow-sm hover:shadow-md transition-shadow duration-300">
                                 {/* Image */}
                                 <div
-                                    className="h-[187.98px] w-[334.2200012207031px] bg-cover bg-center"
+                                    className="h-[187.98px] w-full bg-cover bg-center"
                                     style={{ backgroundImage: `url(${content.image})` }}
                                 />
 
@@ -87,7 +87,7 @@ const SubCategoryBlogs = () => {
                                     </div>
 
                                     <div className="flex flex-col gap-[16px]">
-                                    <h3 className="text-[#202124] text-[19.84px] font-[500] leading-[28px]">
+                                    <h3 className="text-[#202124] text-[19.84px]  font-[500] leading-[28px]">
                                         {content.title}
                                     </h3>
 
@@ -97,11 +97,16 @@ const SubCategoryBlogs = () => {
                                     </div>
                                </div>
                                {/* Footer always sticks at bottom */}
-                                <div className="pb-[37px] pt-[80px] px-[24px] flex items-center justify-between">
-                                        <div className="text-[#5f6368] text-[14px] font-[500] leading-[20px]">
-                                            Posted by {content.author} - {content.date}
+                                <div className="pb-[37px] pt-[80px] px-[24px] flex items-start justify-between gap-2">
+                                       <div className="flex gap-2">
+                                        <div className="text-[#5f6368] text-[14px] font-[500]  leading-[20px]">
+                                            Posted <br/>by
                                         </div>
-                                        <img src="/images/blackArrow.svg" alt="Arrow Icon" className="w-4 h-4" />
+                                        <div className="text-[#5f6368] text-[14px] font-[500] leading-[20px]">
+                                             {content.author} - {content.date}
+                                        </div>
+                                        </div>
+                                        <img src="/images/blackArrow.svg" alt="Arrow Icon" className="w-[16px] h-[16px] my-auto" />
                                 </div>
                                 </div>
                             </div>

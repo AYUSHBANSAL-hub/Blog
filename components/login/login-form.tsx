@@ -10,7 +10,7 @@ const LoginFormSection = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
-        <div className="w-full max-w-[600px] shadow-shadow rounded-2xl">
+        <div className="w-[471px] shadow-shadow">
             <div className="">
                 <div className="flex flex-col gap-[24px]">
                     <h1 className="text-4xl font-semibold text-[#09090B] leading-tight ">
@@ -31,7 +31,7 @@ const LoginFormSection = () => {
                                 id="email"
                                 type="email"
                                 placeholder="Enter your email"
-                                className="min-h-9 px-3 py-2 text-sm rounded-lg"
+                                className="min-h-[40px] px-[12px] py-[10px] text-sm rounded-md"
                             />
                         </div>
 
@@ -48,7 +48,7 @@ const LoginFormSection = () => {
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Enter your password"
-                                    className="min-h-9 px-3 py-2 text-sm rounded-lg"
+                                    className="min-h-[40px] px-[12px] py-[10px] text-sm rounded-md"
                                 />
                                 <Button
                                     type="button"
@@ -60,11 +60,9 @@ const LoginFormSection = () => {
                                     <EyeIcon className="h-4 w-4" />
                                 </Button>
                             </div>
-                        </div>                        
-                    </div>
-
-                    {/* Remember and Forgot */}
-                        <div className="flex items-center mt-[8px] justify-between text-sm">
+                        </div>  
+                         {/* Remember and Forgot */}
+                        <div className="flex items-center justify-between text-sm">
                             <div className="flex items-center gap-2">
                                 <Checkbox id="remember" className="w-4 h-4" />
                                 <label htmlFor="remember" className="text-[#52525c]">
@@ -75,32 +73,30 @@ const LoginFormSection = () => {
                                 Forgot password?
                             </Button>
                         </div>
-
-                    {/* Login Button */}
-                    <div className="flex flex-col mt-[24px] gap-3">
-                    <div className="w-full">
-                        <Button className="w-full min-h-9 px-4 py-2 bg-zinc-950 text-neutral-50 rounded-lg flex gap-2">
-                            <MailIcon className="w-4 h-4" />
+                        {/* login button */}
+                        <div className="w-full">
+                        <Button className="w-full min-h-[40px] px-4 py-[10px] bg-zinc-950 text-neutral-50 rounded-lg flex gap-2">
+                            <MailIcon className="w-[20px] h-[20px]" />
                             <span className="text-sm">Log in with email</span>
                         </Button>
-                    </div>
-
+                    </div>                      
+                    </div>                 
                     {/* Sign up link */}
-                    <div className="flex items-center justify-center text-sm">
+                    <div className="flex items-center  mt-[18px] justify-center gap-[16px] text-sm">
                         <span className="text-[#71717b]">Don&apos;t have an account?</span>
                         <Link href="/signup">
-                            <Button variant="ghost" className="h-8 px-2 py-1 text-[#52525c]">
+                            <div className="h-8 px-2 py-1 text-[#52525c] hover:text-black">
                                 Sign up
-                            </Button>
+                            </div>
                         </Link>
                     </div>
 
                     {/* Terms */}
-                    <p className="text-xs text-center text-[#71717b] leading-4">
+                    <p className="text-xs  mt-[18px] text-center text-[#71717b] leading-4">
                         By clicking Continue, you agree to our Terms of Service and Privacy
                         Policy.
                     </p>
-                    </div>
+                    
                     </div>
                 </div>
             </div>

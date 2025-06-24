@@ -90,7 +90,7 @@ const BlogSection = () => {
         </div>
 
         {/* Blog List */}
-        <div className="flex-1 pt-12 max-h-[1000px] border-b-2 overflow-y-auto scroll-smooth pr-2 custom-scrollbar-hide">
+        <div className="flex-1 pt-10 max-h-[1000px] border-b-2 overflow-y-auto scroll-smooth pr-2 custom-scrollbar-hide">
           <div className="flex flex-col gap-10 ">
             {blogPosts.map((post, index) => (
               <div key={index} className="relative cursor-pointer" onClick={() => setFeaturedBlog({

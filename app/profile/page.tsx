@@ -70,7 +70,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row mt-16 mb-20 px-4 md:px-30 md:pt-5 gap-9 w-full">
+    <div className="flex flex-col md:flex-row mt-16 mb-20 px-4 md:px-[69px] justify-center md:pt-5 gap-9 w-full">
       {/* Profile Card */}
       <div className="w-full md:w-[384px]">
         <Card className="p-2 border-[#E5E7EB] border-2 rounded-[12px]">
@@ -85,7 +85,7 @@ const ProfilePage = () => {
               </Avatar>
             </div>
              
-             <div className="flex flex-col gap-3 justify-center items-center">
+             <div className="flex flex-col gap-[7.33px] justify-center items-center">
                 <h2 className="font-black text-2xl text-gray-900 leading-7">{profileData.name}</h2>
                 <p className="text-lg font-bold text-[#4B5563] mb-4">{profileData.username}</p>
              </div>
@@ -126,7 +126,7 @@ const ProfilePage = () => {
       </div>
 
       {/* Blog Posts Section */}
-      <div className="w-full md:w-2/3 flex flex-col gap-4">
+      <div className="w-full md:w-[798px] flex flex-col gap-4">
         <Card className="shadow">
           <CardContent className="px-8 flex flex-col gap-[15.1px]">
             <h2 className="text-[20px] font-[900] text-[#111827] ">My Blog Posts</h2>
@@ -140,13 +140,13 @@ const ProfilePage = () => {
           </CardContent>
         </Card>
 
-        <div className="max-h-[700px] overflow-y-auto scroll-smooth pr-1 space-y-4 scrollbar-hide">
+        <div className="max-h-[700px] overflow-y-auto scroll-smooth space-y-[25px] scrollbar-hide">
   {blogPosts.map((post, index) => {
     const colorClasses = getBadgeColorClasses(post.category.color);
     return (
       <Card key={index} className="shadow overflow-hidden">
-        <CardContent className="px-8 ">
-          <div className="flex flex-wrap justify-between items-center gap-y-1">
+        <CardContent className="pl-[24px] pr-[20.5px] ">
+          <div className="flex flex-wrap justify-between items-center">
             <span
               className={`${colorClasses.bg} ${colorClasses.text} rounded-full px-3 py-1 text-[12px] font-[500]`}
             >
@@ -185,7 +185,7 @@ const ProfilePage = () => {
 
 
         <div className="flex justify-center mt-2 md:mb-7">
-          <Button variant="secondary" className="text-[#374151] text-[16px] rounded-[8px] font-[500] h-[48px] w-[168.953125px]">
+          <Button  className="text-[#374151] text-[16px] bg-[#F3F4F6] hover:bg-gray-300 rounded-[8px] font-[500] h-[48px] w-[168.953125px]">
             Load More Posts
           </Button>
         </div>
