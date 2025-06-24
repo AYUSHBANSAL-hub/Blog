@@ -87,7 +87,7 @@ const CategoryBlogs = () => {
                                     </div>
 
                                     <div className="flex flex-col gap-[16px]">
-                                    <h3 className="text-[#202124] text-[19.84px] pb-3 font-[500] leading-[28px]">
+                                    <h3 className="text-[#202124] text-[19.84px]  font-[500] leading-[28px]">
                                         {content.title}
                                     </h3>
 
