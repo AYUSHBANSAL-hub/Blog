@@ -72,7 +72,7 @@ const SubCategoryBlogs = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-10">
                     {featuredContent.map((content) => (
                         <div key={content.id} className="flex justify-center">
-                            <div className="flex flex-col gap-[24px] max-w-[334.22px] w-full h-full rounded-2xl overflow-hidden border border-[#dadce0] shadow-sm hover:shadow-md transition-shadow duration-300">
+                            <div className="flex flex-col gap-[24px] max-w-[338.22px] w-full h-full rounded-2xl overflow-hidden border border-[#dadce0] shadow-sm hover:shadow-md transition-shadow duration-300">
                                 {/* Image */}
                                 <div
                                     className="h-[187.98px] w-[334.2200012207031px] bg-cover bg-center"
@@ -87,7 +87,7 @@ const SubCategoryBlogs = () => {
                                     </div>
 
                                     <div className="flex flex-col gap-[16px]">
-                                    <h3 className="text-[#202124] text-[19.84px] pb-3 font-[500] leading-[28px]">
+                                    <h3 className="text-[#202124] text-[19.84px] font-[500] leading-[28px]">
                                         {content.title}
                                     </h3>
 
