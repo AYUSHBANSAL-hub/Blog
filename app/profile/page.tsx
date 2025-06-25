@@ -85,7 +85,7 @@ const ProfilePage = () => {
               </Avatar>
             </div>
              
-             <div className="flex flex-col gap-[7.33px] justify-center items-center">
+             <div className="flex flex-col gap-[12.24px] justify-center items-center">
                 <h2 className="font-black text-2xl text-gray-900 leading-7">{profileData.name}</h2>
                 <p className="text-lg font-bold text-[#4B5563] mb-4">{profileData.username}</p>
              </div>
