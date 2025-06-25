@@ -161,15 +161,15 @@ const ProfilePage = () => {
           <div className="flex flex-col sm:flex-row justify-between mt-[14.76px] items-start sm:items-center gap-3">
             <div className="flex flex-wrap gap-3 text-xs font-black text-gray-500">
               <span className="flex items-center text-[14px] font-[900] gap-1"  style={{ fontFamily: 'var(--font-roboto)' }}>
-                <img src="/images/profile/img-6.svg" alt="Views" className="w-4 h-3.5" />
+                <img src="/images/profile/img-6.svg" alt="Views" className="w-[14px] h-[14px]" />
                 {post.stats.views} views
               </span>
               <span className="flex items-center text-[14px] font-[900] gap-1"  style={{ fontFamily: 'var(--font-roboto)' }}>
-                <img src="/images/profile/img-7.svg" alt="Likes" className="w-4 h-3.5" />
+                <img src="/images/profile/img-7.svg" alt="Likes" className="w-[14px] h-[14px]" />
                 {post.stats.likes} likes
               </span>
               <span className="flex items-center text-[14px] font-[900] gap-1"  style={{ fontFamily: 'var(--font-roboto)' }}>
-                <img src="/images/profile/img-8.svg" alt="Comments" className="w-4 h-3.5" />
+                <img src="/images/profile/img-8.svg" alt="Comments" className="w-[14px] h-[14px]" />
                 {post.stats.comments} comments
               </span>
             </div>
