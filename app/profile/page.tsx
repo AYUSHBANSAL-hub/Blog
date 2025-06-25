@@ -85,7 +85,7 @@ const ProfilePage = () => {
               </Avatar>
             </div>
              
-             <div className="flex flex-col gap-[12.24px] justify-center items-center">
+             <div className="flex flex-col gap-[7.8px] mt-[12.24px] justify-center items-center">
                 <h2 className="font-black text-2xl text-gray-900 leading-7">{profileData.name}</h2>
                 <p className="text-lg font-bold text-[#4B5563] mb-4">{profileData.username}</p>
              </div>
@@ -97,11 +97,8 @@ const ProfilePage = () => {
                   <span className="text-sm font-bold text-[#4B5563]">{stat.label}</span>
                 </div>
               ))}
-            </div>
-
-            
-
-            <div className="w-full space-y-3 mt-4 py-5 flex flex-col gap-2 border-t-2 mb-3">
+            </div>           
+            <div className="w-full space-y-3 mt-4 py-5 flex flex-col gap-2 border-t-[1px] border-[#F3F4F6] mb-3">
               {profileData.details.map((detail, index) => (
                 <div key={index} className="flex items-center gap-1 ">
                   <img className="w-4 h-4 mr-3" src={detail.icon} alt="" />
@@ -114,20 +111,20 @@ const ProfilePage = () => {
 
             
 
-            <div className="w-full border-t-2 flex flex-col gap-2 ">
+            <div className="w-full border-t-[1px] border-[#F3F4F6] flex flex-col gap-2 ">
               <h3 className="text-lg font-semibold text-gray-900 mt-5 mb-1">About</h3>
               <p className="text-sm font-bold text-gray-600" style={{ fontFamily: 'var(--font-roboto)' }}>{profileData.about}</p>
             </div>
           </CardContent>
-          <CardFooter className="p-4  pt-0">
-            <Button className="w-full py-3 text-[16px] font-[500] bg-[#2563EB] hover:bg-blue-700">Edit Profile</Button>
-          </CardFooter>
+          
+            <Button className="w-full py-4 text-[16px] font-[500] bg-[#2563EB] hover:bg-blue-700">Edit Profile</Button>
+          
         </Card>
       </div>
 
       {/* Blog Posts Section */}
       <div className="w-full md:w-[798px] flex flex-col gap-4">
-        <Card className="shadow">
+        <Card className="">
           <CardContent className="px-8 flex flex-col gap-[15.1px]">
             <h2 className="text-[20px] font-[900] text-[#111827] ">My Blog Posts</h2>
             <div className="flex flex-wrap items-center gap-4">
@@ -144,11 +141,11 @@ const ProfilePage = () => {
   {blogPosts.map((post, index) => {
     const colorClasses = getBadgeColorClasses(post.category.color);
     return (
-      <Card key={index} className="shadow overflow-hidden">
+      <Card key={index} className=" overflow-hidden">
         <CardContent className="pl-[24px] pr-[20.5px] ">
           <div className="flex flex-wrap justify-between items-center">
             <span
-              className={`${colorClasses.bg} ${colorClasses.text} rounded-full px-3 py-1 text-[12px] font-[500]`}
+              className={`${colorClasses.bg} ${colorClasses.text} rounded-full px-[7px] py-[3px] text-[12px] font-[500]`}
             >
               {post.category.name}
             </span>
@@ -158,7 +155,7 @@ const ProfilePage = () => {
           <h3 className="text-[20px] mt-[10.8px] font-[700] text-[#111827] ">{post.title}</h3>
           <p className=" font-[400] text-[16px] text-[#4B5563] mt-[14.44px]" style={{ fontFamily: 'var(--font-roboto)' }}>{post.description}</p>
 
-          <div className="flex flex-col sm:flex-row justify-between mt-[14.76px] items-start sm:items-center gap-3">
+          <div className="flex flex-col sm:flex-row justify-between mt-[14.76px] h-fit items-start sm:items-center gap-3">
             <div className="flex flex-wrap gap-3 text-xs font-black text-gray-500">
               <span className="flex items-center text-[14px] font-[900] gap-1"  style={{ fontFamily: 'var(--font-roboto)' }}>
                 <img src="/images/profile/img-6.svg" alt="Views" className="w-[14px] h-[14px]" />

@@ -51,7 +51,7 @@ export default function BlogHero() {
             className={`
               w-full sm:w-[90%] max-w-md
               mt-6 md:mt-0
-              md:absolute md:-right-[35px] md:top-1/2 md:-translate-y-1/2 md:w-[35%]
+              md:absolute  md:-right-[-200px] lg:-right-[-100px] xl:-right-[10px] 2xl:-right-[35px] md:top-1/2 md:-translate-y-1/2 
               z-10
             `}
           >

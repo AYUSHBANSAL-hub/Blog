@@ -56,9 +56,9 @@ const SubcategoryList = ({ onSubcategoryClick }: { onSubcategoryClick: (category
      
            <Button
              variant="outline"
-             className="min-w-[250px] mt-3 font-[500]  font-figtree text-[16px] max-w-[380px] min-h-12 px-[58.44px] py-[12px] rounded-full border border-[#5F6368] text-[#1A73E8] hover:bg-[#f1f3f4]"
+             className="min-w-[250px] mt-[22px] font-[500]  font-figtree text-[16px] max-w-[380px] min-h-12 px-[58.44px] py-[12px] rounded-full border border-[#5F6368] text-[#1A73E8] hover:bg-[#f1f3f4]"
            >
-             Load more Category
+             Load more Categories
            </Button>
          </section>
   );

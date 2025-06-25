@@ -24,7 +24,7 @@ const NavigationBreadcrumbSection = ({ items, onBreadcrumbClick }: Props) => {
               onClick={() => onBreadcrumbClick?.(0)}
               className="flex items-center w-12 h-12"
             >
-              <HomeIcon className="w-4 h-4" />
+              <img src='/images/home.svg' className="h-[16px] w-[16px]"/>
             </BreadcrumbLink>
           </BreadcrumbItem>
 

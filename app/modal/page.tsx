@@ -1,6 +1,5 @@
 "use client"
 import React from 'react';
-import { Card, CardContent } from '../../components/ui/card';
 import { useModal } from '@/hooks/useModal';
 import { PaginationIndicators } from '@/components/Modal/paginationIndicators';
 import { VideoPreview } from '@/components/Modal/videoPreview';
