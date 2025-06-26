@@ -55,7 +55,7 @@ const SubscriptionBanner = () => {
 
       {/* Email Input + Submit */}
       <div className="flex flex-col w-full max-w-full md:max-w-[497px] gap-4 mt-6 md:mt-8 lg:mt-12">
-        <div className="flex flex-col md:flex-row items-center gap-3 sm:gap-4 w-full">
+        <div className="flex flex-col md:flex-row items-start lg:items-center gap-3 sm:gap-4 w-full">
           {/* Email Box */}
           <div className="flex items-center w-full md:w-[358px] rounded-[72px] border border-[#ffffff66] px-3 md:px-[18px] md:py-[16px] gap-3">
             <div className="relative w-5 h-5">
@@ -78,9 +78,9 @@ const SubscriptionBanner = () => {
           {/* Submit Button */}
           <Button
             className="
-              w-full md:w-auto h-[46px] xs:h-[50px] md:h-[54px]
-              px-4 xs:px-6 md:px-8
-              py-2 xs:py-3 md:py-4
+              md:w-auto md:h-[42px] 
+              md:px-8
+              md:py-4
               bg-white hover:bg-gray-100 rounded-[80px]
               font-bold text-[#3891DEC4] text-sm xs:text-base sm:text-lg
               flex-shrink-0

@@ -70,124 +70,144 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row mt-16 mb-20 px-4 md:px-[69px] justify-center md:pt-5 gap-9 w-full">
-      {/* Profile Card */}
-      <div className="w-full md:w-[384px]">
-        <Card className="p-2 border-[#E5E7EB] border-2 rounded-[12px]">
-          <CardContent className=" px-7 pt-5 flex flex-col items-center">
-            <div >
-              <Avatar className="w-20 h-20 ">
-                <img
-                  src="/images/profile/img.svg"
-                  alt="Profile"
-                  className="object-cover w-full h-full rounded-full"
-                />
-              </Avatar>
-            </div>
-             
-             <div className="flex flex-col gap-[7.8px] mt-[12.24px] justify-center items-center">
-                <h2 className="font-black text-2xl text-gray-900 leading-7">{profileData.name}</h2>
-                <p className="text-lg font-bold text-[#4B5563] mb-4">{profileData.username}</p>
-             </div>
+   <div className="flex flex-col md:flex-row mt-16 mb-20 px-4 sm:px-6 md:px-[69px] justify-center md:pt-5 gap-9 w-full">
+  {/* Profile Card */}
+  <div className="w-full md:w-[384px]">
+    <Card className="p-2 border-[#E5E7EB] border-2 rounded-[12px]">
+      <CardContent className="px-7 pt-5 flex flex-col items-center">
+        <div>
+          <Avatar className="w-20 h-20">
+            <img
+              src="/images/profile/img.svg"
+              alt="Profile"
+              className="object-cover w-full h-full rounded-full"
+            />
+          </Avatar>
+        </div>
 
-            <div className="flex justify-center w-full gap-1 mb-4">
-              {profileData.stats.map((stat, index) => (
-                <div key={index} className="flex flex-col items-center w-20">
-                  <span className="font-black text-2xl text-gray-900">{stat.value}</span>
-                  <span className="text-sm font-bold text-[#4B5563]">{stat.label}</span>
-                </div>
-              ))}
-            </div>           
-            <div className="w-full space-y-3 mt-4 py-5 flex flex-col gap-2 border-t-[1px] border-[#F3F4F6] mb-3">
-              {profileData.details.map((detail, index) => (
-                <div key={index} className="flex items-center gap-1 ">
-                  <img className="w-4 h-4 mr-3" src={detail.icon} alt="" />
-                  <span className={`text-sm font-bold ${detail.isLink ? "text-blue-600" : "text-gray-600"}`} style={{ fontFamily: 'var(--font-roboto)' }}>
-                    {detail.text}
+        <div className="flex flex-col gap-[7.8px] mt-[12.24px] justify-center items-center">
+          <h2 className="font-black text-2xl text-gray-900 leading-7">{profileData.name}</h2>
+          <p className="text-lg font-bold text-[#4B5563] mb-4">{profileData.username}</p>
+        </div>
+
+        <div className="flex justify-center w-full gap-1 mb-4">
+          {profileData.stats.map((stat, index) => (
+            <div key={index} className="flex flex-col items-center w-20">
+              <span className="font-black text-2xl text-gray-900">{stat.value}</span>
+              <span className="text-sm font-bold text-[#4B5563]">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="w-full space-y-3 mt-4 py-5 flex flex-col gap-2 border-t-[1px] border-[#F3F4F6] mb-3">
+          {profileData.details.map((detail, index) => (
+            <div key={index} className="flex items-center gap-1">
+              <img className="w-4 h-4 mr-3" src={detail.icon} alt="" />
+              <span
+                className={`text-sm font-bold ${detail.isLink ? "text-blue-600" : "text-gray-600"}`}
+                style={{ fontFamily: "var(--font-roboto)" }}
+              >
+                {detail.text}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="w-full border-t-[1px] border-[#F3F4F6] flex flex-col gap-2">
+          <h3 className="text-lg font-semibold text-gray-900 mt-5 mb-1">About</h3>
+          <p className="text-sm font-bold text-gray-600" style={{ fontFamily: "var(--font-roboto)" }}>
+            {profileData.about}
+          </p>
+        </div>
+      </CardContent>
+
+      <Button className="w-full py-4 text-[16px] font-[500] bg-[#2563EB] hover:bg-blue-700">
+        Edit Profile
+      </Button>
+    </Card>
+  </div>
+
+  {/* Blog Posts Section */}
+  <div className="w-full md:w-[798px] flex flex-col gap-4">
+    <Card>
+      <CardContent className="px-4 sm:px-8 flex flex-col gap-[15.1px]">
+        <h2 className="text-[20px] font-[900] text-[#111827]">My Blog Posts</h2>
+        <div className="flex flex-wrap items-center gap-4">
+          <span className="bg-blue-100 font-[500] text-[#1E40AF] rounded-full px-3 py-1 text-[14px]">
+            24 Posts
+          </span>
+          <span className="text-[14px] font-[900] text-[#4B5563]" style={{ fontFamily: "var(--font-roboto)" }}>
+            Total views: 15.2k
+          </span>
+          <span className="text-[14px] font-[900] text-[#4B5563]" style={{ fontFamily: "var(--font-roboto)" }}>
+            Total likes: 892
+          </span>
+        </div>
+      </CardContent>
+    </Card>
+
+    <div className=" space-y-[25px]  px-2 sm:px-0">
+      {blogPosts.map((post, index) => {
+        const colorClasses = getBadgeColorClasses(post.category.color);
+        return (
+          <Card key={index} className="overflow-hidden">
+            <CardContent className="pl-4 pr-4 sm:pl-[24px] sm:pr-[20.5px]">
+              <div className="flex flex-wrap justify-between items-center">
+                <span
+                  className={`${colorClasses.bg} ${colorClasses.text} rounded-full px-[7px] py-[3px] text-[12px] font-[500]`}
+                >
+                  {post.category.name}
+                </span>
+                <span
+                  className="text-[14px] font-[900] text-[#6B7280]"
+                  style={{ fontFamily: "var(--font-roboto)" }}
+                >
+                  {post.date}
+                </span>
+              </div>
+
+              <h3 className="text-[20px] mt-[10.8px] font-[700] text-[#111827]">{post.title}</h3>
+              <p className="font-[400] text-[16px] text-[#4B5563] mt-[14.44px]" style={{ fontFamily: "var(--font-roboto)" }}>
+                {post.description}
+              </p>
+
+              <div className="flex flex-col sm:flex-row justify-between mt-[14.76px] h-fit items-start sm:items-center gap-3">
+                <div className="flex flex-wrap gap-3 text-xs font-black text-gray-500">
+                  <span className="flex items-center text-[14px] font-[900] gap-1" style={{ fontFamily: "var(--font-roboto)" }}>
+                    <img src="/images/profile/img-6.svg" alt="Views" className="w-[14px] h-[14px]" />
+                    {post.stats.views} views
+                  </span>
+                  <span className="flex items-center text-[14px] font-[900] gap-1" style={{ fontFamily: "var(--font-roboto)" }}>
+                    <img src="/images/profile/img-7.svg" alt="Likes" className="w-[14px] h-[14px]" />
+                    {post.stats.likes} likes
+                  </span>
+                  <span className="flex items-center text-[14px] font-[900] gap-1" style={{ fontFamily: "var(--font-roboto)" }}>
+                    <img src="/images/profile/img-8.svg" alt="Comments" className="w-[14px] h-[14px]" />
+                    {post.stats.comments} comments
                   </span>
                 </div>
-              ))}
-            </div>
+                <Button
+                  variant="link"
+                  className="text-[#2563EB] text-[14px] font-[500] p-0"
+                  style={{ fontFamily: "var(--font-roboto)" }}
+                >
+                  Read More
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        );
+      })}
+    </div>
 
-            
-
-            <div className="w-full border-t-[1px] border-[#F3F4F6] flex flex-col gap-2 ">
-              <h3 className="text-lg font-semibold text-gray-900 mt-5 mb-1">About</h3>
-              <p className="text-sm font-bold text-gray-600" style={{ fontFamily: 'var(--font-roboto)' }}>{profileData.about}</p>
-            </div>
-          </CardContent>
-          
-            <Button className="w-full py-4 text-[16px] font-[500] bg-[#2563EB] hover:bg-blue-700">Edit Profile</Button>
-          
-        </Card>
-      </div>
-
-      {/* Blog Posts Section */}
-      <div className="w-full md:w-[798px] flex flex-col gap-4">
-        <Card className="">
-          <CardContent className="px-8 flex flex-col gap-[15.1px]">
-            <h2 className="text-[20px] font-[900] text-[#111827] ">My Blog Posts</h2>
-            <div className="flex flex-wrap items-center gap-4">
-              <span className="bg-blue-100 font-[500] text-[#1E40AF] rounded-full px-3 py-1 text-[14px] ">
-                24 Posts
-              </span>
-              <span className="text-[14px] font-[900] text-[#4B5563]"  style={{ fontFamily: 'var(--font-roboto)' }}>Total views: 15.2k</span>
-              <span className="text-[14px] font-[900] text-[#4B5563]"  style={{ fontFamily: 'var(--font-roboto)' }}>Total likes: 892</span>
-            </div>
-          </CardContent>
-        </Card>
-
-        <div className="max-h-[700px] overflow-y-auto scroll-smooth space-y-[25px] scrollbar-hide">
-  {blogPosts.map((post, index) => {
-    const colorClasses = getBadgeColorClasses(post.category.color);
-    return (
-      <Card key={index} className=" overflow-hidden">
-        <CardContent className="pl-[24px] pr-[20.5px] ">
-          <div className="flex flex-wrap justify-between items-center">
-            <span
-              className={`${colorClasses.bg} ${colorClasses.text} rounded-full px-[7px] py-[3px] text-[12px] font-[500]`}
-            >
-              {post.category.name}
-            </span>
-            <span className="text-[14px] font-[900] text-[#6B7280]" style={{ fontFamily: 'var(--font-roboto)' }}>{post.date}</span>
-          </div>
-
-          <h3 className="text-[20px] mt-[10.8px] font-[700] text-[#111827] ">{post.title}</h3>
-          <p className=" font-[400] text-[16px] text-[#4B5563] mt-[14.44px]" style={{ fontFamily: 'var(--font-roboto)' }}>{post.description}</p>
-
-          <div className="flex flex-col sm:flex-row justify-between mt-[14.76px] h-fit items-start sm:items-center gap-3">
-            <div className="flex flex-wrap gap-3 text-xs font-black text-gray-500">
-              <span className="flex items-center text-[14px] font-[900] gap-1"  style={{ fontFamily: 'var(--font-roboto)' }}>
-                <img src="/images/profile/img-6.svg" alt="Views" className="w-[14px] h-[14px]" />
-                {post.stats.views} views
-              </span>
-              <span className="flex items-center text-[14px] font-[900] gap-1"  style={{ fontFamily: 'var(--font-roboto)' }}>
-                <img src="/images/profile/img-7.svg" alt="Likes" className="w-[14px] h-[14px]" />
-                {post.stats.likes} likes
-              </span>
-              <span className="flex items-center text-[14px] font-[900] gap-1"  style={{ fontFamily: 'var(--font-roboto)' }}>
-                <img src="/images/profile/img-8.svg" alt="Comments" className="w-[14px] h-[14px]" />
-                {post.stats.comments} comments
-              </span>
-            </div>
-            <Button variant="link" className="text-[#2563EB] text-[14px] font-[500] p-0" style={{ fontFamily: 'var(--font-roboto)' }} >
-              Read More
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  })}
+    <div className="flex justify-center mt-2 md:mb-7">
+      <Button className="text-[#374151] text-[16px] bg-[#F3F4F6] hover:bg-gray-300 rounded-[8px] font-[500] h-[48px] w-[168.953125px]">
+        Load More Posts
+      </Button>
+    </div>
+  </div>
 </div>
 
-
-        <div className="flex justify-center mt-2 md:mb-7">
-          <Button  className="text-[#374151] text-[16px] bg-[#F3F4F6] hover:bg-gray-300 rounded-[8px] font-[500] h-[48px] w-[168.953125px]">
-            Load More Posts
-          </Button>
-        </div>
-      </div>
-    </div>
   );
 };
 

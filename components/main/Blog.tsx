@@ -45,115 +45,114 @@ const BlogSection = () => {
   const [featuredBlog, setFeaturedBlog] = useState(initialFeaturedBlog);
 
   return (
-    <section className="w-full max-w-[1296px] pb-6 px-2 mx-auto">
-      <div className="flex flex-col md:flex-row gap-[48px] min-h-[700px]">
-        {/* Featured Blog */}
-        <div className="flex-1 pt-12 flex flex-col gap-[16px]">
-          <div className="flex flex-col gap-4">
-            <h2 className="font-[600] text-black text-[40px] tracking-[-0.51px] leading-[40px]">
-              {featuredBlog.title}
-            </h2>
+    <section className="w-full max-w-[1296px] pb-6 px-4 sm:px-6 md:px-8 mx-auto">
+  <div className="flex flex-col md:flex-row gap-[48px] min-h-[700px]">
+    {/* Featured Blog */}
+    <div className="flex-1 pt-12 flex flex-col gap-[16px]">
+      <div className="flex flex-col gap-4">
+        <h2 className="font-[600] text-black text-[32px] sm:text-[36px] md:text-[40px] tracking-[-0.51px] leading-[1.2]">
+          {featuredBlog.title}
+        </h2>
 
-            <div className="flex items-center gap-[19.56px] h-[38px]">
-              <span className="text-[13.6px] font-[300] text-[#232323] tracking-[0.16px] leading-[21px]"style={{ fontFamily: 'var(--font-roboto)' }}>
-                {featuredBlog.date}
-              </span>
+        <div className="flex flex-wrap items-center gap-[12px] sm:gap-[19.56px] h-auto">
+          <span className="text-[13.6px] font-[300] text-[#232323] tracking-[0.16px] leading-[21px]" style={{ fontFamily: 'var(--font-roboto)' }}>
+            {featuredBlog.date}
+          </span>
 
-              <span className="font-['Inter',Helvetica] font-light text-[#232323] text-sm tracking-[0.16px] leading-[21px]"style={{ fontFamily: 'var(--font-roboto)' }}>
-                {featuredBlog.category}
-              </span>
+          <span className="font-light text-[#232323] text-sm tracking-[0.16px] leading-[21px]" style={{ fontFamily: 'var(--font-roboto)' }}>
+            {featuredBlog.category}
+          </span>
 
-              <Button
-                variant="outline"
-                className="h-9 rounded-[100px] pt-[6.5px] pb-[7.48px] pr-[9px] pl-[16px] backdrop-blur-[10px]  border-[#00000029]"
-              >
-                <span className="font-[500] text-[#232323] text-[13.9px] tracking-[0.11px] leading-[21px]"style={{ fontFamily: 'var(--font-roboto)' }}>
-                  Learn more
-                </span>
-              </Button>
-            </div>
-          </div>
-
-          <div className=" mt-[25px] rounded-[16px] overflow-hidden">
-            <div className="">
-              <div className="relative w-full  max-w-[622px] h-[422px] md:h-[622px]">
-                <Image
-                  src={featuredBlog.image}
-                  alt={featuredBlog.title}
-                  fill
-                  className="object-cover "
-                />
-                <div className="absolute inset-0 bg-[#00000017]" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Blog List */}
-        <div className="flex-1 pt-10 max-h-[1000px] border-b-2 overflow-y-auto scroll-smooth pr-2 custom-scrollbar-hide">
-          <div className="flex flex-col gap-10 ">
-            {blogPosts.map((post, index) => (
-              <div key={index} className="relative cursor-pointer" onClick={() => setFeaturedBlog({
-                title: post.title,
-                date: post.date,
-                category: post.categories[0], // default to first category
-                image: post.image,
-              })}>
-                <div className="flex w-full max-w-[624px] pb-10 gap-[48px]">
-                  <div className="flex-1">
-                    <h3 className="font-[600] mt-3 text-black text-[30.8px] tracking-[-0.51px] leading-[33.9px] mb-4">
-                      {post.title}
-                    </h3>
-
-                    <div className="flex flex-wrap items-center gap-4">
-                      <span className="text-[13.6px]  font-[300] text-[#232323] tracking-[0.16px] leading-[21px]" style={{ fontFamily: 'var(--font-roboto)' }}>
-                        {post.date}
-                      </span>
-
-                      <div className="flex">
-                        {post.categories.map((category, catIndex) => (
-                          <span
-                            key={catIndex}
-                            className="text-[14.06px] font-light text-[#232323] text-sm tracking-[0.16px] leading-[21px]"
-                            style={{ fontFamily: 'var(--font-roboto)' }}
-                          >
-                            {category}
-                          </span>
-                        ))}
-                      </div>
-
-                      <Button variant="link" className="p-0 h-9 text-[#004FCF]">
-                        <span className="font-[600] text-[13.9px] tracking-[0.11px] leading-[21px]" style={{ fontFamily: 'var(--font-roboto)' }}>
-                          Learn more
-                        </span>
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="w-[176px] h-[176px] rounded-[16px] overflow-hidden border-0 relative">
-                    <div className="p-0 h-full">
-                      <div className="relative h-full w-full">
-                        <Image
-                          src={post.image}
-                          alt={post.title}
-                          fill
-                          className="object-cover"
-                        />
-                        <div className="absolute inset-0 bg-[#00000017]" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {index < blogPosts.length - 1 && (
-                  <Separator className="w-full h-px bg-[#00000017]" />
-                )}
-              </div>
-            ))}
-          </div>
+          <Button
+            variant="outline"
+            className="h-9 rounded-[100px] pt-[6.5px] pb-[7.48px] pr-[9px] pl-[16px] backdrop-blur-[10px] border-[#00000029]"
+          >
+            <span className="font-[500] text-[#232323] text-[13.9px] tracking-[0.11px] leading-[21px]" style={{ fontFamily: 'var(--font-roboto)' }}>
+              Learn more
+            </span>
+          </Button>
         </div>
       </div>
-    </section>
+
+      <div className="mt-[25px] rounded-[16px] overflow-hidden">
+        <div className="relative w-full h-[300px] sm:h-[400px] md:h-[622px] max-w-[622px]">
+          <Image
+            src={featuredBlog.image}
+            alt={featuredBlog.title}
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-[#00000017]" />
+        </div>
+      </div>
+    </div>
+
+    {/* Blog List */}
+    <div className="flex-1 pt-10 md:max-h-[1000px] md:overflow-y-auto scroll-smooth pr-1 sm:pr-2 custom-scrollbar-hide">
+      <div className="flex flex-col gap-10">
+        {blogPosts.map((post, index) => (
+          <div key={index} className="relative cursor-pointer" onClick={() => setFeaturedBlog({
+            title: post.title,
+            date: post.date,
+            category: post.categories[0],
+            image: post.image,
+          })}>
+            <div className="flex flex-col sm:flex-row w-full pb-10 gap-4 sm:gap-[48px]">
+              <div className="flex-1">
+                <h3 className="font-[600] mt-3 text-black text-[24px] sm:text-[28px] md:text-[30.8px] tracking-[-0.51px] leading-[1.1] mb-4">
+                  {post.title}
+                </h3>
+
+                <div className="flex flex-wrap items-center gap-4">
+                  <span className="text-[13.6px] font-[300] text-[#232323] tracking-[0.16px] leading-[21px]" style={{ fontFamily: 'var(--font-roboto)' }}>
+                    {post.date}
+                  </span>
+
+                  <div className="flex gap-2 flex-wrap">
+                    {post.categories.map((category, catIndex) => (
+                      <span
+                        key={catIndex}
+                        className="text-[14.06px] font-light text-[#232323] text-sm tracking-[0.16px] leading-[21px]"
+                        style={{ fontFamily: 'var(--font-roboto)' }}
+                      >
+                        {category}
+                      </span>
+                    ))}
+                  </div>
+
+                  <Button variant="link" className="p-0 h-9 text-[#004FCF]">
+                    <span className="font-[600] text-[13.9px] tracking-[0.11px] leading-[21px]" style={{ fontFamily: 'var(--font-roboto)' }}>
+                      Learn more
+                    </span>
+                  </Button>
+                </div>
+              </div>
+
+              <div className="w-full sm:w-[176px] h-[176px] rounded-[16px] overflow-hidden border-0 relative">
+                <div className="p-0 h-full">
+                  <div className="relative h-full w-full">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-[#00000017]" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {index < blogPosts.length - 1 && (
+              <Separator className="w-full h-px bg-[#00000017]" />
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
   );
 };
 

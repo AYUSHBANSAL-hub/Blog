@@ -25,7 +25,7 @@ const SubcategoryList = ({ onSubcategoryClick }: { onSubcategoryClick: (category
   return (
      <section className="flex flex-col w-full items-center gap-3 py-6">
            <div className="w-full max-w-[1270px]">
-             <div className="grid grid-cols-1 md:grid-cols-3 md:mt-3 gap-6 ">
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:mt-3 gap-6 ">
                {blogCards.map((blog, index) => (
                  <div
                    key={index}
