@@ -73,8 +73,8 @@ const Navbar = () => {
       <div className="flex items-center justify-between px-6 md:px-20 py-3">
         {/* Left: Logo + Nav */}
         <div className="flex items-center gap-8">
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
+          
+          <a href="/" className="flex items-center gap-2 group">
             <span className="text-black text-xl font-medium group-hover:text-neutral-700 transition-colors">LOGO</span>
             <div className="border border-stone-300 p-0.5 rounded-full flex items-center justify-center group-hover:border-stone-400 transition-colors">
               <ChevronDown size={16} className="text-stone-500 group-hover:text-stone-700 transition-colors" />

@@ -1,13 +1,14 @@
 "use client"
 
 import type React from "react"
+import dynamic from 'next/dynamic';
 import { useState, useCallback, useMemo, useRef } from "react"
-import ReactQuill from 'react-quill-new';
+const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 import 'react-quill-new/dist/quill.snow.css';
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-// import { ScrollArea } from "@/components/ui/scroll-area" // For tag list if it grows
+
 import {
   Bold,
   Italic,
@@ -57,7 +58,9 @@ const BlogEditorBody: React.FC<BlogEditorBodyProps> = ({ initialData = {}, onPub
   const [tags, setTags] = useState<string[]>(initialData.tags || [])
   const [currentTag, setCurrentTag] = useState("")
 
-  const quillRef = useRef<ReactQuill>(null)
+  const quillRef = useRef<any>(null)
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
+
 
   const handleImageUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -175,9 +178,10 @@ const BlogEditorBody: React.FC<BlogEditorBodyProps> = ({ initialData = {}, onPub
               onDrop={handleImageDrop}
               onDragOver={handleDragOver}
               className="w-full h-40 sm:h-36 rounded-lg border-2 border-dashed border-gray-300 flex flex-col justify-center items-center text-center cursor-pointer hover:border-blue-500"
-              onClick={() => document.getElementById("featuredImageInput")?.click()}
+              onClick={() => imageInputRef.current?.click()}
             >
               <input
+                ref={imageInputRef}
                 type="file"
                 id="featuredImageInput"
                 accept="image/*"
@@ -202,6 +206,7 @@ const BlogEditorBody: React.FC<BlogEditorBodyProps> = ({ initialData = {}, onPub
                 </>
               )}
             </div>
+
           </div>
           <div
             id="toolbar"
@@ -303,22 +308,22 @@ const BlogEditorBody: React.FC<BlogEditorBodyProps> = ({ initialData = {}, onPub
                 </Button>
               </div>
               {tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {tags.map((tag, index) => (
-                      <div
-                        key={index}
-                        className="bg-blue-100 text-blue-800 text-[10px] sm:text-xs font-medium font-['Figtree'] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full flex items-center"
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {tags.map((tag, index) => (
+                    <div
+                      key={index}
+                      className="bg-blue-100 text-blue-800 text-[10px] sm:text-xs font-medium font-['Figtree'] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full flex items-center"
+                    >
+                      {tag}
+                      <button
+                        onClick={() => removeTag(tag)}
+                        className="ml-1 sm:ml-1.5 text-blue-600 hover:text-blue-800"
                       >
-                        {tag}
-                        <button
-                          onClick={() => removeTag(tag)}
-                          className="ml-1 sm:ml-1.5 text-blue-600 hover:text-blue-800"
-                        >
-                          {/* <X size={10} sm:size={12} /> */}
-                        </button>
-                      </div>
-                    ))}
-                  </div>
+                        {/* <X size={10} sm:size={12} /> */}
+                      </button>
+                    </div>
+                  ))}
+                </div>
               )}
             </div>
           </div>
@@ -328,13 +333,13 @@ const BlogEditorBody: React.FC<BlogEditorBodyProps> = ({ initialData = {}, onPub
               variant="outline"
               className="w-full font-bold font-['Figtree'] rounded-full text-sm md:text-base py-7 border-blue-500 text-black hover:bg-blue-50"
             >
-              Preview  <ArrowRight/>
+              Preview  <ArrowRight />
             </Button>
             <Button
               onClick={handlePublish}
               className="w-full font-bold font-['Figtree'] rounded-full text-sm md:text-base py-7 bg-blue-500 hover:bg-blue-600 text-gray-50"
             >
-              Publish <ArrowRight/>
+              Publish <ArrowRight />
             </Button>
           </div>
         </div>

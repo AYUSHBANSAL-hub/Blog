@@ -13,11 +13,11 @@ import { ArrowRight } from "lucide-react";
 
 
 const socialIcons = [
-  { icon: "/images/landing/vector-1.svg", alt: "Discord" },
-  { icon: "/images/landing/vector-2.svg", alt: "Twitter" },
-  { icon: "/images/landing/vector-3.svg", alt: "Group" },
-  { icon: "/images/landing/vector-4.svg", alt: "Telegram" },
-  { icon: "/images/landing/vector-5.svg", alt: "Facebook" },
+  { icon: "/images/landing/icon-1.png", alt: "Discord" },
+  { icon: "/images/landing/icon-2.png", alt: "Twitter" },
+  { icon: "/images/landing/icon-3.png", alt: "Group" },
+  { icon: "/images/landing/icon-4.png", alt: "Telegram" },
+  { icon: "/images/landing/icon-5.png", alt: "Facebook" },
 ];
 
 const transition = { duration: 1.1, ease: "easeInOut" };
