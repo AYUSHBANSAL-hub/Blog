@@ -15,26 +15,26 @@ const ArticleSection = () => {
     date: "29 May, 2025",
     readTime: "2 min read",
     summary:
-      "Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium. Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.",
+      "Helping our customers build a 'Resilient Future'",
   };
 
-  const tags = ["Loreum Ipsum", "Loreum Ipsum", "Loreum Ipsum"];
+  const tags = ["AI", "Innovation", "Blockchain"];
 
   const keyPoints = [
     {
-      label: "Loreum",
+      label: "AI",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.",
+        "To ask your questions using your voice, simply tap the microphone icon and ask your query in AI Mode",
     },
     {
-      label: "Loreum Ipsum",
+      label: "Innovation",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.",
+        "We’re bringing the powerful capabilities of Lens into AI Mode, allowing you to easily ask complex questions about what you see. ",
     },
     {
-      label: "Loreum Ipsum",
+      label: "Blockchain",
       content:
-        "Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.",
+        "This launch is part of our long-term vision to make finding and accessing information even more effortless on Search. With our latest advancements in AI, we've seen people turn to Google Search to tackle increasingly complex and nuanced questions",
     },
   ];
 
@@ -60,7 +60,7 @@ const ArticleSection = () => {
                     className="text-[#1a73e8] text-sm tracking-[0.25px] font-medium"
                     style={{ fontFamily: "var(--font-roboto)" }}
                   >
-                    PRODUCT XYZ
+                    PRODUCT
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator>
@@ -72,7 +72,7 @@ const ArticleSection = () => {
                     className="font-medium text-[#1a73e8] text-sm tracking-[0.25px]"
                     style={{ fontFamily: "var(--font-roboto)" }}
                   >
-                    LOREUM
+                    GOOGLE AI
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </BreadcrumbList>
@@ -84,8 +84,7 @@ const ArticleSection = () => {
         <div className="w-full flex justify-center px-4 sm:px-6 md:px-0">
           <div className="w-full max-w-[1046px]">
             <h1 className="text-[32px] sm:text-[44px] md:text-[59.8px] font-normal text-[#202124] tracking-[-0.3px] md:tracking-[-0.5px] leading-tight md:leading-[72px]">
-              Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra
-              et nibh sem urna pretium.
+              Google Search: Introducing AI Mode in India
             </h1>
           </div>
         </div>
@@ -126,9 +125,9 @@ const ArticleSection = () => {
             <AvatarFallback>XYZ</AvatarFallback>
           </Avatar>
           <div>
-            <h3 className="text-sm font-bold text-[#202124]" style={{ fontFamily: "var(--font-roboto)" }}>XYZ</h3>
+            <h3 className="text-sm font-bold text-[#202124]" style={{ fontFamily: "var(--font-roboto)" }}>Neha Gupta</h3>
             <p className="text-sm font-medium text-[#5f6368] tracking-[0.25px] leading-[20.2px]" style={{ fontFamily: "var(--font-roboto)" }}>
-              Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.
+              Vice President, Product Management, Search
             </p>
           </div>
         </div>
@@ -153,10 +152,13 @@ const ArticleSection = () => {
             <Card className="border-none shadow-none">
               <CardContent className="p-0">
                 <p className="text-[#5f6368] text-base leading-[26px] mb-4" style={{ fontFamily: "var(--font-roboto)" }}>
-                  Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.
+                 Imagine being able to ask whatever's on your mind, even a question that's very complex or multi-layered, 
+                 and in an instant, receiving a comprehensive, AI-powered response that unpacks the topic using advanced reasoning, 
+                 complete with essential details and links to explore. 
                 </p>
                 <p className="text-[#5f6368] text-base leading-[26px]" style={{ fontFamily: "var(--font-roboto)" }}>
-                  Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.
+                  We first introduced AI Mode as an experiment in the U.S. earlier this year, and started rolling out to users outside of Labs at 
+                  Google I/O 2025. It's already resonating with users who appreciate its speed, quality, and fresh responses. 
                 </p>
               </CardContent>
             </Card>

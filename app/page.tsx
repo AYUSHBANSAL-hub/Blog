@@ -13,11 +13,11 @@ import { ArrowRight } from "lucide-react";
 
 
 const socialIcons = [
-  { icon: "/images/landing/icon-1.png", alt: "Discord" },
-  { icon: "/images/landing/icon-2.png", alt: "Twitter" },
-  { icon: "/images/landing/icon-3.png", alt: "Group" },
-  { icon: "/images/landing/icon-4.png", alt: "Telegram" },
-  { icon: "/images/landing/icon-5.png", alt: "Facebook" },
+  { icon: "/images/icon_1.svg", alt: "Discord" },
+  { icon: "/images/icon_2.svg", alt: "Twitter" },
+  { icon: "/images/icon_3.svg", alt: "Group" },
+  { icon: "/images/icon_4.svg", alt: "Telegram" },
+  { icon: "/images/icon_5.svg", alt: "Facebook" },
 ];
 
 const transition = { duration: 1.1, ease: "easeInOut" };
@@ -49,7 +49,7 @@ const LandingPage = () => {
                     2xl:text-[96px] 2xl:leading-[92px] lg:tracking-[-0.51px]
                   "
               >
-                Lorem ipsum dolor sit
+                Responsible AI for Humanity
               </motion.h1>
 
               {/* Sub-headline */}
@@ -65,7 +65,7 @@ const LandingPage = () => {
                  "
                 style={{ fontFamily: 'var(--font-roboto)' }}
               >
-                Loreum Ipsum: Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra.
+                Design intelligent agents that act ethically to benefit all humanity.
               </motion.p>
 
 
@@ -161,7 +161,7 @@ const LandingPage = () => {
         <ProductsExplore />
       </div>
 
-      <div className="flex flex-col lg:gap-[172px]">
+      <div className="flex flex-col md:gap-20 lg:gap-[172px]">
         <SubscriptionBanner />
         <Overlay />
       </div>

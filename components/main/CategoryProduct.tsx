@@ -9,7 +9,7 @@ import React from "react";
 const blogCards = [
   {
     category: "PRODUCT",
-    title: "Loreum Ipsum: Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra",
+    title: "AlphaGenome: AI for better understanding the genome",
     imagePath: "/images/landing/Product-1.svg",
   },
   {

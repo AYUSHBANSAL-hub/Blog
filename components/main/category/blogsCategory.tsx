@@ -16,7 +16,7 @@ const CategoryBlogs = () => {
         },
         {
             id: 2,
-            category: "PRODUCT Y",
+            category: "Company announcements",
             title: "Cloud Computing: AWS",
             description:
                 "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
@@ -26,7 +26,7 @@ const CategoryBlogs = () => {
         },
         {
             id: 3,
-            category: "LOREM IPSUM",
+            category: "Company announcements",
             title: "Cloud Computing: AWS",
             description:
                 "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
@@ -36,7 +36,7 @@ const CategoryBlogs = () => {
         },
         {
             id: 4,
-            category: "CLOUD COMPUTING",
+            category: "Company announcements",
             title: "Cloud Computing: AWS",
             description:
                 "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
@@ -46,7 +46,7 @@ const CategoryBlogs = () => {
         },
         {
             id: 5,
-            category: "PRODUCT Y",
+            category: "Privacy & Security",
             title: "Cloud Computing: AWS",
             description:
                 "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
@@ -56,7 +56,7 @@ const CategoryBlogs = () => {
         },
         {
             id: 6,
-            category: "LOREM IPSUM",
+            category: "Privacy & Security",
             title: "Cloud Computing: AWS",
             description:
                 "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",

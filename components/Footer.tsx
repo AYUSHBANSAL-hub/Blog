@@ -6,25 +6,45 @@ import { Separator } from "@/components/ui/separator";
 // Product data for the footer section
 const productCategories = [
     {
-        title: "Cloud Computing",
-        icon: "/images/Vector-1.svg",
-        items: ["Team Spaces", "File Sharing", "Comments", "Notifications"],
-    },
-    {
-        title: "Encryption",
-        icon: "/images/Vector-2.svg",
-        items: ["Encryption", "Access Control", "Audit Logs", "Compliance"],
-    },
-    {
-        title: "AI in Action",
-        icon: "/images/Vector-3.svg",
-        items: ["Workflows", "Triggers", "Integrations", "API Access"],
-    },
-    {
-        title: "Product Managment",
-        icon: "/images/Vector-4.svg",
-        items: ["Dashboard", "Reports", "Insights", "Real-time Data"],
-    },
+    title: "Research & Breakthroughs",
+    icon: "/images/Vector-1.svg",
+    items: [
+      "Foundational Models",
+      "Multimodal Learning",
+      "Reinforcement Learning",
+      "Emergent Behavior"
+    ],
+  },
+  {
+    title: "Responsible AI",
+    icon: "/images/Vector-2.svg",
+    items: [
+      "Fairness & Bias",
+      "Privacy & Security",
+      "Interpretability",
+      "AI Governance"
+    ],
+  },
+  {
+    title: "Applications",
+    icon: "/images/Vector-3.svg",
+    items: [
+      "Healthcare AI",
+      "Language Models",
+      "Robotics",
+      "Creative Tools"
+    ],
+  },
+  {
+    title: "AI Infrastructure",
+    icon: "/images/Vector-4.svg",
+    items: [
+      "TPUs & Accelerators",
+      "Data Pipelines",
+      "Scalable Training",
+      "Model Deployment"
+    ],
+  },
 ];
 
 // Resource links data

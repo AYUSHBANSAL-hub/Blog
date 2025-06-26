@@ -18,8 +18,8 @@ export default function BlogPage() {
     setSelectedCategory(category);
     setSelectedSubcategory(null);
     setBreadcrumbs([
-      { label: "BLOGS", href: "#" },
-      { label: category.toUpperCase(), href: "#" },
+      { label: "BLOGS", href: "" },
+      { label: category.toUpperCase(), href: "" },
     ]);
   };
 

@@ -6,25 +6,23 @@ import CardRightImage from "./CardRightImage";
 
 const productCards = [
   {
-    title: "LMS",
+    title: "Google Search",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium. Lorem ipsum dolor sit amet consectetur. ",
+      "World's most-used search engine for finding web pages, images, videos, and more. World's most-used search engine for finding web pages, images, videos, and more. ",
     image: "/images/blog-3.png",
     badge: null,
     layout: "left",
   },
   {
-    title: "Product C",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium. Lorem ipsum dolor sit amet consectetur.  Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium. Lorem ipsum dolor sit amet consectetur. ",
+    title: "Google Scholar",
+    description:"Search engine for scholarly articles, theses, and academic research papers. Search engine for scholarly articles, theses, and academic research papers. ",
     image: "/images/blog-1.png",
     badge: { text: "New" },
     layout: "right",
   },
   {
-    title: "Product Y",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium. Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur. ",
+    title: "Google Cloud Platform (GCP)",
+    description:"Suite of cloud computing services for hosting, databases, AI, and more.Suite of cloud computing services for hosting, databases, AI, and more.",
     image: "/images/blog-1.png",
     badge: null,
     layout: "left",

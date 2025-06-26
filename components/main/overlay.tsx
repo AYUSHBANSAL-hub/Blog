@@ -44,10 +44,11 @@ const Overlay = () => {
           "
           style={{ fontFamily: 'var(--font-roboto)' }}
         >
-          Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et
-          nibh sem urna pretium. Lorem ipsum dolor sit amet consectetur. Sed
-          est blandit pharetra et nibh sem urna pretium. Lorem ipsum dolor sit
-          amet consectetur. Sed est blandit pharetra et nibh sem urna pretium.
+         Leverage the power of intelligent AI agents to automate routine tasks, 
+         enhance decision-making, streamline operations, and drive productivity — giving 
+         your team more time to focus on what matters most Leverage the power of intelligent AI agents to automate routine tasks, 
+         enhance decision-making, streamline operations, and drive productivity — giving 
+         your team more time to focus on what matters most 
         </p>
       </div>
 

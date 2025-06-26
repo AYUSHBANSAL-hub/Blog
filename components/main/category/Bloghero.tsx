@@ -8,9 +8,9 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const blogData = [
   {
-    category: "PRODUCT",
-    title: "Lorem ipsum dolor sit amet consectetur.",
-    description: "Lorem ipsum dolor sit amet consectetur.",
+    category: "SEARCH",
+    title: "Google Search: Introducing AI Mode in India",
+    description: "Imagine being able to ask whatever's on your mind,even a question that's very complex or multi-layered, and in an instant, receiving a comprehensive, AI-powered response that unpacks the topic using advanced reasoning, complete with essential details and links to explore.",
     image: "/images/blog-2.svg",
   },
 ];
@@ -55,7 +55,7 @@ export default function BlogHero() {
               z-10
             `}
           >
-            <Card className="rounded-2xl w-full md:w-[476px] h-auto md:h-[320px] pt-6 shadow-xl px-8 pb-6 bg-white">
+            <Card className="rounded-2xl h-full w-full md:w-[476px]  pt-6 shadow-xl px-8 pb-6 bg-white">
               <CardContent className="px-0">
                 <div className="text-[#1A73E8] py-4 md:pt-4 text-sm font-medium" style={{ fontFamily: 'var(--font-roboto)' }}>
                   {blog.category}
@@ -63,7 +63,7 @@ export default function BlogHero() {
                 <h2 className="text-xl cursor-default  md:text-[35.58px] font-medium text-[#202124]  md:pt-1 text-center md:text-left">
                   {blog.title}
                 </h2>
-                <p className="text-sm md:text-base md:mt-3 text-[#5F6368] mt-2 text-center md:text-left" style={{ fontFamily: 'var(--font-roboto)' }}>
+                <p className="text-sm md:text-base line-clamp-1 md:mt-3 text-[#5F6368] mt-2 text-center md:text-left" style={{ fontFamily: 'var(--font-roboto)' }}>
                   {blog.description}
                 </p>
                 <div className="flex justify-center md:justify-end pt-10">

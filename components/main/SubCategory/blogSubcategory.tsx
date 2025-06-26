@@ -9,14 +9,14 @@ const SubCategoryBlogs = () => {
       category: "CLOUD COMPUTING",
       title: "Cloud Computing: AWS",
       description:
-        "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
+        "India has long been a hub for technology and innovation, and the strong talent pool here makes it a strategic location for Google Cloud to invest in our cloud infrastructure, grow our operations and expand our workforce to support our growing customer base.",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
       image: "/images/blog-1.svg",
     },
     {
       id: 2,
-      category: "PRODUCT Y",
+      category: "Google Cloud ",
       title: "Cloud Computing: AWS",
       description:
         "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
@@ -26,10 +26,10 @@ const SubCategoryBlogs = () => {
     },
     {
       id: 3,
-      category: "LOREM IPSUM",
+      category: "Google Cloud ",
       title: "Cloud Computing: AWS",
       description:
-        "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
+        "It’s fascinating to see the growth of India’s developer ecosystem over the years and the positive impact it has today in the lives of billions of people across the globe. The time for Indian developers to scale has never been better with new technologies, surfaces, and users emerging in the digital landscape.",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
       image: "/images/blog-1.svg",
@@ -39,14 +39,14 @@ const SubCategoryBlogs = () => {
       category: "CLOUD COMPUTING",
       title: "Cloud Computing: AWS",
       description:
-        "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
+        "India has always played the role of a strategic nerve centre in the tech discourse—this is evident in the thriving startup and app ecosystems, the digital public infrastructure that's transforming life for hundreds of millions of Indians, and the depth and diversity of Indian creators.",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
       image: "/images/blog-1.svg",
     },
     {
       id: 5,
-      category: "PRODUCT Y",
+      category: "Google Cloud ",
       title: "Cloud Computing: AWS",
       description:
         "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
@@ -56,10 +56,10 @@ const SubCategoryBlogs = () => {
     },
     {
       id: 6,
-      category: "LOREM IPSUM",
+      category: "Google Cloud ",
       title: "Cloud Computing: AWS",
       description:
-        "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
+        "Today, we are excited to share another major milestone in our ongoing commitment to India, with the inauguration of Ananta—one of Google’s largest offices globally.",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
       image: "/images/blog-1.svg",

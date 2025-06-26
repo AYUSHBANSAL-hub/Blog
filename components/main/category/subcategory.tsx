@@ -6,7 +6,7 @@ import Image from "next/image";
 const blogCards = [
   {
     category: "PRODUCT",
-    title: "Loreum Ipsum: Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra",
+    title: "AlphaGenome: AI for better understanding the genome",
     imageUrl: "/images/landing/Product-1.svg",
   },
   {

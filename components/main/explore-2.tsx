@@ -6,27 +6,26 @@ import CardRightImage from "./CardRightImage";
 
 const productCards = [
   {
-    title: "Product B",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium. Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet consectetur.",
+    title: "Vertex AI",
+    description:"Managed platform to build, deploy, and scale ML models in Google Cloud Managed platform to build, deploy, and scale ML models in Google Cloud",
     image: "/images/blog-4.png",
     badge: null,
     layout: "left",
   },
   {
-    title: "Product X",
+    title: "Gemini",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium. Lorem ipsum dolor sit amet consectetur. ",
+      "Google's generative AI assistant for writing, coding, and problem-solving.Google's generative AI assistant for writing, coding, and problem-solving.",
     image: "/images/blog-2.png",
     badge: null,
     layout: "left",
   },
   {
-    title: "Product T",
+    title: "AutoML",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretiumLorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium. Lorem ipsum dolor sit amet consectetur.  Lorem ipsum dolor sit amet consectetur. Sed est blandit pharetra et nibh sem urna pretium. Lorem ipsum dolor sit amet consectetur.  Lorem ipsum dolor sit amet consectetur. Sed est blandit .",
+      "Tools to train custom ML models with minimal coding required.Tools to train custom ML models with minimal coding required.Tools to train custom ML models with minimal coding required.Tools to train custom ML models with minimal coding required.",
     image: "/images/blog-1.png",
-    badge: { text: "Step 6" },
+    badge: { text: "New" },
     layout: "right",
   },
 ];

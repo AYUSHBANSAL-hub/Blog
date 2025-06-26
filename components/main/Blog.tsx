@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
 const initialFeaturedBlog = {
-  title: "Lorem ipsum dolor sit amet consectetur.",
+  title: "Veo 3 our new state-of-the-art video generation model",
   date: "May 2025",
   category: "Models",
   image: "/images/Overlay.svg",
@@ -15,25 +15,25 @@ const initialFeaturedBlog = {
 
 const blogPosts = [
   {
-    title: "Lorem ipsum dolor sit amet consectetur.",
+    title: "Advanced audio dialog and generation with Gemini 2.5",
     date: "June 2025",
     categories: ["Models"],
     image: "/images/model-1.svg",
   },
   {
-    title: "Lorem ipsum dolor sit amet consectetur.",
+    title: "Imagen 4: Our best image generation model yet",
     date: "May 2025",
     categories: ["Models"],
     image: "/images/model-2.svg",
   },
   {
-    title: "Lorem ipsum dolor sit amet consectetur.",
+    title: "Project Mariner: Exploring how AI agents can help you multitask",
     date: "May 2025",
     categories: ["Labs"],
     image: "/images/model-3.svg",
   },
   {
-    title: "Lorem ipsum dolor sit amet consectetur.",
+    title: "Fuel your creativity with new generative media models and tools",
     date: "May 2025",
     categories: ["Labs", "Models"],
     image: "/images/model-4.svg",

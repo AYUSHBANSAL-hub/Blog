@@ -1,114 +1,118 @@
-"use client"
+"use client";
 
-import { SearchIcon, ChevronDown, Menu, XIcon } from "lucide-react"
-import { useState, useRef, useEffect } from "react"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import MegaMenuContent from "./Megamenu"
- // Added import
+import {
+  SearchIcon,
+  ChevronDown,
+  Menu,
+  XIcon,
+} from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";      // NEW
+import Link from "next/link";
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import MegaMenuContent from "./Megamenu";
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isSearchExpanded, setIsSearchExpanded] = useState(false)
-  const searchContainerRef = useRef<HTMLDivElement>(null)
+  const pathname = usePathname();                   // NEW
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  // State for mega menu
-  const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null)
-  const megaMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  // Mega-menu state
+  const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
+  const megaMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // All links now lowercase & without “active”
   const navItems = [
-    { label: "Product", active: true, href: "#" },
-    { label: "Service", active: false, href: "#" },
-    { label: "Blogs", active: false, href: "/blog" },
-    { label: "Case Studies", active: false, href: "#" },
-    { label: "About", active: false, href: "#" },
-  ]
+    { label: "Product",       href: "/" },
+    { label: "Service",       href: "/manageblog" },
+    { label: "Blogs",         href: "/Blog" },          // fixed
+    { label: "Case Studies",  href: "/blog-open" },
+    { label: "About",         href: "/signup" },
+  ];
 
+  /* ---------------- search collapse on outside click ---------------- */
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
-        setIsSearchExpanded(false)
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(e.target as Node)
+      ) {
+        setIsSearchExpanded(false);
       }
-    }
-    if (isSearchExpanded) {
-      document.addEventListener("mousedown", handleClickOutside)
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [isSearchExpanded])
+    };
+    if (isSearchExpanded) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isSearchExpanded]);
 
-  // Mega menu handlers
+  /* ---------------- mega-menu helpers ---------------- */
   const handleNavItemMouseEnter = (label: string) => {
-    if (megaMenuTimeoutRef.current) {
-      clearTimeout(megaMenuTimeoutRef.current)
-    }
-    setActiveMegaMenu(label)
-  }
-
+    if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
+    setActiveMegaMenu(label);
+  };
   const handleNavContainerMouseLeave = () => {
-    megaMenuTimeoutRef.current = setTimeout(() => {
-      setActiveMegaMenu(null)
-    }, 150) // Delay to allow moving to the mega menu
-  }
+    megaMenuTimeoutRef.current = setTimeout(() => setActiveMegaMenu(null), 150);
+  };
+  const handleMegaMenuMouseEnter  = () => megaMenuTimeoutRef.current && clearTimeout(megaMenuTimeoutRef.current);
+  const handleMegaMenuMouseLeave  = () => {
+    megaMenuTimeoutRef.current = setTimeout(() => setActiveMegaMenu(null), 150);
+  };
 
-  const handleMegaMenuMouseEnter = () => {
-    if (megaMenuTimeoutRef.current) {
-      clearTimeout(megaMenuTimeoutRef.current)
-    }
-  }
-
-  const handleMegaMenuMouseLeave = () => {
-    megaMenuTimeoutRef.current = setTimeout(() => {
-      setActiveMegaMenu(null)
-    }, 150)
-  }
+  /* ---------------- helper: is link active? ---------------- */
+  const isLinkActive = (href: string) =>
+    href === "/"
+      ? pathname === "/"
+      : pathname.startsWith(href);    // covers nested routes
 
   return (
     <header
-      className="bg-white w-full h-[71px] pt-2 relative" // Added relative for mega menu positioning
-      onMouseLeave={handleNavContainerMouseLeave} // Add mouse leave to header
+      className="bg-white w-full h-[71px] pt-2 relative"
+      onMouseLeave={handleNavContainerMouseLeave}
     >
       <div className="flex items-center justify-between px-6 md:px-20 py-3">
-        {/* Left: Logo + Nav */}
+        {/* ---------- LEFT: logo + desktop nav ---------- */}
         <div className="flex items-center gap-8">
-          
-          <a href="/" className="flex items-center gap-2 group">
-            <span className="text-black text-xl font-medium group-hover:text-neutral-700 transition-colors">LOGO</span>
-            <div className="border border-stone-300 p-0.5 rounded-full flex items-center justify-center group-hover:border-stone-400 transition-colors">
+          <Link href="/" className="flex items-center gap-2 group">
+            <span className="text-black text-xl font-medium group-hover:text-neutral-700 transition-colors">
+              LOGO
+            </span>
+            <span className="border border-stone-300 p-0.5 rounded-full flex items-center justify-center group-hover:border-stone-400 transition-colors">
               <ChevronDown size={16} className="text-stone-500 group-hover:text-stone-700 transition-colors" />
-            </div>
-          </a>
+            </span>
+          </Link>
 
-          {/* Desktop Nav */}
+          {/* ---------- DESKTOP NAV ---------- */}
           <nav className="hidden md:flex ml-7 items-center gap-3">
-            {navItems.map((item) => (
-              <div
-                key={item.label}
-                onMouseEnter={() => handleNavItemMouseEnter(item.label)}
-                className="py-1.5" // Added padding here to ensure hover area is sufficient
-              >
-                <a
-                  href={item.href}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-150 ease-in-out
-                    ${
-                      item.active
-                        ? "bg-stone-100 text-neutral-800"
-                        : "text-neutral-600 hover:bg-stone-100 hover:text-neutral-800"
-                    }`}
+            {navItems.map((item) => {
+              const active = isLinkActive(item.href);     // NEW
+              return (
+                <div
+                  key={item.label}
+                  onMouseEnter={() => handleNavItemMouseEnter(item.label)}
+                  className="py-1.5"
                 >
-                  {item.label}
-                </a>
-              </div>
-            ))}
+                  <Link
+                    href={item.href}
+                    className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-150
+                      ${active
+                        ? "bg-stone-100 text-neutral-800"
+                        : "text-neutral-600 hover:bg-stone-100 hover:text-neutral-800"}`}
+                  >
+                    {item.label}
+                  </Link>
+                </div>
+              );
+            })}
           </nav>
         </div>
 
-        {/* Right: Search, Sign In + Mobile Menu Button */}
+        {/* ---------- RIGHT: search + sign-in + mobile-menu-btn ---------- */}
         <div className="flex items-center gap-3">
+          {/* desktop search & sign in */}
           <div className="hidden md:flex items-center gap-3" ref={searchContainerRef}>
-            {!isSearchExpanded && (
+            {!isSearchExpanded ? (
               <button
                 onClick={() => setIsSearchExpanded(true)}
                 className="p-2 h-9 w-12 flex items-center justify-center bg-stone-100 hover:bg-stone-200 rounded-4xl transition-colors"
@@ -116,8 +120,7 @@ const Navbar = () => {
               >
                 <SearchIcon className="h-4 w-4 text-stone-600" />
               </button>
-            )}
-            {isSearchExpanded && (
+            ) : (
               <div className="relative w-80">
                 <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-stone-500 pointer-events-none" />
                 <input
@@ -136,13 +139,13 @@ const Navbar = () => {
             )}
 
             <Link href="/login">
-              <Button className="bg-[#6a83ff] hover:bg-[#556acc] text-white rounded-full px-4 h-9 text-sm font-medium transition-colors">
+              <Button className="bg-[#6a83ff] hover:bg-[#556acc] text-white rounded-full px-4 h-9 text-sm font-medium">
                 Sign In
               </Button>
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* mobile menu button */}
           <button
             className="md:hidden p-2 -mr-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -155,26 +158,29 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Nav */}
+      {/* ---------- MOBILE NAV ---------- */}
       {isMenuOpen && (
         <div
           id="mobile-menu"
-          className="md:hidden bg-white flex flex-col gap-1 px-4 pt-2 pb-4 border-t border-stone-200 absolute top-[69px] left-0 right-0 z-20 shadow-lg" // Added positioning for mobile menu
+          className="md:hidden bg-white flex flex-col gap-1 px-4 pt-2 pb-4 border-t border-stone-200 absolute top-[69px] left-0 right-0 z-20 shadow-lg"
         >
-          {navItems.map((item) => (
-            <a
-              href={item.href}
-              key={item.label}
-              className={`block px-3 py-2.5 rounded-md text-base font-medium transition-colors
-                ${
-                  item.active
+          {navItems.map((item) => {
+            const active = isLinkActive(item.href);     // NEW
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={() => setIsMenuOpen(false)}
+                className={`block px-3 py-2.5 rounded-md text-base font-medium transition-colors
+                  ${active
                     ? "bg-stone-100 text-neutral-900"
-                    : "text-neutral-700 hover:bg-stone-100 hover:text-neutral-900"
-                }`}
-            >
-              {item.label}
-            </a>
-          ))}
+                    : "text-neutral-700 hover:bg-stone-100 hover:text-neutral-900"}`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+
           <div className="relative w-full mt-3">
             <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-500" />
             <Input
@@ -182,6 +188,7 @@ const Navbar = () => {
               placeholder="Search"
             />
           </div>
+
           <Link href="/login">
             <Button className="w-full mt-3 rounded-full bg-[#6a83ff] hover:bg-[#556acc] text-white text-sm font-medium h-10">
               Sign In
@@ -190,18 +197,18 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* Mega Menu - Desktop Only */}
+      {/* ---------- MEGA MENU (desktop) ---------- */}
       {activeMegaMenu && (
         <div
-          className="hidden md:block absolute left-0 right-0 top-[69px] z-10" // Positioned below the header
+          className="hidden md:block absolute left-0 right-0 top-[69px] z-10"
           onMouseEnter={handleMegaMenuMouseEnter}
           onMouseLeave={handleMegaMenuMouseLeave}
         >
-          <MegaMenuContent />
+          <MegaMenuContent activeLabel={activeMegaMenu} />
         </div>
       )}
     </header>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

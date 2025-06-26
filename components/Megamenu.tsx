@@ -1,10 +1,62 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Gem } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 
-const MegaMenuContent = () => {
+const MegaMenuContent = ({ activeLabel }: { activeLabel: string }) => {
+  const menuData: Record<string, any> = {
+    Product: {
+      heading: "Explore Our Products",
+      description: "Innovative tools designed to elevate your workflow.",
+      links: [
+        { text: "AI Dashboard", href: "#" },
+        { text: "Analytics Tool", href: "#" },
+        { text: "Marketplace", href: "#" },
+      ],
+    },
+    Service: {
+      heading: "Our Services",
+      description: "Tailored solutions for your business needs.",
+      links: [
+        { text: "Consulting", href: "#" },
+        { text: "Custom Development", href: "#" },
+        { text: "Cloud Integration", href: "#" },
+      ],
+    },
+    Blogs: {
+      heading: "From the Blog",
+      description: "Insights, tutorials, and industry news.",
+      links: [
+        { text: "Tech Trends 2025", href: "#" },
+        { text: "Scaling with Microservices", href: "#" },
+        { text: "React Performance Tips", href: "#" },
+      ],
+    },
+    "Case Studies": {
+      heading: "Success Stories",
+      description: "See how our clients achieved success.",
+      links: [
+        { text: "Fintech Case Study", href: "#" },
+        { text: "E-commerce Optimization", href: "#" },
+        { text: "AI Implementation", href: "#" },
+      ],
+    },
+    About: {
+      heading: "Who We Are",
+      description: "Learn more about our mission and values.",
+      links: [
+        { text: "Our Team", href: "#" },
+        { text: "Careers", href: "#" },
+        { text: "Contact Us", href: "#" },
+      ],
+    },
+  }
+
+  const content = menuData[activeLabel]
+
+  if (!content) return null
+
   return (
     <div className="bg-white shadow-xl w-full">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -12,8 +64,8 @@ const MegaMenuContent = () => {
           {/* Column 1 */}
           <div className="flex flex-col justify-between">
             <div>
-              <h2 className="text-2xl font-semibold text-neutral-800">Lorem ipsum dolor sit amet consectetur.</h2>
-              <p className="mt-2 text-sm text-neutral-600">Discover our innovative solutions and drive your success.</p>
+              <h2 className="text-2xl font-semibold text-neutral-800">{content.heading}</h2>
+              <p className="mt-2 text-sm text-neutral-600">{content.description}</p>
             </div>
             <Link href="#" passHref>
               <Button
@@ -28,15 +80,14 @@ const MegaMenuContent = () => {
 
           {/* Column 2 */}
           <div>
-            <h3 className="text-lg font-medium text-neutral-800">Lorem ipsum</h3>
-            <p className="mt-1 text-sm text-neutral-500">Lorem ipsum dolor sit amet consectetur.</p>
+            <h3 className="text-lg font-medium text-neutral-800">Quick Links</h3>
             <ul className="mt-4 space-y-3">
-              {[1, 2, 3].map((i) => (
+              {content.links.map((link: any, i: number) => (
                 <li key={i} className="flex items-center">
-                  <Link href="#" className="flex items-center group">
-                    <img src='/images/star.svg'className="h-4 w-4 mr-3 flex-shrink-0" />
+                  <Link href={link.href} className="flex items-center group">
+                    <img src="/images/star.svg" className="h-4 w-4 mr-3 flex-shrink-0" />
                     <span className="text-sm text-neutral-700 group-hover:text-blue-600 transition-colors">
-                      Lorem ipsum
+                      {link.text}
                     </span>
                   </Link>
                 </li>
@@ -44,17 +95,16 @@ const MegaMenuContent = () => {
             </ul>
           </div>
 
-          {/* Column 3 */}
+          {/* Column 3 - You can repeat same or different section */}
           <div>
-            <h3 className="text-lg font-medium text-neutral-800">Lorem ipsum</h3>
-            <p className="mt-1 text-sm text-neutral-500">Lorem ipsum dolor sit amet consectetur.</p>
+            <h3 className="text-lg font-medium text-neutral-800">More Resources</h3>
             <ul className="mt-4 space-y-3">
-              {[1, 2, 3].map((i) => (
+              {content.links.map((link: any, i: number) => (
                 <li key={i} className="flex items-center">
-                  <Link href="#" className="flex items-center group">
-                    <img src='/images/star.svg'className="h-4 w-4 mr-3 flex-shrink-0" />
+                  <Link href={link.href} className="flex items-center group">
+                    <img src="/images/star.svg" className="h-4 w-4 mr-3 flex-shrink-0" />
                     <span className="text-sm text-neutral-700 group-hover:text-blue-600 transition-colors">
-                      Lorem ipsum
+                      {link.text}
                     </span>
                   </Link>
                 </li>
