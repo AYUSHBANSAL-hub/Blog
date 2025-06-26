@@ -133,7 +133,7 @@ const LandingPage = () => {
                 w-full max-w-[300px] h-[260px]
                 sm:max-w-[300px] sm:h-[300px]
                 md:max-w-[300px] md:h-[400px]
-                lg:max-w-[700px] lg:h-[700px]
+                lg:max-w-[500px] lg:h-[500px]
                 2xl:max-w-[738px] 2xl:h-[738px]
                 flex-shrink-0
               "

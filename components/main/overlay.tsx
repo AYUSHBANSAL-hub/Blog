@@ -24,11 +24,11 @@ const Overlay = () => {
 
     {/* ─── Content ─── */}
     <div className="relative z-10 flex flex-col items-center justify-center h-full px-3 sm:px-6 pt-8 sm:pt-10">
-      <div className="flex flex-col items-center gap-4 xs:gap-6 sm:gap-8 md:gap-6 max-w-[1114px] text-center">
+      <div className="flex flex-col items-center gap-1 xs:gap-6 sm:gap-8 md:gap-6 max-w-[1114px] text-center">
         <h2
           className="
             font-bold text-white
-            text-[20px] xs:text-[26px] sm:text-[32px] md:text-[58px]
+            text-[20px]  md:mt-0 xs:text-[26px] sm:text-[32px] md:text-[58px]
             leading-tight
           "
         >
@@ -37,7 +37,7 @@ const Overlay = () => {
 
         <p
           className="
-            max-w-[808px] mt-2 sm:mt-3
+            max-w-[808px]  sm:line-clamp-0 mt-2 sm:mt-3
             font-normal text-[#aeaeae]
             text-xs xs:text-sm sm:text-base
             leading-relaxed
@@ -53,12 +53,12 @@ const Overlay = () => {
       </div>
 
       {/* ─── Button ─── */}
-      <div className="mt-6 sm:mt-10">
+      <div className="mt-0 sm:mt-10">
         <Button
           className="
             bg-[#00b6ff] text-white text-sm sm:text-base md:text-lg
             font-figtree font-medium
-            mb-6
+            mb-10
             px-5 sm:px-[12px]
             py-2 sm:py-3 md:py-[10px]
             rounded-[]

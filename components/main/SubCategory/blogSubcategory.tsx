@@ -22,7 +22,7 @@ const SubCategoryBlogs = () => {
         "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
-      image: "/images/blog-1.svg",
+      image: "/images/japan-backgroud.svg",
     },
     {
       id: 3,
@@ -32,7 +32,7 @@ const SubCategoryBlogs = () => {
         "It’s fascinating to see the growth of India’s developer ecosystem over the years and the positive impact it has today in the lives of billions of people across the globe. The time for Indian developers to scale has never been better with new technologies, surfaces, and users emerging in the digital landscape.",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
-      image: "/images/blog-1.svg",
+      image: "/images/carousel-img.svg",
     },
     {
       id: 4,
@@ -52,7 +52,7 @@ const SubCategoryBlogs = () => {
         "Today, we hosted the tenth edition of\nGoogle for India, a milestone that invites us\nto reflect on the incredible transformation\nwe…",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
-      image: "/images/blog-1.svg",
+      image: "/images/thumbnail-1.svg",
     },
     {
       id: 6,
@@ -62,7 +62,7 @@ const SubCategoryBlogs = () => {
         "Today, we are excited to share another major milestone in our ongoing commitment to India, with the inauguration of Ananta—one of Google’s largest offices globally.",
       author: "Roma Datta …",
       date: "03 Oct, 2024",
-      image: "/images/blog-1.svg",
+      image: "/images/GoogleStore-1.svg",
     },
   ];
 
