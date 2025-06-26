@@ -26,7 +26,7 @@ const Navbar = () => {
 
   // All links now lowercase & without “active”
   const navItems = [
-    { label: "Product",       href: "/" },
+    { label: "Product",       href: "/profile" },
     { label: "Service",       href: "/manageblog" },
     { label: "Blogs",         href: "/Blog" },          // fixed
     { label: "Case Studies",  href: "/blog-open" },
