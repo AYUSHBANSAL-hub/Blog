@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Figtree } from 'next/font/google';
 import { Roboto } from 'next/font/google';
+import UserProvider from "./UserProvider";
 
 const figtree = Figtree({
   subsets: ['latin'],
@@ -31,6 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={` ${figtree.variable} ${roboto.variable}`}>
+      <UserProvider>
       <body className="antialiased font-figtree h-full flex flex-col">
         <div className="fixed top-0 left-0 right-0 z-50">
           <Navbar />
@@ -40,6 +42,8 @@ export default function RootLayout({
 
         <Footer />
       </body>
+    
+      </UserProvider>
     </html>
   );
 }

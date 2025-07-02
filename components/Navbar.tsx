@@ -13,6 +13,8 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import MegaMenuContent from "./Megamenu";
+import { useSelector } from "react-redux";
+import { useAppSelector } from "@/lib/hook";
 
 const Navbar = () => {
   const pathname = usePathname();                   // NEW
@@ -20,20 +22,22 @@ const Navbar = () => {
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  // Mega-menu state
+  
+  const user = useAppSelector((state) =>  state.user );
+  const getInitial = (name : string) => name?.charAt(0)?.toUpperCase() || "U"
+
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
   const megaMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // All links now lowercase & without “active”
+
   const navItems = [
-    { label: "Product",       href: "/profile" },
-    { label: "Service",       href: "/manageblog" },
-    { label: "Blogs",         href: "/Blog" },          // fixed
-    { label: "Case Studies",  href: "/blog-open" },
-    { label: "About",         href: "/signup" },
+    { label: "Product", href: "/profile" },
+    { label: "Service", href: "/manageblog" },
+    { label: "Blogs", href: "/Blog" },          // fixed
+    { label: "Case Studies", href: "/blog-open" },
+    { label: "About", href: "/signup" },
   ];
 
-  /* ---------------- search collapse on outside click ---------------- */
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -47,7 +51,7 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isSearchExpanded]);
 
-  /* ---------------- mega-menu helpers ---------------- */
+
   const handleNavItemMouseEnter = (label: string) => {
     if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
     setActiveMegaMenu(label);
@@ -55,24 +59,25 @@ const Navbar = () => {
   const handleNavContainerMouseLeave = () => {
     megaMenuTimeoutRef.current = setTimeout(() => setActiveMegaMenu(null), 150);
   };
-  const handleMegaMenuMouseEnter  = () => megaMenuTimeoutRef.current && clearTimeout(megaMenuTimeoutRef.current);
-  const handleMegaMenuMouseLeave  = () => {
+  const handleMegaMenuMouseEnter = () => megaMenuTimeoutRef.current && clearTimeout(megaMenuTimeoutRef.current);
+  const handleMegaMenuMouseLeave = () => {
     megaMenuTimeoutRef.current = setTimeout(() => setActiveMegaMenu(null), 150);
   };
 
-  /* ---------------- helper: is link active? ---------------- */
+
   const isLinkActive = (href: string) =>
     href === "/"
       ? pathname === "/"
-      : pathname.startsWith(href);    // covers nested routes
-
+      : pathname.startsWith(href);
   return (
+    
     <header
       className="bg-white w-full h-[71px] pt-2 relative"
       onMouseLeave={handleNavContainerMouseLeave}
     >
+      
       <div className="flex items-center justify-between px-6 md:px-20 py-3">
-        {/* ---------- LEFT: logo + desktop nav ---------- */}
+
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2 group">
             <span className="text-black text-xl font-medium group-hover:text-neutral-700 transition-colors">
@@ -83,7 +88,7 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* ---------- DESKTOP NAV ---------- */}
+
           <nav className="hidden md:flex ml-7 items-center gap-3">
             {navItems.map((item) => {
               const active = isLinkActive(item.href);     // NEW
@@ -138,20 +143,39 @@ const Navbar = () => {
               </div>
             )}
 
-            <Link href="/login">
-              <Button className="bg-[#6a83ff] hover:bg-[#556acc] text-white rounded-full px-4 h-9 text-sm font-medium">
-                Sign In
-              </Button>
-            </Link>
+
+            {user?.id ? (
+              <div
+                title={user.fullName}
+                className="w-9 h-9 bg-[#6a83ff] text-white rounded-full flex items-center justify-center font-semibold text-sm"
+              >
+                {getInitial(user.fullName)}
+              </div>
+            ) : (
+              <Link href="/login">
+                <Button className="bg-[#6a83ff] hover:bg-[#556acc] text-white rounded-full px-4 h-9 text-sm font-medium">
+                  Sign In
+                </Button>
+              </Link>
+            )}
           </div>
 
           {/* mobile menu button */}
+          {user?.id ? 
+           ( <div
+                title={user.fullName}
+                className="w-6 md:hidden h-6 bg-[#6a83ff]  text-white rounded-full flex items-center justify-center font-semibold text-[12px]"
+              >
+                {getInitial(user.fullName)}
+          </div>) : (<></>)}
+
           <button
             className="md:hidden p-2 -mr-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
           >
+
             <Menu className="w-6 h-6 text-zinc-800" />
             <span className="sr-only">Open menu</span>
           </button>
@@ -189,11 +213,12 @@ const Navbar = () => {
             />
           </div>
 
-          <Link href="/login">
+          { user.id ? (<></>) :
+            (<Link href="/login">
             <Button className="w-full mt-3 rounded-full bg-[#6a83ff] hover:bg-[#556acc] text-white text-sm font-medium h-10">
               Sign In
             </Button>
-          </Link>
+          </Link>)}
         </div>
       )}
 

@@ -1,273 +1,261 @@
 "use client"
 
-import type React from "react"
-import dynamic from 'next/dynamic';
-import { useState, useCallback, useMemo, useRef } from "react"
-const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
-import 'react-quill-new/dist/quill.snow.css';
+import React, { useState, useRef } from "react"
+import dynamic from "next/dynamic"
+import { useRouter } from "next/navigation"
+                 // or any toast lib you prefer
+
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
 import {
-  Bold,
-  Italic,
-  Underline,
-  Strikethrough,
-  List,
-  ListOrdered,
-  Link2,
-  ImageIcon,
-  Video,
-  AlignLeft,
-  AlignCenter,
-  AlignRight,
-  Quote,
-  UploadCloud,
-  X,
-  MoreHorizontal,
-  ArrowRight
-} from "lucide-react"
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select"
 
-// Define the props for the component
-interface BlogEditorBodyProps {
-  initialData?: {
-    title?: string
-    subheading?: string
-    content?: string
-    featuredImage?: string | null
-    category?: string
-    subCategory?: string
-    tags?: string[]
+import { UploadCloud, ArrowRight, Eye } from "lucide-react"
+
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false })
+import "react-quill-new/dist/quill.snow.css"
+import { useAppSelector } from "@/lib/hook"
+
+/* ───────────────────────────────────────────────────────── toolbar config ── */
+const modules = {
+  toolbar: {
+    container: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image"],
+      ["clean"]
+    ],
+    handlers: {
+      image: async function (this: any) {
+        const input = document.createElement("input")
+        input.type = "file"
+        input.accept = "image/*"
+        input.click()
+
+        input.onchange = async () => {
+          const file = input.files?.[0]
+          if (!file) return
+
+          const fd = new FormData()
+          fd.append("image", file)
+
+          const res = await fetch("/api/upload-image", { method: "POST", body: fd })
+          if (!res.ok) return alert("Upload failed")
+
+          const { url } = await res.json()
+          const range = this.quill.getSelection(true)
+          this.quill.insertEmbed(range.index, "image", url)
+          this.quill.setSelection(range.index + 1)
+        }
+      }
+    }
   }
-  onPublish?: (data: any) => void
-  onPreview?: (data: any) => void
 }
 
-// Define a type for the editor content for clarity
-type EditorContent = string
+const formats = [
+  "header",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "list",
+  "link",
+  "image"
+]
 
-const BlogEditorBody: React.FC<BlogEditorBodyProps> = ({ initialData = {}, onPublish, onPreview }) => {
-  const [title, setTitle] = useState(initialData.title || "")
-  const [subheading, setSubheading] = useState(initialData.subheading || "")
-  const [content, setContent] = useState<EditorContent>(initialData.content || "")
+/* ─────────────────────────────────────────────────────────────────────────── */
+
+const BlogEditorBody: React.FC = () => {
+  const router = useRouter()
+  const { email } = useAppSelector((s) => s.user) || {}
+
+  /* ── state ────────────────────────────────────────────────────────────── */
+  const [title, setTitle]           = useState("")
+  const [subheading, setSubheading] = useState("")
+  const [content, setContent]       = useState("")
   const [featuredImage, setFeaturedImage] = useState<File | null>(null)
-  const [imagePreview, setImagePreview] = useState<string | null>(initialData.featuredImage || null)
-  const [category, setCategory] = useState(initialData.category || "")
-  const [subCategory, setSubCategory] = useState(initialData.subCategory || "")
-  const [tags, setTags] = useState<string[]>(initialData.tags || [])
-  const [currentTag, setCurrentTag] = useState("")
+  const [imagePreview, setImagePreview]   = useState<string | null>(null)
+  const [category, setCategory]         = useState("")
+  const [subCategory, setSubCategory]   = useState("")
+  const [tags, setTags]                 = useState<string[]>([])
+  const [currentTag, setCurrentTag]     = useState("")
+  const [isPublishing, setIsPublishing] = useState(false)
 
-  const quillRef = useRef<any>(null)
-  const imageInputRef = useRef<HTMLInputElement | null>(null);
+  const imageInputRef = useRef<HTMLInputElement | null>(null)
 
-
-  const handleImageUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0]
+  /* ── image helpers ────────────────────────────────────────────────────── */
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
       setFeaturedImage(file)
       setImagePreview(URL.createObjectURL(file))
     }
-  }, [])
+  }
 
-  const handleImageDrop = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
-    if (event.dataTransfer.files && event.dataTransfer.files[0]) {
-      const file = event.dataTransfer.files[0]
-      if (file.type.startsWith("image/")) {
-        setFeaturedImage(file)
-        setImagePreview(URL.createObjectURL(file))
-      }
+  const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    const file = e.dataTransfer.files?.[0]
+    if (file?.type.startsWith("image/")) {
+      setFeaturedImage(file)
+      setImagePreview(URL.createObjectURL(file))
     }
-  }, [])
+  }
 
-  const handleDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault()
-    event.stopPropagation()
-  }, [])
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault()
 
+  /* ── tag helpers ──────────────────────────────────────────────────────── */
   const addTag = () => {
-    if (currentTag.trim() && !tags.includes(currentTag.trim())) {
-      setTags([...tags, currentTag.trim()])
+    const t = currentTag.trim()
+    if (t && !tags.includes(t)) {
+      setTags([...tags, t])
       setCurrentTag("")
     }
   }
 
-  const removeTag = (tagToRemove: string) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove))
-  }
+  const removeTag = (t: string) => setTags(tags.filter((x) => x !== t))
 
-  const handlePublish = () => {
-    const data = { title, subheading, content, featuredImage, category, subCategory, tags }
-    console.log("Publishing data:", data)
-    if (onPublish) onPublish(data)
-  }
-
+  /* ── preview (opens a new tab) ────────────────────────────────────────── */
   const handlePreview = () => {
-    const data = { title, subheading, content, featuredImage, category, subCategory, tags }
-    console.log("Previewing data:", data)
-    if (onPreview) onPreview(data)
+    if (!title.trim() && !content.trim()) {
+      alert("Nothing to preview.")
+      return
+    }
+    const win = window.open("", "_blank")
+    if (!win) return
+    win.document.write(`
+      <html>
+        <head>
+          <title>Preview – ${title}</title>
+          <style>
+            body{font-family:system-ui;margin:40px;line-height:1.6}
+            img{max-width:100%;height:auto}
+          </style>
+        </head>
+        <body>
+          <h1>${title}</h1>
+          <h2>${subheading}</h2>
+          ${imagePreview ? `<img src="${imagePreview}" alt="cover"/>` : ""}
+          ${content}
+        </body>
+      </html>
+    `)
+    win.document.close()
   }
 
-  const modules = useMemo(
-    () => ({
-      toolbar: {
-        container: "#toolbar",
-      },
-      clipboard: { matchVisual: false },
-    }),
-    [],
-  )
+  /* ── publish (POST /api/blogs) ────────────────────────────────────────── */
+  const handlePublish = async () => {
+    if (!email) {
+      alert("You must be logged in.")
+      return
+    }
+    if (!title.trim() || !content.trim()) {
+      alert("Title and content are required.")
+      return
+    }
 
-  const formats = [
-    "header",
-    "font",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-    "video",
-    "align",
-  ]
+    const fd = new FormData()
+    fd.append("title",        title)
+    fd.append("subHeading",   subheading)
+    fd.append("content",      content)
+    fd.append("email",        email)
+    fd.append("tags",         JSON.stringify(tags))
+    fd.append("category",     category)
+    fd.append("subCategory",  subCategory)
+    if (featuredImage) fd.append("coverImage", featuredImage)
 
-  const ToolbarButton = ({ format, icon, value }: { format?: string; icon: React.ReactNode; value?: any }) => (
-    <button
-      type="button"
-      className={`ql-${format} p-1.5 flex items-center justify-center hover:bg-gray-100 rounded-md`}
-      value={value}
-      aria-label={format || "toolbar button"}
-    >
-      {icon}
-    </button>
-  )
+    try {
+      setIsPublishing(true)
+      const res  = await fetch("/api/blogs", { method: "POST", body: fd })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Failed to publish")
+      alert("Blog published 🎉")
+      router.push(`/blog-open?blogId=${data.blog.blog_id}`)
+    } catch (err: any) {
+      alert(err.message || "Server error")
+    } finally {
+      setIsPublishing(false)
+    }
+  }
 
+  /* ── UI ───────────────────────────────────────────────────────────────── */
   return (
-    // Responsive outermost container
     <div className="w-full max-w-7xl mx-auto px-4 mt-[50px] sm:px-6 lg:px-8 py-8">
-      {/* Main content wrapper: flex for columns, stacks on smaller screens */}
       <div className="flex flex-col lg:flex-row lg:gap-x-8">
-        {/* Left Column: Editor Fields - Takes more space on large screens */}
+
+        {/* ───── editor column ─────────────────────────────────────── */}
         <div className="w-full lg:flex-[2_1_0%] flex flex-col gap-y-3 mb-8 lg:mb-0">
-          <Input
-            type="text"
+
+          <input
             placeholder="Enter your blog title..."
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="h-auto text-2xl md:text-3xl font-bold font-['Figtree'] shadow-none placeholder:text-gray-400 border-none focus-visible:ring-0 focus-visible:ring-offset-0 p-0"
-            style={{ lineHeight: "1.25" }} // Adjusted line height for responsiveness
+            className="text-[30px] text-[#ADAEBC] font-bold border-none shadow-none focus-visible:ring-0"
           />
-          <Input
-            type="text"
-            placeholder="Enter your Sub heading..."
+
+          <input
+            placeholder="Enter your sub heading..."
             value={subheading}
             onChange={(e) => setSubheading(e.target.value)}
-            className="h-auto text-xl md:text-2xl font-medium font-['Figtree'] shadow-none placeholder:text-[#ADAEBC] border-none focus-visible:ring-0 focus-visible:ring-offset-0 p-0"
-            style={{ lineHeight: "1.25" }} // Adjusted line height
+            className="text-[24px] font-[600] text-[#ADAEBC] border-none shadow-none focus-visible:ring-0"
           />
-          <div className="bg-white rounded-lg shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] border border-gray-200 p-4 sm:p-6">
-            <h3 className="text-gray-900 text-base sm:text-lg font-semibold font-['Figtree'] mb-4">Featured Image</h3>
+
+          {/* featured image */}
+          <div className="bg-white rounded-lg border p-4">
+            <h3 className="font-semibold text-[#111827] mb-2">Featured Image</h3>
             <div
               onDrop={handleImageDrop}
               onDragOver={handleDragOver}
-              className="w-full h-40 sm:h-36 rounded-lg border-2 border-dashed border-gray-300 flex flex-col justify-center items-center text-center cursor-pointer hover:border-blue-500"
               onClick={() => imageInputRef.current?.click()}
+              className="h-40 border-2 border-dashed rounded-lg flex items-center justify-center cursor-pointer"
             >
               <input
                 ref={imageInputRef}
                 type="file"
-                id="featuredImageInput"
                 accept="image/*"
                 onChange={handleImageUpload}
                 className="hidden"
               />
               {imagePreview ? (
-                <img
-                  src={imagePreview || "/placeholder.svg"}
-                  alt="Featured preview"
-                  className="max-h-full max-w-full object-contain rounded-md"
-                />
+                <img src={imagePreview} alt="Preview" className="h-full object-contain rounded" />
               ) : (
-                <>
-                  <UploadCloud className="w-8 h-6 sm:w-9 sm:h-7 text-gray-400 mb-2" />
-                  <p className="text-gray-600 text-xs sm:text-lg/4 w-50  font-normal font-['Figtree']">
-                    Click to upload or drag and drop
-                  </p>
-                  <p className="text-gray-500 mt-2 text-[10px] sm:text-xs font-normal font-['Figtree']">
-                    PNG, JPG, GIF up to 10MB
-                  </p>
-                </>
+                <div className="text-center">
+                  <UploadCloud className="w-8 h-8 mx-auto mb-2" />
+                  <p className="text-sm">Click or drag image</p>
+                </div>
               )}
             </div>
+          </div>
 
-          </div>
-          <div
-            id="toolbar"
-            className="w-full h-auto p-2 bg-white rounded-lg shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] border border-gray-200 flex items-center flex-wrap gap-x-1 gap-y-1"
-          >
-            <div className="flex border-r border-gray-200 pr-1 flex-wrap">
-              <ToolbarButton format="bold" icon={<Bold size={16} className="text-gray-600" />} />
-              <ToolbarButton format="italic" icon={<Italic size={16} className="text-gray-600" />} />
-              <ToolbarButton format="underline" icon={<Underline size={16} className="text-gray-600" />} />
-              <ToolbarButton format="strike" icon={<Strikethrough size={16} className="text-gray-600" />} />
-            </div>
-            <div className="border-r border-gray-200 px-1 flex-wrap">
-              <select className="ql-header h-8 text-gray-600 text-xs sm:text-sm font-normal font-['Figtree'] bg-transparent border-none focus:ring-0 focus:outline-none rounded-md hover:bg-gray-100 p-1">
-                <option value="">Normal</option> <option value="1">Heading 1</option>{" "}
-                <option value="2">Heading 2</option> <option value="3">Heading 3</option>
-              </select>
-            </div>
-            <div className="flex border-r border-gray-200 px-1 flex-wrap">
-              <ToolbarButton format="align" value="" icon={<AlignLeft size={16} className="text-gray-600" />} />
-              <ToolbarButton format="align" value="center" icon={<AlignCenter size={16} className="text-gray-600" />} />
-              <ToolbarButton format="align" value="right" icon={<AlignRight size={16} className="text-gray-600" />} />
-            </div>
-            <div className="flex border-r border-gray-200 px-1 flex-wrap">
-              <ToolbarButton format="list" value="ordered" icon={<ListOrdered size={16} className="text-gray-600" />} />
-              <ToolbarButton format="list" value="bullet" icon={<List size={16} className="text-gray-600" />} />
-              <ToolbarButton format="blockquote" icon={<Quote size={16} className="text-gray-600" />} />
-            </div>
-            <div className="flex px-1 flex-wrap">
-              <ToolbarButton format="link" icon={<Link2 size={16} className="text-gray-600" />} />
-              <ToolbarButton format="image" icon={<ImageIcon size={16} className="text-gray-600" />} />
-              <ToolbarButton format="video" icon={<Video size={16} className="text-gray-600" />} />
-              <ToolbarButton icon={<MoreHorizontal size={16} className="text-gray-600" />} />
-            </div>
-          </div>
-          <div className="w-full min-h-[300px] md:min-h-[400px] lg:h-[550px] bg-white rounded-lg shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] border border-gray-200 overflow-hidden">
+          {/* rich text */}
+          <div className="min-h-[300px] bg-white border rounded-lg overflow-hidden">
             <ReactQuill
-              ref={quillRef}
               theme="snow"
               value={content}
               onChange={setContent}
               modules={modules}
               formats={formats}
-              placeholder="Start writing your blog post..."
-              className="h-full [&_.ql-container]:border-none [&_.ql-editor]:min-h-[inherit] [&_.ql-editor]:font-['Figtree'] [&_.ql-editor]:text-sm [&_.ql-editor]:md:text-base [&_.ql-editor]:text-gray-700 [&_.ql-editor.ql-blank::before]:text-gray-400 [&_.ql-editor.ql-blank::before]:font-normal [&_.ql-editor.ql-blank::before]:not-italic"
-              style={{ height: "calc(100% - 42px)" }}
+              placeholder="Start writing your blog post…"
+              className="h-full"
+              style={{ height: "100%" }}
             />
           </div>
         </div>
 
-        {/* Right Column: Sidebar - Takes less space, sticky on large screens */}
-        <div className="w-full lg:w-80 lg:flex-[1_1_0%] lg:max-w-xs flex flex-col gap-y-6 lg:sticky lg:top-20 self-start">
-          <div className="bg-white rounded-lg shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] border border-gray-200 p-4 sm:p-6 flex flex-col gap-y-6">
-            <h3 className="text-gray-900 text-base sm:text-lg font-semibold font-['Figtree']">Categories & Tags</h3>
+        {/* ───── sidebar column ────────────────────────────────────── */}
+        <div className="w-full lg:w-80 lg:max-w-xs flex flex-col gap-y-6 lg:sticky lg:top-20 self-start">
+
+          <div className="bg-white rounded-lg shadow border p-4 flex flex-col gap-y-4">
+            {/* category */}
             <div>
-              <label className="block text-gray-700 text-xs sm:text-sm font-medium font-['Figtree'] mb-1">
-                Category
-              </label>
-              <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="w-full font-['Figtree'] text-xs sm:text-sm">
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
+              <label className="text-sm font-medium">Category</label>
+              <Select value={category}  onValueChange={setCategory}>
+                <SelectTrigger className="w-full"><SelectValue placeholder="Select category" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="technology">Technology</SelectItem>
                   <SelectItem value="design">Design</SelectItem>
@@ -276,14 +264,12 @@ const BlogEditorBody: React.FC<BlogEditorBodyProps> = ({ initialData = {}, onPub
                 </SelectContent>
               </Select>
             </div>
+
+            {/* sub category */}
             <div>
-              <label className="block text-gray-700 text-xs sm:text-sm font-medium font-['Figtree'] mb-1">
-                Sub-Category
-              </label>
+              <label className="text-sm font-medium">Sub‑Category</label>
               <Select value={subCategory} onValueChange={setSubCategory}>
-                <SelectTrigger className="w-full font-['Figtree'] text-xs sm:text-sm">
-                  <SelectValue placeholder="Select sub-category" />
-                </SelectTrigger>
+                <SelectTrigger className="w-full"><SelectValue placeholder="Select sub‑category" /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="web-dev">Web Development</SelectItem>
                   <SelectItem value="ui-ux">UI/UX</SelectItem>
@@ -292,59 +278,52 @@ const BlogEditorBody: React.FC<BlogEditorBodyProps> = ({ initialData = {}, onPub
                 </SelectContent>
               </Select>
             </div>
+
+            {/* tags */}
             <div>
-              <label className="block text-gray-700 text-xs sm:text-sm font-medium font-['Figtree'] mb-1">Tags</label>
-              <div className="flex gap-x-2">
+              <label className="text-sm font-medium">Tags</label>
+              <div className="flex gap-2">
                 <Input
-                  type="text"
                   placeholder="Add a tag"
                   value={currentTag}
                   onChange={(e) => setCurrentTag(e.target.value)}
-                  onKeyPress={(e) => e.key === "Enter" && addTag()}
-                  className="font-['Figtree'] text-xs sm:text-sm"
+                  onKeyDown={(e) => e.key === "Enter" && addTag()}
                 />
-                <Button onClick={addTag} className="font-['Figtree'] text-xs sm:text-sm px-3">
-                  Add
-                </Button>
+                <Button onClick={addTag} size="sm">Add</Button>
               </div>
               {tags.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-2">
-                  {tags.map((tag, index) => (
-                    <div
-                      key={index}
-                      className="bg-blue-100 text-blue-800 text-[10px] sm:text-xs font-medium font-['Figtree'] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full flex items-center"
-                    >
+                  {tags.map((tag) => (
+                    <span key={tag} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs flex items-center">
                       {tag}
-                      <button
-                        onClick={() => removeTag(tag)}
-                        className="ml-1 sm:ml-1.5 text-blue-600 hover:text-blue-800"
-                      >
-                        {/* <X size={10} sm:size={12} /> */}
-                      </button>
-                    </div>
+                      <button onClick={() => removeTag(tag)} className="ml-1 text-blue-500">×</button>
+                    </span>
                   ))}
                 </div>
               )}
             </div>
           </div>
-          <div className="flex flex-col gap-y-3">
-            <Button
-              onClick={handlePreview}
-              variant="outline"
-              className="w-full font-bold font-['Figtree'] rounded-full text-sm md:text-base py-7 border-blue-500 text-black hover:bg-blue-50"
-            >
-              Preview  <ArrowRight />
-            </Button>
-            <Button
-              onClick={handlePublish}
-              className="w-full font-bold font-['Figtree'] rounded-full text-sm md:text-base py-7 bg-blue-500 hover:bg-blue-600 text-gray-50"
-            >
-              Publish <ArrowRight />
-            </Button>
-          </div>
+
+          {/* ── action buttons ────────────────────────────────────── */}
+          <Button
+            onClick={handlePreview}
+            variant="outline"
+            className="w-full rounded-full py-6 font-bold flex items-center justify-center gap-2"
+          >
+            <Eye size={18}/> Preview
+          </Button>
+
+          <Button
+            onClick={handlePublish}
+            disabled={isPublishing}
+            className="w-full rounded-full bg-blue-500 hover:bg-blue-600 text-white py-6 font-bold disabled:opacity-50"
+          >
+            {isPublishing ? "Publishing…" : "Publish"} <ArrowRight className="ml-2" />
+          </Button>
         </div>
       </div>
     </div>
   )
 }
+
 export default BlogEditorBody
