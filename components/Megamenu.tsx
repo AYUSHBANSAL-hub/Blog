@@ -15,7 +15,7 @@ const MegaMenuContent = ({ activeLabel }: { activeLabel: string }) => {
         { text: "Marketplace", href: "#" },
       ],
     },
-    Service: {
+    Create: {
       heading: "Our Services",
       description: "Tailored solutions for your business needs.",
       links: [
@@ -33,7 +33,7 @@ const MegaMenuContent = ({ activeLabel }: { activeLabel: string }) => {
         { text: "React Performance Tips", href: "#" },
       ],
     },
-    "Case Studies": {
+    "Profile": {
       heading: "Success Stories",
       description: "See how our clients achieved success.",
       links: [

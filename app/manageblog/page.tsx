@@ -3,7 +3,6 @@
 import React, { useState, useRef } from "react"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/navigation"
-                 // or any toast lib you prefer
 
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -14,6 +13,14 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogClose
+} from "@/components/ui/dialog"
 
 import { UploadCloud, ArrowRight, Eye } from "lucide-react"
 
@@ -86,6 +93,7 @@ const BlogEditorBody: React.FC = () => {
   const [tags, setTags]                 = useState<string[]>([])
   const [currentTag, setCurrentTag]     = useState("")
   const [isPublishing, setIsPublishing] = useState(false)
+  const [showPreview, setShowPreview]   = useState(false)   // NEW: modal state
 
   const imageInputRef = useRef<HTMLInputElement | null>(null)
 
@@ -120,32 +128,13 @@ const BlogEditorBody: React.FC = () => {
 
   const removeTag = (t: string) => setTags(tags.filter((x) => x !== t))
 
-  /* ── preview (opens a new tab) ────────────────────────────────────────── */
+  /* ── preview (opens modal) ────────────────────────────────────────────── */
   const handlePreview = () => {
     if (!title.trim() && !content.trim()) {
       alert("Nothing to preview.")
       return
     }
-    const win = window.open("", "_blank")
-    if (!win) return
-    win.document.write(`
-      <html>
-        <head>
-          <title>Preview – ${title}</title>
-          <style>
-            body{font-family:system-ui;margin:40px;line-height:1.6}
-            img{max-width:100%;height:auto}
-          </style>
-        </head>
-        <body>
-          <h1>${title}</h1>
-          <h2>${subheading}</h2>
-          ${imagePreview ? `<img src="${imagePreview}" alt="cover"/>` : ""}
-          ${content}
-        </body>
-      </html>
-    `)
-    win.document.close()
+    setShowPreview(true)
   }
 
   /* ── publish (POST /api/blogs) ────────────────────────────────────────── */
@@ -185,144 +174,174 @@ const BlogEditorBody: React.FC = () => {
 
   /* ── UI ───────────────────────────────────────────────────────────────── */
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 mt-[50px] sm:px-6 lg:px-8 py-8">
-      <div className="flex flex-col lg:flex-row lg:gap-x-8">
+    <>
+      {/* ── MAIN EDITOR LAYOUT ─────────────────────────────────────────── */}
+      <div className="w-full max-w-7xl mx-auto px-4 mt-[50px] sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col lg:flex-row lg:gap-x-8">
 
-        {/* ───── editor column ─────────────────────────────────────── */}
-        <div className="w-full lg:flex-[2_1_0%] flex flex-col gap-y-3 mb-8 lg:mb-0">
+          {/* ───── editor column ─────────────────────────────────────── */}
+          <div className="w-full lg:flex-[2_1_0%] flex flex-col gap-y-3 mb-8 lg:mb-0">
 
-          <input
-            placeholder="Enter your blog title..."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="text-[30px] text-[#ADAEBC] font-bold border-none shadow-none focus-visible:ring-0"
-          />
-
-          <input
-            placeholder="Enter your sub heading..."
-            value={subheading}
-            onChange={(e) => setSubheading(e.target.value)}
-            className="text-[24px] font-[600] text-[#ADAEBC] border-none shadow-none focus-visible:ring-0"
-          />
-
-          {/* featured image */}
-          <div className="bg-white rounded-lg border p-4">
-            <h3 className="font-semibold text-[#111827] mb-2">Featured Image</h3>
-            <div
-              onDrop={handleImageDrop}
-              onDragOver={handleDragOver}
-              onClick={() => imageInputRef.current?.click()}
-              className="h-40 border-2 border-dashed rounded-lg flex items-center justify-center cursor-pointer"
-            >
-              <input
-                ref={imageInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="hidden"
-              />
-              {imagePreview ? (
-                <img src={imagePreview} alt="Preview" className="h-full object-contain rounded" />
-              ) : (
-                <div className="text-center">
-                  <UploadCloud className="w-8 h-8 mx-auto mb-2" />
-                  <p className="text-sm">Click or drag image</p>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* rich text */}
-          <div className="min-h-[300px] bg-white border rounded-lg overflow-hidden">
-            <ReactQuill
-              theme="snow"
-              value={content}
-              onChange={setContent}
-              modules={modules}
-              formats={formats}
-              placeholder="Start writing your blog post…"
-              className="h-full"
-              style={{ height: "100%" }}
+            <input
+              placeholder="Enter your blog title..."
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="text-[30px] text-[#ADAEBC] font-bold border-none shadow-none focus-visible:ring-0"
             />
-          </div>
-        </div>
 
-        {/* ───── sidebar column ────────────────────────────────────── */}
-        <div className="w-full lg:w-80 lg:max-w-xs flex flex-col gap-y-6 lg:sticky lg:top-20 self-start">
+            <input
+              placeholder="Enter your sub heading..."
+              value={subheading}
+              onChange={(e) => setSubheading(e.target.value)}
+              className="text-[24px] font-[600] text-[#ADAEBC] border-none shadow-none focus-visible:ring-0"
+            />
 
-          <div className="bg-white rounded-lg shadow border p-4 flex flex-col gap-y-4">
-            {/* category */}
-            <div>
-              <label className="text-sm font-medium">Category</label>
-              <Select value={category}  onValueChange={setCategory}>
-                <SelectTrigger className="w-full"><SelectValue placeholder="Select category" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="technology">Technology</SelectItem>
-                  <SelectItem value="design">Design</SelectItem>
-                  <SelectItem value="startup">Startup</SelectItem>
-                  <SelectItem value="lifestyle">Lifestyle</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* sub category */}
-            <div>
-              <label className="text-sm font-medium">Sub‑Category</label>
-              <Select value={subCategory} onValueChange={setSubCategory}>
-                <SelectTrigger className="w-full"><SelectValue placeholder="Select sub‑category" /></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="web-dev">Web Development</SelectItem>
-                  <SelectItem value="ui-ux">UI/UX</SelectItem>
-                  <SelectItem value="saas">SaaS</SelectItem>
-                  <SelectItem value="mobile-apps">Mobile Apps</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* tags */}
-            <div>
-              <label className="text-sm font-medium">Tags</label>
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Add a tag"
-                  value={currentTag}
-                  onChange={(e) => setCurrentTag(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && addTag()}
+            {/* featured image */}
+            <div className="bg-white rounded-lg border p-4">
+              <h3 className="font-semibold text-[#111827] mb-2">Featured Image</h3>
+              <div
+                onDrop={handleImageDrop}
+                onDragOver={handleDragOver}
+                onClick={() => imageInputRef.current?.click()}
+                className="h-40 border-2 border-dashed rounded-lg flex items-center justify-center cursor-pointer"
+              >
+                <input
+                  ref={imageInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  className="hidden"
                 />
-                <Button onClick={addTag} size="sm">Add</Button>
+                {imagePreview ? (
+                  <img src={imagePreview} alt="Preview" className="h-full object-contain rounded" />
+                ) : (
+                  <div className="text-center">
+                    <UploadCloud className="w-8 h-8 mx-auto mb-2" />
+                    <p className="text-sm">Click or drag image</p>
+                  </div>
+                )}
               </div>
-              {tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {tags.map((tag) => (
-                    <span key={tag} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs flex items-center">
-                      {tag}
-                      <button onClick={() => removeTag(tag)} className="ml-1 text-blue-500">×</button>
-                    </span>
-                  ))}
-                </div>
-              )}
+            </div>
+
+            {/* rich text */}
+            <div className="min-h-[300px] bg-white border rounded-lg overflow-hidden">
+              <ReactQuill
+                theme="snow"
+                value={content}
+                onChange={setContent}
+                modules={modules}
+                formats={formats}
+                placeholder="Start writing your blog post…"
+                className="h-full"
+                style={{ height: "100%" }}
+              />
             </div>
           </div>
 
-          {/* ── action buttons ────────────────────────────────────── */}
-          <Button
-            onClick={handlePreview}
-            variant="outline"
-            className="w-full rounded-full py-6 font-bold flex items-center justify-center gap-2"
-          >
-            <Eye size={18}/> Preview
-          </Button>
+          {/* ───── sidebar column ────────────────────────────────────── */}
+          <div className="w-full lg:w-80 lg:max-w-xs flex flex-col gap-y-6 lg:sticky lg:top-20 self-start">
 
-          <Button
-            onClick={handlePublish}
-            disabled={isPublishing}
-            className="w-full rounded-full bg-blue-500 hover:bg-blue-600 text-white py-6 font-bold disabled:opacity-50"
-          >
-            {isPublishing ? "Publishing…" : "Publish"} <ArrowRight className="ml-2" />
-          </Button>
+            <div className="bg-white rounded-lg shadow border p-4 flex flex-col gap-y-4">
+              {/* category */}
+              <div>
+                <label className="text-sm font-medium">Category</label>
+                <Select value={category}  onValueChange={setCategory}>
+                  <SelectTrigger className="w-full"><SelectValue placeholder="Select category" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="technology">Technology</SelectItem>
+                    <SelectItem value="design">Design</SelectItem>
+                    <SelectItem value="startup">Startup</SelectItem>
+                    <SelectItem value="lifestyle">Lifestyle</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* sub category */}
+              <div>
+                <label className="text-sm font-medium">Sub‑Category</label>
+                <Select value={subCategory} onValueChange={setSubCategory}>
+                  <SelectTrigger className="w-full"><SelectValue placeholder="Select sub‑category" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="web-dev">Web Development</SelectItem>
+                    <SelectItem value="ui-ux">UI/UX</SelectItem>
+                    <SelectItem value="saas">SaaS</SelectItem>
+                    <SelectItem value="mobile-apps">Mobile Apps</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* tags */}
+              <div>
+                <label className="text-sm font-medium">Tags</label>
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Add a tag"
+                    value={currentTag}
+                    onChange={(e) => setCurrentTag(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && addTag()}
+                  />
+                  <Button onClick={addTag} size="sm">Add</Button>
+                </div>
+                {tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {tags.map((tag) => (
+                      <span key={tag} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs flex items-center">
+                        {tag}
+                        <button onClick={() => removeTag(tag)} className="ml-1 text-blue-500">×</button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* ── action buttons ────────────────────────────────────── */}
+            <Button
+              onClick={handlePreview}
+              variant="outline"
+              className="w-full rounded-full py-6 font-bold flex items-center justify-center gap-2"
+            >
+              <Eye size={18}/> Preview
+            </Button>
+
+            <Button
+              onClick={handlePublish}
+              disabled={isPublishing}
+              className="w-full rounded-full bg-blue-500 hover:bg-blue-600 text-white py-6 font-bold disabled:opacity-50"
+            >
+              {isPublishing ? "Publishing…" : "Publish"} <ArrowRight className="ml-2" />
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* ── PREVIEW MODAL ───────────────────────────────────────────────── */}
+      <Dialog open={showPreview} onOpenChange={setShowPreview}>
+        <DialogContent className="max-w-3xl">
+          <DialogHeader>
+            <DialogTitle>Preview</DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-4 overflow-y-auto max-h-[70vh]">
+            {title && <h1 className="text-3xl font-bold">{title}</h1>}
+            {subheading && <h2 className="text-xl font-semibold">{subheading}</h2>}
+            {imagePreview && (
+              <img
+                src={imagePreview}
+                alt="cover"
+                className="w-full h-auto rounded"
+              />
+            )}
+            {content && (
+              <div
+                className="prose prose-sm sm:prose lg:prose-lg max-w-none"
+                dangerouslySetInnerHTML={{ __html: content }}
+              />
+            )}
+          </div>         
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }
 

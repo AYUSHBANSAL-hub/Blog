@@ -31,10 +31,10 @@ const Navbar = () => {
 
 
   const navItems = [
-    { label: "Product", href: "/profile" },
-    { label: "Service", href: "/manageblog" },
+    { label: "Product", href: "/modal" },
+    { label: "Create", href: "/manageblog" },
     { label: "Blogs", href: "/Blog" },          // fixed
-    { label: "Case Studies", href: "/blog-open" },
+    { label: "Profile", href: "/profile" },
     { label: "About", href: "/signup" },
   ];
 

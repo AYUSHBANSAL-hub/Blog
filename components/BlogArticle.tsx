@@ -1,4 +1,7 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,39 +12,40 @@ import {
 import { ChevronRightIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card, CardContent } from "./ui/card";
+import { Skeleton } from "./ui/skeleton";
 
 const ArticleSection = () => {
-  const articleMeta = {
-    date: "29 May, 2025",
-    readTime: "2 min read",
-    summary:
-      "Helping our customers build a 'Resilient Future'",
-  };
+  const searchParams = useSearchParams();
+  const blogId = searchParams.get("blogId");
+  const [blog, setBlog] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  const tags = ["AI", "Innovation", "Blockchain"];
+  useEffect(() => {
+    const fetchBlog = async () => {
+      if (!blogId) return;
+      try {
+        const res = await fetch(`/api/blogs/${blogId}`);
+        const data = await res.json();
+        if (data.status) {
+          setBlog(data.blog);
+        }
+      } catch (err) {
+        console.error("Failed to fetch blog:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const keyPoints = [
-    {
-      label: "AI",
-      content:
-        "To ask your questions using your voice, simply tap the microphone icon and ask your query in AI Mode",
-    },
-    {
-      label: "Innovation",
-      content:
-        "We’re bringing the powerful capabilities of Lens into AI Mode, allowing you to easily ask complex questions about what you see. ",
-    },
-    {
-      label: "Blockchain",
-      content:
-        "This launch is part of our long-term vision to make finding and accessing information even more effortless on Search. With our latest advancements in AI, we've seen people turn to Google Search to tackle increasingly complex and nuanced questions",
-    },
-  ];
+    fetchBlog();
+  }, [blogId]);
+
+  const wordCount = blog?.content?.split(/\s+/).length || 0;
+  const readTime = Math.ceil(wordCount / 200);
 
   return (
     <section className="flex flex-col items-center w-full">
+      {/* Top Container */}
       <div className="w-full max-w-[1324px] flex flex-col items-start py-9">
-        {/* Breadcrumb */}
         <div className="w-full flex justify-center mb-6 px-4 sm:px-6 md:px-0">
           <div className="w-full max-w-[1046px]">
             <Breadcrumb className="overflow-x-auto">
@@ -80,111 +84,156 @@ const ArticleSection = () => {
           </div>
         </div>
 
-        {/* Title */}
         <div className="w-full flex justify-center px-4 sm:px-6 md:px-0">
           <div className="w-full max-w-[1046px]">
-            <h1 className="text-[32px] sm:text-[44px] md:text-[59.8px] font-normal text-[#202124] tracking-[-0.3px] md:tracking-[-0.5px] leading-tight md:leading-[72px]">
-              Google Search: Introducing AI Mode in India
-            </h1>
+            {loading ? (
+              <Skeleton className="h-[60px] w-full rounded-md" />
+            ) : (
+              <h1 className="text-[32px] sm:text-[44px] md:text-[59.8px] font-normal text-[#202124] tracking-[-0.3px] md:tracking-[-0.5px] leading-tight md:leading-[72px]">
+                {blog?.title}
+              </h1>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Meta Info */}
+      {/* Blog Info */}
       <div className="w-full max-w-[1260px] px-4 sm:px-6 md:px-[60px] lg:px-[107px] pb-9">
         <div className="flex flex-col md:flex-row">
           <div className="pr-0 md:pr-6 border-r md:border-r border-[#dadce0]">
-            <p className="text-[#5f6368] text-[13.9px] leading-6" style={{ fontFamily: "var(--font-roboto)" }}>
-              {articleMeta.date}
-              <br />
-              {articleMeta.readTime}
-            </p>
+            {loading ? (
+              <Skeleton className="h-4 w-24 mb-2" />
+            ) : (
+              <p
+                className="text-[#5f6368] text-[13.9px] leading-6"
+                style={{ fontFamily: "var(--font-roboto)" }}
+              >
+                {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}
+                <br />
+                {readTime} min read
+              </p>
+            )}
           </div>
           <div className="flex-1 mt-4 md:mt-0 md:ml-6">
-            <p className="text-[#5f6368] text-base md:text-lg leading-[26px] md:leading-[30px]" style={{ fontFamily: "var(--font-roboto)" }}>
-              {articleMeta.summary}
-            </p>
+            {loading ? (
+              <Skeleton className="h-5 w-64" />
+            ) : (
+              <p
+                className="text-[#5f6368] text-base md:text-lg leading-[26px] md:leading-[30px]"
+                style={{ fontFamily: "var(--font-roboto)" }}
+              >
+                Helping our customers build a 'Resilient Future'
+              </p>
+            )}
           </div>
         </div>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-[13px] mt-[13px]">
-          {tags.map((tag, index) => (
-            <span key={index} className="bg-[#e8f0fe] text-[#174ea6] rounded-[30px] px-5 py-2.5 text-[13.3px]" style={{ fontFamily: "var(--font-roboto)" }}>
-              {tag}
-            </span>
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex gap-2 mt-[13px]">
+            <Skeleton className="h-6 w-16 rounded-full" />
+            <Skeleton className="h-6 w-20 rounded-full" />
+            <Skeleton className="h-6 w-14 rounded-full" />
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-[13px] mt-[13px]">
+            {(blog?.tags || []).map((tag: string, index: number) => (
+              <span
+                key={index}
+                className="bg-[#e8f0fe] text-[#174ea6] rounded-[30px] px-5 py-2.5 text-[13.3px]"
+                style={{ fontFamily: "var(--font-roboto)" }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* Author and Share */}
+      {/* Author Section */}
       <div className="w-full max-w-[1260px] flex flex-col md:flex-row justify-between items-start md:items-center px-4 sm:px-6 md:px-[60px] lg:px-[107px] mb-6">
-        <div className="flex items-start mb-6 md:mb-0">
-          <Avatar className="w-10 h-10 border border-[#e8eaed] rounded-full mr-4">
-            <AvatarImage src="/images/dp-1.svg" className="w-10 h-10 rounded-full object-cover" />
-            <AvatarFallback>XYZ</AvatarFallback>
-          </Avatar>
-          <div>
-            <h3 className="text-sm font-bold text-[#202124]" style={{ fontFamily: "var(--font-roboto)" }}>Neha Gupta</h3>
-            <p className="text-sm font-medium text-[#5f6368] tracking-[0.25px] leading-[20.2px]" style={{ fontFamily: "var(--font-roboto)" }}>
-              Vice President, Product Management, Search
-            </p>
+        {loading ? (
+          <div className="flex items-center gap-4">
+            <Skeleton className="w-10 h-10 rounded-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-3 w-52" />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex items-start mb-6 md:mb-0">
+            <Avatar className="w-10 h-10 border border-[#e8eaed] rounded-full mr-4">
+              <AvatarImage
+                src="/images/dp-1.svg"
+                className="w-10 h-10 rounded-full object-cover"
+              />
+              <AvatarFallback>XYZ</AvatarFallback>
+            </Avatar>
+            <div>
+              <h3
+                className="text-sm font-bold text-[#202124]"
+                style={{ fontFamily: "var(--font-roboto)" }}
+              >
+                Neha Gupta
+              </h3>
+              <p
+                className="text-sm font-medium text-[#5f6368] tracking-[0.25px] leading-[20.2px]"
+                style={{ fontFamily: "var(--font-roboto)" }}
+              >
+                Vice President, Product Management, Search
+              </p>
+            </div>
+          </div>
+        )}
         <button className="flex items-center">
           <img src="/images/share.svg" className="w-[19px] h-[18px]" />
-          <span className="ml-2.5 text-base text-[#202124]" style={{ fontFamily: "var(--font-roboto)" }}>
+          <span
+            className="ml-2.5 text-base text-[#202124]"
+            style={{ fontFamily: "var(--font-roboto)" }}
+          >
             Share
           </span>
         </button>
       </div>
 
-      {/* Featured Image */}
+      {/* Cover Image */}
       <div className="w-full max-w-[1260px] px-4 sm:px-6 md:px-[60px] lg:px-[107px]">
-        <img src="/images/blog-img.svg" className="w-full h-auto rounded-lg object-cover" />
+        {loading ? (
+          <Skeleton className="w-full h-[300px] rounded-lg" />
+        ) : (
+          <img
+            src={blog?.coverImageUrl || "/images/blog-img.svg"}
+            className="w-full h-auto rounded-lg object-cover"
+          />
+        )}
       </div>
 
-      {/* Article Body */}
-      <div className="w-full max-w-[1260px] px-4 sm:px-6 md:px-[80px] lg:px-[214px] pt-10">
-        <div className="flex flex-col items-center gap-12">
-          {/* Section 1 */}
-          <div className="w-full max-w-[726px]">
-            <Card className="border-none shadow-none">
-              <CardContent className="p-0">
-                <p className="text-[#5f6368] text-base leading-[26px] mb-4" style={{ fontFamily: "var(--font-roboto)" }}>
-                 Imagine being able to ask whatever's on your mind, even a question that's very complex or multi-layered, 
-                 and in an instant, receiving a comprehensive, AI-powered response that unpacks the topic using advanced reasoning, 
-                 complete with essential details and links to explore. 
-                </p>
-                <p className="text-[#5f6368] text-base leading-[26px]" style={{ fontFamily: "var(--font-roboto)" }}>
-                  We first introduced AI Mode as an experiment in the U.S. earlier this year, and started rolling out to users outside of Labs at 
-                  Google I/O 2025. It's already resonating with users who appreciate its speed, quality, and fresh responses. 
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Section Image */}
-          <div className="w-full max-w-[617px] rounded-lg overflow-hidden">
-            <img src="/images/blog-gif.gif" className="w-full h-auto object-cover" />
-          </div>
-
-          {/* Section 2 with Key Points */}
-          <div className="w-full max-w-[726px]">
-            <Card className="border-none shadow-none">
-              <CardContent className="p-0">
-                <h2 className="text-[24px] md:text-[28px] font-bold text-[#202124] leading-9 py-4">
-                  Key Insights & Analysis
-                </h2>
-                {keyPoints.map((point, index) => (
-                  <p key={index} className="text-[#5f6368] text-base leading-[26px] mb-3" style={{ fontFamily: "var(--font-roboto)" }}>
-                    <span className="font-bold">{point.label}:</span>
-                    <span className="font-light"> {point.content}</span>
-                  </p>
-                ))}
-              </CardContent>
-            </Card>
-          </div>
+      {/* Blog Content */}
+      <div className="w-full max-w-[1260px] px-4 sm:px-6 md:px-[80px] lg:px-[214px] pt-10 pb-20">
+        <div className="w-full max-w-[726px] mx-auto">
+          <Card className="border-none shadow-none">
+            <CardContent className="p-0">
+              {loading ? (
+                <div className="space-y-4">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-[90%]" />
+                  <Skeleton className="h-4 w-[80%]" />
+                  <Skeleton className="h-4 w-[95%]" />
+                  <Skeleton className="h-4 w-[85%]" />
+                </div>
+              ) : (
+                <div
+                  className="text-[#5f6368] text-base leading-[26px] space-y-4"
+                  style={{ fontFamily: "var(--font-roboto)" }}
+                  dangerouslySetInnerHTML={{ __html: blog.content }}
+                />
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>
