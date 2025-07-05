@@ -12,19 +12,24 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import MegaMenuContent from "./Megamenu";
-import { useAppSelector } from "@/lib/hook";
+import { useAppSelector, useAppDispatch } from "@/lib/hook";
+import { clearUser } from "@/lib/features/UserSlice";
+
 
 const Navbar = () => {
   const pathname = usePathname();
-  const router   = useRouter();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const [isMenuOpen, setIsMenuOpen]         = useState(false);
+ 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
-  const [searchQuery, setSearchQuery]       = useState("");
-  const [searchResults, setSearchResults]   = useState<any[]>([]);
-  const [loading, setLoading]               = useState(false);
-
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);   
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const avatarRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
   const user = useAppSelector((s) => s.user);
@@ -35,13 +40,12 @@ const Navbar = () => {
 
   const navItems = [
     { label: "Product", href: "/modal" },
-    { label: "Create",  href: "/manageblog" },
-    { label: "Blogs",   href: "/Blog" },
+    { label: "Create", href: "/manageblog" },
+    { label: "Blogs", href: "/Blog" },
     { label: "Profile", href: "/profile" },
-    { label: "About",   href: "/signup" },
+    { label: "About", href: "/signup" },
   ];
 
-  
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -51,12 +55,18 @@ const Navbar = () => {
         setIsSearchExpanded(false);
         setSearchResults([]);
       }
+      if (
+        avatarRef.current &&
+        !avatarRef.current.contains(e.target as Node)
+      ) {
+        setDropdownOpen(false);
+      }
     };
-    if (isSearchExpanded) document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isSearchExpanded]);
+  }, []);
 
-  /* ───────────────────────── search debounce + fetch ─────────────── */
+  
   useEffect(() => {
     if (!searchQuery.trim()) {
       setSearchResults([]);
@@ -66,11 +76,10 @@ const Navbar = () => {
     debounceRef.current = setTimeout(async () => {
       try {
         setLoading(true);
-        const res  = await fetch(`/api/blogs/search?search=${encodeURIComponent(searchQuery.trim())}`);
+        const res = await fetch(`/api/blogs/search?search=${encodeURIComponent(searchQuery.trim())}`);
         const data = await res.json();
         setSearchResults(data.blogs || []);
-      } catch (e) {
-        console.error(e);
+      } catch {
         setSearchResults([]);
       } finally {
         setLoading(false);
@@ -86,15 +95,19 @@ const Navbar = () => {
   const handleNavContainerMouseLeave = () => {
     megaMenuTimeoutRef.current = setTimeout(() => setActiveMegaMenu(null), 150);
   };
-  const handleMegaMenuMouseEnter = () => megaMenuTimeoutRef.current && clearTimeout(megaMenuTimeoutRef.current);
-  const handleMegaMenuMouseLeave = () => {
-    megaMenuTimeoutRef.current = setTimeout(() => setActiveMegaMenu(null), 150);
-  };
 
   const isLinkActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  /* ───────────────────────── result item component ───────────────── */
+  
+  const handleLogout = () => {
+    dispatch(clearUser());              // clear Redux
+    localStorage.removeItem("token");   // remove JWT
+    setDropdownOpen(false);
+    router.push("/login");
+  };
+
+ 
   const ResultList = ({ mobile = false }: { mobile?: boolean }) => {
     if (!searchResults.length && !loading) return null;
     return (
@@ -122,8 +135,7 @@ const Navbar = () => {
   return (
     <header className="bg-white w-full h-[71px] pt-2 relative" onMouseLeave={handleNavContainerMouseLeave}>
       <div className="flex items-center justify-between px-6 md:px-20 py-3">
-
-        {/* logo + nav */}
+        
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2 group">
             <span className="text-black text-xl font-medium group-hover:text-neutral-700 transition-colors">LOGO</span>
@@ -152,8 +164,9 @@ const Navbar = () => {
           </nav>
         </div>
 
-        {/* desktop search + auth */}
+        
         <div className="flex items-center gap-3">
+          {/* search container */}
           <div className="hidden md:flex items-center gap-3 relative" ref={searchContainerRef}>
             {!isSearchExpanded ? (
               <button
@@ -188,9 +201,30 @@ const Navbar = () => {
               </div>
             )}
 
+            
             {user?.id ? (
-              <div title={user.fullName} className="w-9 h-9 bg-[#6a83ff] text-white rounded-full flex items-center justify-center font-semibold text-sm">
-                {getInitial(user.fullName)}
+              <div className="relative" ref={avatarRef}>
+                <button
+                  onClick={() => setDropdownOpen((p) => !p)}
+                  className="w-9 h-9 bg-[#6a83ff] text-white rounded-full flex items-center justify-center font-semibold text-sm"
+                  title={user.fullName}
+                >
+                  {getInitial(user.fullName)}
+                </button>
+
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-32 bg-white border border-stone-200 rounded-md shadow-lg z-50">
+                    <button
+                      onMouseDown={(e) => {
+                        e.stopPropagation();   // keep outside‑click handler from closing early
+                        handleLogout();        // ← call your logout
+                      }}
+                      className="block w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-stone-100 transition-colors"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               <Link href="/login">
@@ -201,14 +235,31 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* mobile avatar */}
+          
           {user?.id && (
-            <div title={user.fullName} className="w-6 md:hidden h-6 bg-[#6a83ff] text-white rounded-full flex items-center justify-center font-semibold text-[12px]">
-              {getInitial(user.fullName)}
+            <div className="relative md:hidden" ref={avatarRef}>
+              <button
+                onClick={() => setDropdownOpen((p) => !p)}
+                className="w-6 h-6 bg-[#6a83ff] text-white rounded-full flex items-center justify-center font-semibold text-[12px]"
+                title={user.fullName}
+              >
+                {getInitial(user.fullName)}
+              </button>
+
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-28 bg-white border border-stone-200 rounded-md shadow-lg z-50">
+                  <button
+                    onClick={handleLogout}
+                    className="block w-full text-left px-3 py-2 text-sm text-stone-700 hover:bg-stone-100 transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
             </div>
           )}
 
-          {/* mobile menu button */}
+          
           <button
             className="md:hidden p-2 -mr-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -241,7 +292,7 @@ const Navbar = () => {
             );
           })}
 
-          {/* mobile search */}
+         
           <div className="relative w-full mt-3">
             <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-500" />
             <Input
@@ -265,7 +316,7 @@ const Navbar = () => {
 
       
       {activeMegaMenu && (
-        <div className="hidden md:block absolute left-0 right-0 top-[69px] z-10" onMouseEnter={handleMegaMenuMouseEnter} onMouseLeave={handleMegaMenuMouseLeave}>
+        <div className="hidden md:block absolute left-0 right-0 top-[69px] z-10" onMouseEnter={() => setActiveMegaMenu(activeMegaMenu)} onMouseLeave={handleNavContainerMouseLeave}>
           <MegaMenuContent activeLabel={activeMegaMenu} />
         </div>
       )}
