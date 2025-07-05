@@ -1,99 +1,80 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowRightIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from "./ui/carousel";
 import { Card, CardContent } from "./ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+
+type RelatedBlog = {
+  blog_id: string;
+  category: string;
+  title: string;
+  author?: string;
+  createdAt?: string;
+  coverImageUrl?: string;
+};
 
 const SubscriptionSection = () => {
-  // ─── Data ────────────────────────────────────────────────────────────────
-  const blogPosts = [
-    {
-      id: 1,
-      category: "AI & ML",
-      title:
-        "Applications Open | Google for Startups Accelerator : AI First India 2025",
-      author: "ABCD",
-      date: "19 Mar, 2025",
-      image: "/images/thumbnail-1.svg",
-    },
-    {
-      id: 2,
-      category: "AI & ML",
-      title:
-        "Latest, Powerful Features To Unlock Your Potential with Gemini",
-      author: "Loreum",
-      date: "05 Dec, 2024",
-      image: "/images/landing/Product-1.svg",
-    },
-    {
-      id: 3,
-      category: "AI & ML",
-      title:
-        "75% of Indians desire a daily growth collaborator: Google-Kantar report",
-      author: "ABCD",
-      date: "05 Dec, 2024",
-      image: "/images/GoogleStore.svg",
-    },
-    {
-      id: 4,
-      category: "PIXEL",
-      title:
-        "Meet Pixel 8a: Premium AI features meet affordability, in a phone that's built to last",
-      author: "Soniya ",
-      date: "07 May, 2024",
-      image: "/images/GoogleStore-1.svg",
-    },
-    {
-      id: 5,
-      category: "ENTREPRENEURS",
-      title:
-        "Applications now open for Google for Startups Accelerator: Apps 2025 — Seeking 20 AI-powered Indian startups!",
-      author: "Brian Rakowski",
-      date: "06 Dec, 2023",
-      image: "/images/japan-backgroud.svg",
-    },
-    {
-      id: 6,
-      category: "SEARCH",
-      title: "Year in Search 2024: what sparked curiosity across India on Google",
-      author: "Rick Osterloh",
-      date: "19 Oct, 2023",
-      image: "/images/carousel-img.svg",
-    },
-  ];
-
-  /* ────────── Carousel logic ───────────────────── */
+  const searchParams = useSearchParams();
+  const blogId = searchParams.get("blogId");
+  const [blogs, setBlogs] = useState<RelatedBlog[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+
   const slidesPerView = 3;
-  const totalSlides = blogPosts.length;
-  const lastIndex = totalSlides - slidesPerView;
+  const lastIndex = Math.max(blogs.length - slidesPerView, 0);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!blogId) return;
+    setLoading(true);
+    fetch(`/api/blogs/${blogId}/related`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status) {
+          const formatted: RelatedBlog[] = (data.related || []).map((b: any) => ({
+            blog_id: b.blog_id,
+            category: (b.category || "BLOG").toUpperCase(),
+            title: b.title,
+            author: b.author || "Author",
+            createdAt: b.createdAt,
+            coverImageUrl: b.coverImageUrl || "/images/landing/Product-1.svg",
+          }));
+          setBlogs(formatted);
+        }
+      })
+      .catch((err) => console.error("Failed to load related blogs:", err))
+      .finally(() => setLoading(false));
+  }, [blogId]);
 
   const handlePrev = () => setCurrentSlide((c) => (c > 0 ? c - 1 : 0));
   const handleNext = () => setCurrentSlide((c) => (c < lastIndex ? c + 1 : c));
 
-  /* ────────── Motion variants ──────────────────── */
   const cardVariants = {
     hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.25, 0.8, 0.25, 1] } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.55, ease: [0.25, 0.8, 0.25, 1] },
+    },
   };
-
   const imgVariants = {
     initial: { scale: 1 },
     hovered: { scale: 1.05, transition: { duration: 0.35 } },
   };
-
   const arrowVariants = {
     initial: { x: 0 },
     hovered: { x: 4, transition: { duration: 0.25 } },
   };
 
-  /* ────────── Render ───────────────────────────── */
   return (
     <section className="w-full md:py-9 pb-2.5">
       <div className="flex flex-col items-center w-full">
@@ -112,85 +93,113 @@ const SubscriptionSection = () => {
             <CarouselContent
               className="flex transition-transform duration-500 ease-out px-4"
               style={{
-                transform: `translateX(-${(100 / slidesPerView) * currentSlide}%)`,
+                transform: `translateX(-${
+                  (100 / slidesPerView) * currentSlide
+                }%)`,
               }}
             >
-              {blogPosts.map((post) => (
+              {(loading ? Array(3).fill(null) : blogs).map((post, idx) => (
                 <CarouselItem
-                  key={post.id}
+                  key={post?.blog_id || idx}
                   className="md:basis-1/2 lg:basis-1/3 px-2.5 flex-shrink-0"
                 >
-                  {/* ── Parent detects hover but doesn’t scale ── */}
                   <motion.div
                     variants={cardVariants}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
-                    whileHover="hovered"            /* passes state to children */
+                    whileHover="hovered"
                     className="h-full"
+                    onClick={() => !loading && post && router.push(`/blog-open?blogId=${post.blog_id}`)}
                   >
                     <Card className="h-[480px] py-0 border border-[#dadce0] rounded-lg overflow-hidden">
                       <CardContent className="h-full flex flex-col justify-between p-0">
-                        {/* Image + text */}
                         <div>
-                          {/* Only the image scales on hover */}
                           <motion.div
                             variants={imgVariants}
                             initial="initial"
                             className="h-52 hover:h-56 transition-all ease-in-out overflow-hidden"
                           >
-                            <img
-                              src={post.image}
-                              alt=""
-                              className="w-full h-full object-cover"
-                            />
+                            {loading ? (
+                              <Skeleton className="w-full h-full" />
+                            ) : (
+                              <img
+                                src={post!.coverImageUrl!}
+                                alt=""
+                                className="w-full h-full object-cover"
+                              />
+                            )}
                           </motion.div>
 
                           <div className="px-10 pt-6">
-                            <span
-                              className="text-[14px] font-[500] leading-[44px] tracking-[1.5px] text-[#202124]"
-                              style={{ fontFamily: "var(--font-roboto)" }}
-                            >
-                              {post.category}
-                            </span>
+                            {loading ? (
+                              <Skeleton className="w-20 h-4" />
+                            ) : (
+                              <span
+                                className="text-[14px] font-[500] leading-[44px] tracking-[1.5px] text-[#202124]"
+                                style={{ fontFamily: "var(--font-roboto)" }}
+                              >
+                                {post!.category}
+                              </span>
+                            )}
                           </div>
 
                           <div className="px-10 pt-1 h-20">
-                            <h3
-                              className="text-[22px] leading-[30px] line-clamp-2 text-[#202124]"
-                              style={{ fontFamily: "var(--font-roboto)" }}
-                            >
-                              {post.title}
-                            </h3>
+                            {loading ? (
+                              <Skeleton className="w-full h-12" />
+                            ) : (
+                              <h3
+                                className="text-[22px] leading-[30px] line-clamp-2 text-[#202124]"
+                                style={{ fontFamily: "var(--font-roboto)" }}
+                              >
+                                {post!.title}
+                              </h3>
+                            )}
                           </div>
                         </div>
 
-                        {/* Footer */}
                         <div className="relative flex items-center px-10 pb-10">
-                          <div className="flex gap-0.5 items-center">
-                            <span
-                              className="text-base font-light leading-5 text-[#414141]"
-                              style={{ fontFamily: "var(--font-roboto)" }}
-                            >
-                              Posted by {post.author}
-                            </span>
-                            <span className="text-base font-light leading-5 text-[#414141]">&nbsp;–&nbsp;</span>
-                            <span
-                              className="text-base font-light leading-5 text-[#414141]"
-                              style={{ fontFamily: "var(--font-roboto)" }}
-                            >
-                              {post.date}
-                            </span>
-                          </div>
+                          {loading ? (
+                            <Skeleton className="w-[180px] h-4" />
+                          ) : (
+                            <>
+                              <div className="flex gap-0.5 items-center">
+                                <span
+                                  className="text-base font-light leading-5 text-[#414141]"
+                                  style={{
+                                    fontFamily: "var(--font-roboto)",
+                                  }}
+                                >
+                                  Posted by {post!.author}
+                                </span>
+                                <span className="text-base font-light leading-5 text-[#414141]">
+                                  &nbsp;–&nbsp;
+                                </span>
+                                <span
+                                  className="text-base font-light leading-5 text-[#414141]"
+                                  style={{
+                                    fontFamily: "var(--font-roboto)",
+                                  }}
+                                >
+                                  {post!.createdAt
+                                    ? new Date(post!.createdAt).toLocaleDateString("en-IN", {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric",
+                                      })
+                                    : ""}
+                                </span>
+                              </div>
 
-                          {/* Arrow glides right on hover */}
-                          <motion.div
-                            variants={arrowVariants}
-                            initial="initial"
-                            className="absolute right-10 bottom-10"
-                          >
-                            <ArrowRightIcon className="h-[18px] w-[18px] text-[#414141]" />
-                          </motion.div>
+                              <motion.div
+                                variants={arrowVariants}
+                                initial="initial"
+                                className="absolute right-10 bottom-10"
+                              >
+                                <ArrowRightIcon className="h-[18px] w-[18px] text-[#414141]" />
+                              </motion.div>
+                            </>
+                          )}
                         </div>
                       </CardContent>
                     </Card>

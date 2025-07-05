@@ -14,8 +14,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: false, error: "Email is required" }, { status: 400 });
     }
 
-    // Step 1: Get user_id from email
-    const userRes = await dynamoDb.send(
+      const userRes = await dynamoDb.send(
       new QueryCommand({
         TableName: usersTable,
         IndexName: emailIndex,

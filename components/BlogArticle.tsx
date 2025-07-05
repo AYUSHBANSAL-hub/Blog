@@ -126,7 +126,7 @@ const ArticleSection = () => {
                 className="text-[#5f6368] text-base md:text-lg leading-[26px] md:leading-[30px]"
                 style={{ fontFamily: "var(--font-roboto)" }}
               >
-                Helping our customers build a 'Resilient Future'
+                {blog?.subHeading}
               </p>
             )}
           </div>
@@ -144,7 +144,7 @@ const ArticleSection = () => {
             {(blog?.tags || []).map((tag: string, index: number) => (
               <span
                 key={index}
-                className="bg-[#e8f0fe] text-[#174ea6] rounded-[30px] px-5 py-2.5 text-[13.3px]"
+                className="bg-[#e8f0fe] text-[#174ea6] rounded-[30px] capitalize px-5 py-2.5 text-[13.3px]"
                 style={{ fontFamily: "var(--font-roboto)" }}
               >
                 {tag}

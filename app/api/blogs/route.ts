@@ -129,22 +129,37 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  const limitParam = new URL(req.url).searchParams.get("limit");
-  const limit = limitParam ? Number(limitParam) : undefined;
+ 
+  const url   = new URL(req.url);
+  const limit = Math.max(1, Number(url.searchParams.get("limit") || 10));
+  const page  = Math.max(1, Number(url.searchParams.get("page")  || 1));
 
   try {
+   
     const data = await dynamoDb.send(
-      new ScanCommand({
-        TableName: blogsTableName
-      })
+      new ScanCommand({ TableName: blogsTableName })
     );
 
+    
     const items = (data.Items || []) as { views?: number }[];
     items.sort((a, b) => (b.views ?? 0) - (a.views ?? 0));
-    const result = limit ? items.slice(0, limit) : items;
 
-    return NextResponse.json({ status: true, blogs: result });
-  } catch {
+    
+    const total       = items.length;
+    const totalPages  = Math.ceil(total / limit);
+    const offset      = (page - 1) * limit;
+    const blogs       = items.slice(offset, offset + limit);
+
+    return NextResponse.json({
+      status: true,
+      page,
+      limit,
+      total,
+      totalPages,
+      blogs
+    });
+  } catch (err) {
+    console.error("Paginated fetch error:", err);
     return NextResponse.json(
       { status: false, error: "Failed to fetch blogs" },
       { status: 500 }
