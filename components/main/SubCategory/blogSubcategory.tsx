@@ -98,7 +98,7 @@ const SubCategoryBlogs = () => {
               </div>
 
               {/* Footer always sticks at bottom */}
-              <div className="pb-[37px] pt-[80px] px-[24px] flex flex-wrap items-start justify-between gap-2">
+              <div className="pb-[37px]  px-[24px] flex flex-wrap items-start justify-between gap-2">
                 <div className="flex flex-col sm:flex-row gap-2">
                   <div className="text-[#5f6368] text-[14px] font-[500] leading-[20px]">
                     Posted <br />by

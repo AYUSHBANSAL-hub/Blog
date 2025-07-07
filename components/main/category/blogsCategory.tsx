@@ -99,7 +99,7 @@ const CategoryBlogs = () => {
               </div>
 
               {/* Footer always at bottom */}
-              <div className="pb-[37px] pt-[40px] px-[24px] flex flex-wrap sm:flex-nowrap items-start justify-between gap-2">
+              <div className="pb-[37px]  px-[24px] flex flex-wrap sm:flex-nowrap items-start justify-between gap-2">
                 <div className="flex gap-2">
                   <div className="text-[#5f6368] text-[14px] font-[500] leading-[20px] whitespace-nowrap">
                     Posted <br />by

@@ -17,18 +17,15 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogClose
+  DialogTitle
 } from "@/components/ui/dialog"
 
 import { UploadCloud, ArrowRight, Eye } from "lucide-react"
-
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false })
 import "react-quill-new/dist/quill.snow.css"
+
 import { useAppSelector } from "@/lib/hook"
 
-/* ───────────────────────────────────────────────────────── toolbar config ── */
 const modules = {
   toolbar: {
     container: [
@@ -76,28 +73,24 @@ const formats = [
   "image"
 ]
 
-/* ─────────────────────────────────────────────────────────────────────────── */
-
 const BlogEditorBody: React.FC = () => {
   const router = useRouter()
   const { email } = useAppSelector((s) => s.user) || {}
 
-  /* ── state ────────────────────────────────────────────────────────────── */
-  const [title, setTitle]           = useState("")
+  const [title, setTitle] = useState("")
   const [subheading, setSubheading] = useState("")
-  const [content, setContent]       = useState("")
+  const [content, setContent] = useState("")
   const [featuredImage, setFeaturedImage] = useState<File | null>(null)
-  const [imagePreview, setImagePreview]   = useState<string | null>(null)
-  const [category, setCategory]         = useState("")
-  const [subCategory, setSubCategory]   = useState("")
-  const [tags, setTags]                 = useState<string[]>([])
-  const [currentTag, setCurrentTag]     = useState("")
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [category, setCategory] = useState("")
+  const [subCategory, setSubCategory] = useState("")
+  const [tags, setTags] = useState<string[]>([])
+  const [currentTag, setCurrentTag] = useState("")
   const [isPublishing, setIsPublishing] = useState(false)
-  const [showPreview, setShowPreview]   = useState(false)   // NEW: modal state
+  const [showPreview, setShowPreview] = useState(false)
 
   const imageInputRef = useRef<HTMLInputElement | null>(null)
 
-  /* ── image helpers ────────────────────────────────────────────────────── */
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
@@ -117,7 +110,6 @@ const BlogEditorBody: React.FC = () => {
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault()
 
-  /* ── tag helpers ──────────────────────────────────────────────────────── */
   const addTag = () => {
     const t = currentTag.trim()
     if (t && !tags.includes(t)) {
@@ -128,7 +120,6 @@ const BlogEditorBody: React.FC = () => {
 
   const removeTag = (t: string) => setTags(tags.filter((x) => x !== t))
 
-  /* ── preview (opens modal) ────────────────────────────────────────────── */
   const handlePreview = () => {
     if (!title.trim() && !content.trim()) {
       alert("Nothing to preview.")
@@ -137,7 +128,6 @@ const BlogEditorBody: React.FC = () => {
     setShowPreview(true)
   }
 
-  /* ── publish (POST /api/blogs) ────────────────────────────────────────── */
   const handlePublish = async () => {
     if (!email) {
       alert("You must be logged in.")
@@ -149,18 +139,18 @@ const BlogEditorBody: React.FC = () => {
     }
 
     const fd = new FormData()
-    fd.append("title",        title)
-    fd.append("subHeading",   subheading)
-    fd.append("content",      content)
-    fd.append("email",        email)
-    fd.append("tags",         JSON.stringify(tags))
-    fd.append("category",     category)
-    fd.append("subCategory",  subCategory)
+    fd.append("title", title)
+    fd.append("subHeading", subheading)
+    fd.append("content", content)
+    fd.append("email", email)
+    fd.append("tags", JSON.stringify(tags))
+    fd.append("category", category)
+    fd.append("subCategory", subCategory)
     if (featuredImage) fd.append("coverImage", featuredImage)
 
     try {
       setIsPublishing(true)
-      const res  = await fetch("/api/blogs", { method: "POST", body: fd })
+      const res = await fetch("/api/blogs", { method: "POST", body: fd })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Failed to publish")
       alert("Blog published 🎉")
@@ -172,31 +162,37 @@ const BlogEditorBody: React.FC = () => {
     }
   }
 
-  /* ── UI ───────────────────────────────────────────────────────────────── */
+  const canPublish = Boolean(
+    email &&
+    title.trim() &&
+    content.trim() &&
+    category &&
+    subCategory &&
+    featuredImage
+  );
+
+
   return (
     <>
-      {/* ── MAIN EDITOR LAYOUT ─────────────────────────────────────────── */}
       <div className="w-full max-w-7xl mx-auto px-4 mt-[50px] sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row lg:gap-x-8">
 
-          {/* ───── editor column ─────────────────────────────────────── */}
+          {/* Editor column */}
           <div className="w-full lg:flex-[2_1_0%] flex flex-col gap-y-3 mb-8 lg:mb-0">
-
             <input
               placeholder="Enter your blog title..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="text-[30px] text-[#ADAEBC] font-bold border-none shadow-none focus-visible:ring-0"
+              className="text-[30px] text-black font-bold border-none shadow-none focus-visible:ring-0"
             />
 
             <input
               placeholder="Enter your sub heading..."
               value={subheading}
               onChange={(e) => setSubheading(e.target.value)}
-              className="text-[24px] font-[600] text-[#ADAEBC] border-none shadow-none focus-visible:ring-0"
+              className="text-[24px] font-[600] text-black border-none shadow-none focus-visible:ring-0"
             />
 
-            {/* featured image */}
             <div className="bg-white rounded-lg border p-4">
               <h3 className="font-semibold text-[#111827] mb-2">Featured Image</h3>
               <div
@@ -223,7 +219,6 @@ const BlogEditorBody: React.FC = () => {
               </div>
             </div>
 
-            {/* rich text */}
             <div className="min-h-[300px] bg-white border rounded-lg overflow-hidden">
               <ReactQuill
                 theme="snow"
@@ -238,14 +233,12 @@ const BlogEditorBody: React.FC = () => {
             </div>
           </div>
 
-          {/* ───── sidebar column ────────────────────────────────────── */}
+          {/* Sidebar */}
           <div className="w-full lg:w-80 lg:max-w-xs flex flex-col gap-y-6 lg:sticky lg:top-20 self-start">
-
             <div className="bg-white rounded-lg shadow border p-4 flex flex-col gap-y-4">
-              {/* category */}
               <div>
                 <label className="text-sm font-medium">Category</label>
-                <Select value={category}  onValueChange={setCategory}>
+                <Select value={category} onValueChange={setCategory}>
                   <SelectTrigger className="w-full"><SelectValue placeholder="Select category" /></SelectTrigger>
                   <SelectContent>
                     <SelectItem value="technology">Technology</SelectItem>
@@ -256,7 +249,6 @@ const BlogEditorBody: React.FC = () => {
                 </Select>
               </div>
 
-              {/* sub category */}
               <div>
                 <label className="text-sm font-medium">Sub‑Category</label>
                 <Select value={subCategory} onValueChange={setSubCategory}>
@@ -270,12 +262,11 @@ const BlogEditorBody: React.FC = () => {
                 </Select>
               </div>
 
-              {/* tags */}
               <div>
                 <label className="text-sm font-medium">Tags</label>
                 <div className="flex gap-2">
                   <Input
-                    placeholder="Add a tag"
+                    placeholder="Add a tag (Optional)"
                     value={currentTag}
                     onChange={(e) => setCurrentTag(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && addTag()}
@@ -295,18 +286,17 @@ const BlogEditorBody: React.FC = () => {
               </div>
             </div>
 
-            {/* ── action buttons ────────────────────────────────────── */}
             <Button
               onClick={handlePreview}
               variant="outline"
               className="w-full rounded-full py-6 font-bold flex items-center justify-center gap-2"
             >
-              <Eye size={18}/> Preview
+              <Eye size={18} /> Preview
             </Button>
 
             <Button
               onClick={handlePublish}
-              disabled={isPublishing}
+              disabled={!canPublish || isPublishing}
               className="w-full rounded-full bg-blue-500 hover:bg-blue-600 text-white py-6 font-bold disabled:opacity-50"
             >
               {isPublishing ? "Publishing…" : "Publish"} <ArrowRight className="ml-2" />
@@ -315,22 +305,17 @@ const BlogEditorBody: React.FC = () => {
         </div>
       </div>
 
-      {/* ── PREVIEW MODAL ───────────────────────────────────────────────── */}
       <Dialog open={showPreview} onOpenChange={setShowPreview}>
         <DialogContent className="max-w-3xl">
           <DialogHeader>
             <DialogTitle>Preview</DialogTitle>
           </DialogHeader>
 
-          <div className="space-y-4 overflow-y-auto max-h-[70vh]">
+          <div className="space-y-4 max-h-[70vh] overflow-y-auto invisible-scrollbar">
             {title && <h1 className="text-3xl font-bold">{title}</h1>}
             {subheading && <h2 className="text-xl font-semibold">{subheading}</h2>}
             {imagePreview && (
-              <img
-                src={imagePreview}
-                alt="cover"
-                className="w-full h-auto rounded"
-              />
+              <img src={imagePreview} alt="cover" className="w-full h-auto rounded" />
             )}
             {content && (
               <div
@@ -338,7 +323,7 @@ const BlogEditorBody: React.FC = () => {
                 dangerouslySetInnerHTML={{ __html: content }}
               />
             )}
-          </div>         
+          </div>
         </DialogContent>
       </Dialog>
     </>

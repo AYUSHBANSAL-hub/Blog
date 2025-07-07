@@ -21,13 +21,13 @@ const Navbar = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
- 
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);   
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const avatarRef = useRef<HTMLDivElement>(null);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
@@ -42,7 +42,7 @@ const Navbar = () => {
     { label: "Product", href: "/modal" },
     { label: "Create", href: "/manageblog" },
     { label: "Blogs", href: "/Blog" },
-    { label: "Profile", href: "/profile" },
+    ...(user?.id ? [{ label: "Profile", href: "/profile" }] : []),
     { label: "About", href: "/signup" },
   ];
 
@@ -66,7 +66,7 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  
+
   useEffect(() => {
     if (!searchQuery.trim()) {
       setSearchResults([]);
@@ -87,7 +87,7 @@ const Navbar = () => {
     }, 300);
   }, [searchQuery]);
 
-  
+
   const handleNavItemMouseEnter = (label: string) => {
     if (megaMenuTimeoutRef.current) clearTimeout(megaMenuTimeoutRef.current);
     setActiveMegaMenu(label);
@@ -99,7 +99,7 @@ const Navbar = () => {
   const isLinkActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  
+
   const handleLogout = () => {
     dispatch(clearUser());              // clear Redux
     localStorage.removeItem("token");   // remove JWT
@@ -107,7 +107,7 @@ const Navbar = () => {
     router.push("/login");
   };
 
- 
+
   const ResultList = ({ mobile = false }: { mobile?: boolean }) => {
     if (!searchResults.length && !loading) return null;
     return (
@@ -131,11 +131,11 @@ const Navbar = () => {
     );
   };
 
-  
+
   return (
     <header className="bg-white w-full h-[71px] pt-2 relative" onMouseLeave={handleNavContainerMouseLeave}>
       <div className="flex items-center justify-between px-6 md:px-20 py-3">
-        
+
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2 group">
             <span className="text-black text-xl font-medium group-hover:text-neutral-700 transition-colors">LOGO</span>
@@ -149,22 +149,29 @@ const Navbar = () => {
               const active = isLinkActive(item.href);
               return (
                 <div key={item.label} onMouseEnter={() => handleNavItemMouseEnter(item.label)} className="py-1.5">
-                  <Link
-                    href={item.href}
-                    className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-150
-                      ${active
+                  <span
+                    onClick={() => {
+                      if (item.label === "Create" && !user?.id) {
+                        router.push("/login");
+                      } else {
+                        router.push(item.href);
+                      }
+                    }}
+                    className={`cursor-pointer px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-150
+                    ${active
                         ? "bg-stone-100 text-neutral-800"
                         : "text-neutral-600 hover:bg-stone-100 hover:text-neutral-800"}`}
                   >
                     {item.label}
-                  </Link>
+                  </span>
+
                 </div>
               );
             })}
           </nav>
         </div>
 
-        
+
         <div className="flex items-center gap-3">
           {/* search container */}
           <div className="hidden md:flex items-center gap-3 relative" ref={searchContainerRef}>
@@ -201,7 +208,7 @@ const Navbar = () => {
               </div>
             )}
 
-            
+
             {user?.id ? (
               <div className="relative" ref={avatarRef}>
                 <button
@@ -235,7 +242,7 @@ const Navbar = () => {
             )}
           </div>
 
-          
+
           {user?.id && (
             <div className="relative md:hidden" ref={avatarRef}>
               <button
@@ -259,7 +266,7 @@ const Navbar = () => {
             </div>
           )}
 
-          
+
           <button
             className="md:hidden p-2 -mr-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -272,27 +279,34 @@ const Navbar = () => {
         </div>
       </div>
 
-      
+
       {isMenuOpen && (
         <div id="mobile-menu" className="md:hidden bg-white flex flex-col gap-1 px-4 pt-2 pb-4 border-t border-stone-200 absolute top-[69px] left-0 right-0 z-20 shadow-lg">
           {navItems.map((item) => {
             const active = isLinkActive(item.href);
             return (
-              <Link
+              <span
                 key={item.label}
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-                className={`block px-3 py-2.5 rounded-md text-base font-medium transition-colors
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  if (item.label === "Create" && !user?.id) {
+                    router.push("/login");
+                  } else {
+                    router.push(item.href);
+                  }
+                }}
+                className={`block cursor-pointer px-3 py-2.5 rounded-md text-base font-medium transition-colors
                   ${active
                     ? "bg-stone-100 text-neutral-900"
                     : "text-neutral-700 hover:bg-stone-100 hover:text-neutral-900"}`}
               >
                 {item.label}
-              </Link>
+              </span>
+
             );
           })}
 
-         
+
           <div className="relative w-full mt-3">
             <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-stone-500" />
             <Input
@@ -314,7 +328,7 @@ const Navbar = () => {
         </div>
       )}
 
-      
+
       {activeMegaMenu && (
         <div className="hidden md:block absolute left-0 right-0 top-[69px] z-10" onMouseEnter={() => setActiveMegaMenu(activeMegaMenu)} onMouseLeave={handleNavContainerMouseLeave}>
           <MegaMenuContent activeLabel={activeMegaMenu} />

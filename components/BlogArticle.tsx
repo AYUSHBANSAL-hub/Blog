@@ -98,9 +98,9 @@ const ArticleSection = () => {
       </div>
 
       {/* Blog Info */}
-      <div className="w-full max-w-[1260px] px-4 sm:px-6 md:px-[60px] lg:px-[107px] pb-9">
-        <div className="flex flex-col md:flex-row">
-          <div className="pr-0 md:pr-6 border-r md:border-r border-[#dadce0]">
+      <div className="w-full max-w-[1260px] px-2 sm:px-6 md:px-[60px] lg:px-[107px] pb-9">
+        <div className="flex item-center gap-2 justify-center md:flex-row">
+          <div className="pr-1 md:pr-6 border-r md:border-r border-[#dadce0]">
             {loading ? (
               <Skeleton className="h-4 w-24 mb-2" />
             ) : (
@@ -118,12 +118,12 @@ const ArticleSection = () => {
               </p>
             )}
           </div>
-          <div className="flex-1 mt-4 md:mt-0 md:ml-6">
+          <div className="flex-1  md:mt-0 md:ml-6">
             {loading ? (
               <Skeleton className="h-5 w-64" />
             ) : (
               <p
-                className="text-[#5f6368] text-base md:text-lg leading-[26px] md:leading-[30px]"
+                className="text-[#5f6368] text-sm md:text-lg leading-[26px] md:leading-[30px]"
                 style={{ fontFamily: "var(--font-roboto)" }}
               >
                 {blog?.subHeading}
@@ -140,11 +140,11 @@ const ArticleSection = () => {
             <Skeleton className="h-6 w-14 rounded-full" />
           </div>
         ) : (
-          <div className="flex flex-wrap gap-[13px] mt-[13px]">
+          <div className="flex flex-wrap gap-[13px] mt-7 md:mt-[13px]">
             {(blog?.tags || []).map((tag: string, index: number) => (
               <span
                 key={index}
-                className="bg-[#e8f0fe] text-[#174ea6] rounded-[30px] capitalize px-5 py-2.5 text-[13.3px]"
+                className="bg-[#e8f0fe] text-[#174ea6] rounded-[30px] capitalize px-1 md:px-5 md:py-2.5 text-[13.3px]"
                 style={{ fontFamily: "var(--font-roboto)" }}
               >
                 {tag}
@@ -155,7 +155,7 @@ const ArticleSection = () => {
       </div>
 
       {/* Author Section */}
-      <div className="w-full max-w-[1260px] flex flex-col md:flex-row justify-between items-start md:items-center px-4 sm:px-6 md:px-[60px] lg:px-[107px] mb-6">
+      <div className="w-full max-w-[1260px] flex  md:flex-row justify-between items-start md:items-center px-4 sm:px-6 md:px-[60px] lg:px-[107px] mb-6">
         {loading ? (
           <div className="flex items-center gap-4">
             <Skeleton className="w-10 h-10 rounded-full" />
@@ -181,7 +181,7 @@ const ArticleSection = () => {
                 Neha Gupta
               </h3>
               <p
-                className="text-sm font-medium text-[#5f6368] tracking-[0.25px] leading-[20.2px]"
+                className="text-xs md:text-sm font-medium text-[#5f6368] tracking-[0.25px] leading-[20.2px]"
                 style={{ fontFamily: "var(--font-roboto)" }}
               >
                 Vice President, Product Management, Search

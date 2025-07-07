@@ -150,5 +150,14 @@ body {
   font-family: var(--font-figtree);
 }
 
+/* Invisible but functional scrollbar */
+.invisible-scrollbar {
+  scrollbar-width: none;         /* Firefox */
+  -ms-overflow-style: none;      /* IE/Edge */
+}
+.invisible-scrollbar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
 
 

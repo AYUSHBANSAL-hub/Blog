@@ -67,7 +67,7 @@ const socialIcons = [
 const Footer = () => {
   return (
     <section>
-  <footer className="w-full bg-[#F9FAFB] border-t-[2px] px-4 sm:px-8 md:px-12 lg:px-[112px] pt-[61px] border-[#CED4DA] rounded-t-2xl pb-14 min-h-[535px]">
+  <footer className="w-full bg-[#F9FAFB] border-t-[2px] px-4 sm:px-8 md:px-12 lg:px-[112px] pt-[61px] border-[#CED4DA] md:rounded-t-2xl pb-14 min-h-[535px]">
     <div className="max-w-[1200px] mx-auto">
       <h3 className="font-[600] text-[#111827] text-[32px] mb-8">Our Products</h3>
 
