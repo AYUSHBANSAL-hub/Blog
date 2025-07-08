@@ -125,7 +125,7 @@ const BlogSection = () => {
                     className="font-light capitalize text-[#232323] text-sm tracking-[0.16px] leading-[21px]"
                     style={{ fontFamily: "var(--font-roboto)" }}
                   >
-                    {featuredBlog.category}
+                    {featuredBlog.category_name}
                   </span>
 
                   <Button
@@ -175,7 +175,7 @@ const BlogSection = () => {
                       ...post,
                       title: post.title,
                       date: post.createdAt,
-                      category: post.category,
+                      category_name: post.category_name,
                       image: post.coverImageUrl,
                     })
                   }
@@ -201,7 +201,7 @@ const BlogSection = () => {
                           className="text-[14.06px] capitalize font-light text-[#232323] tracking-[0.16px] leading-[21px]"
                           style={{ fontFamily: "var(--font-roboto)" }}
                         >
-                          {post.category}
+                          {post.category_name}
                         </span>
 
                         <Button

@@ -1,30 +1,17 @@
-"use client"
+"use client";
 
-import React, { useState, useRef } from "react"
-import dynamic from "next/dynamic"
-import { useRouter } from "next/navigation"
+import React, { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { UploadCloud, ArrowRight, Eye } from "lucide-react";
+import { useAppSelector } from "@/lib/hook";
 
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/select"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle
-} from "@/components/ui/dialog"
-
-import { UploadCloud, ArrowRight, Eye } from "lucide-react"
-const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false })
-import "react-quill-new/dist/quill.snow.css"
-
-import { useAppSelector } from "@/lib/hook"
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
+import "react-quill-new/dist/quill.snow.css";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 const modules = {
   toolbar: {
@@ -33,34 +20,34 @@ const modules = {
       ["bold", "italic", "underline", "strike"],
       [{ list: "ordered" }, { list: "bullet" }],
       ["link", "image"],
-      ["clean"]
+      ["clean"],
     ],
     handlers: {
       image: async function (this: any) {
-        const input = document.createElement("input")
-        input.type = "file"
-        input.accept = "image/*"
-        input.click()
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
+        input.click();
 
         input.onchange = async () => {
-          const file = input.files?.[0]
-          if (!file) return
+          const file = input.files?.[0];
+          if (!file) return;
 
-          const fd = new FormData()
-          fd.append("image", file)
+          const fd = new FormData();
+          fd.append("image", file);
 
-          const res = await fetch("/api/upload-image", { method: "POST", body: fd })
-          if (!res.ok) return alert("Upload failed")
+          const res = await fetch("/api/upload-image", { method: "POST", body: fd });
+          if (!res.ok) return alert("Upload failed");
 
-          const { url } = await res.json()
-          const range = this.quill.getSelection(true)
-          this.quill.insertEmbed(range.index, "image", url)
-          this.quill.setSelection(range.index + 1)
-        }
-      }
-    }
-  }
-}
+          const { url } = await res.json();
+          const range = this.quill.getSelection(true);
+          this.quill.insertEmbed(range.index, "image", url);
+          this.quill.setSelection(range.index + 1);
+        };
+      },
+    },
+  },
+};
 
 const formats = [
   "header",
@@ -70,114 +57,142 @@ const formats = [
   "strike",
   "list",
   "link",
-  "image"
-]
+  "image",
+];
 
 const BlogEditorBody: React.FC = () => {
-  const router = useRouter()
-  const { email } = useAppSelector((s) => s.user) || {}
+  const router = useRouter();
+  const { email } = useAppSelector((s) => s.user) || {};
 
-  const [title, setTitle] = useState("")
-  const [subheading, setSubheading] = useState("")
-  const [content, setContent] = useState("")
-  const [featuredImage, setFeaturedImage] = useState<File | null>(null)
-  const [imagePreview, setImagePreview] = useState<string | null>(null)
-  const [category, setCategory] = useState("")
-  const [subCategory, setSubCategory] = useState("")
-  const [tags, setTags] = useState<string[]>([])
-  const [currentTag, setCurrentTag] = useState("")
-  const [isPublishing, setIsPublishing] = useState(false)
-  const [showPreview, setShowPreview] = useState(false)
+  const [title, setTitle] = useState("");
+  const [subheading, setSubheading] = useState("");
+  const [content, setContent] = useState("");
+  const [featuredImage, setFeaturedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [category, setCategory] = useState("");
+  const [subCategory, setSubCategory] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
+  const [currentTag, setCurrentTag] = useState("");
+  const [isPublishing, setIsPublishing] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
 
-  const imageInputRef = useRef<HTMLInputElement | null>(null)
+  const [categoryOptions, setCategoryOptions] = useState([]);
+  const [subCategoryOptions, setSubCategoryOptions] = useState([]);
+
+  const imageInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/blogs/categories");
+        const data = await res.json();
+        if (data.categories) setCategoryOptions(data.categories);
+      } catch (err) {
+        console.error("Failed to fetch categories", err);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    const fetchSubcategories = async () => {
+      if (!category) return;
+      try {
+        const res = await fetch(`/api/blogs/subCategories?categoryId=${category}`);
+        const data = await res.json();
+        if (data.subcategories) setSubCategoryOptions(data.subcategories);
+      } catch (err) {
+        console.error("Failed to fetch subcategories", err);
+      }
+    };
+    fetchSubcategories();
+  }, [category]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      setFeaturedImage(file)
-      setImagePreview(URL.createObjectURL(file))
+      setFeaturedImage(file);
+      setImagePreview(URL.createObjectURL(file));
     }
-  }
+  };
 
   const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    const file = e.dataTransfer.files?.[0]
+    e.preventDefault();
+    const file = e.dataTransfer.files?.[0];
     if (file?.type.startsWith("image/")) {
-      setFeaturedImage(file)
-      setImagePreview(URL.createObjectURL(file))
+      setFeaturedImage(file);
+      setImagePreview(URL.createObjectURL(file));
     }
-  }
+  };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault()
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
 
   const addTag = () => {
-    const t = currentTag.trim()
+    const t = currentTag.trim();
     if (t && !tags.includes(t)) {
-      setTags([...tags, t])
-      setCurrentTag("")
+      setTags([...tags, t]);
+      setCurrentTag("");
     }
-  }
+  };
 
-  const removeTag = (t: string) => setTags(tags.filter((x) => x !== t))
+  const removeTag = (t: string) => setTags(tags.filter((x) => x !== t));
 
   const handlePreview = () => {
     if (!title.trim() && !content.trim()) {
-      alert("Nothing to preview.")
-      return
+      alert("Nothing to preview.");
+      return;
     }
-    setShowPreview(true)
-  }
+    setShowPreview(true);
+  };
 
   const handlePublish = async () => {
     if (!email) {
-      alert("You must be logged in.")
-      return
+      alert("You must be logged in.");
+      return;
     }
     if (!title.trim() || !content.trim()) {
-      alert("Title and content are required.")
-      return
+      alert("Title and content are required.");
+      return;
     }
 
-    const fd = new FormData()
-    fd.append("title", title)
-    fd.append("subHeading", subheading)
-    fd.append("content", content)
-    fd.append("email", email)
-    fd.append("tags", JSON.stringify(tags))
-    fd.append("category", category)
-    fd.append("subCategory", subCategory)
-    if (featuredImage) fd.append("coverImage", featuredImage)
+    const fd = new FormData();
+    fd.append("title", title);
+    fd.append("subHeading", subheading);
+    fd.append("content", content);
+    fd.append("email", email);
+    fd.append("tags", JSON.stringify(tags));
+    fd.append("category", category);
+    fd.append("subCategory", subCategory);
+    if (featuredImage) fd.append("coverImage", featuredImage);
 
     try {
-      setIsPublishing(true)
-      const res = await fetch("/api/blogs", { method: "POST", body: fd })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || "Failed to publish")
-      alert("Blog published 🎉")
-      router.push(`/blog-open?blogId=${data.blog.blog_id}`)
+      setIsPublishing(true);
+      const res = await fetch("/api/blogs", { method: "POST", body: fd });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to publish");
+      alert("Blog published 🎉");
+      router.push(`/blog-open?blogId=${data.blog.blog_id}`);
     } catch (err: any) {
-      alert(err.message || "Server error")
+      alert(err.message || "Server error");
     } finally {
-      setIsPublishing(false)
+      setIsPublishing(false);
     }
-  }
+  };
 
   const canPublish = Boolean(
     email &&
-    title.trim() &&
-    content.trim() &&
-    category &&
-    subCategory &&
-    featuredImage
+      title.trim() &&
+      content.trim() &&
+      category &&
+      subCategory &&
+      featuredImage
   );
-
 
   return (
     <>
       <div className="w-full max-w-7xl mx-auto px-4 mt-[50px] sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row lg:gap-x-8">
-
-          {/* Editor column */}
+          {/* Editor */}
           <div className="w-full lg:flex-[2_1_0%] flex flex-col gap-y-3 mb-8 lg:mb-0">
             <input
               placeholder="Enter your blog title..."
@@ -228,7 +243,6 @@ const BlogEditorBody: React.FC = () => {
                 formats={formats}
                 placeholder="Start writing your blog post…"
                 className="h-full"
-                style={{ height: "100%" }}
               />
             </div>
           </div>
@@ -239,25 +253,35 @@ const BlogEditorBody: React.FC = () => {
               <div>
                 <label className="text-sm font-medium">Category</label>
                 <Select value={category} onValueChange={setCategory}>
-                  <SelectTrigger className="w-full"><SelectValue placeholder="Select category" /></SelectTrigger>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="technology">Technology</SelectItem>
-                    <SelectItem value="design">Design</SelectItem>
-                    <SelectItem value="startup">Startup</SelectItem>
-                    <SelectItem value="lifestyle">Lifestyle</SelectItem>
+                    {categoryOptions.map((cat: any) => (
+                      <SelectItem key={cat.category_id} value={cat.category_id}>
+                        {cat.category_name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
 
               <div>
                 <label className="text-sm font-medium">Sub‑Category</label>
-                <Select value={subCategory} onValueChange={setSubCategory}>
-                  <SelectTrigger className="w-full"><SelectValue placeholder="Select sub‑category" /></SelectTrigger>
+                <Select
+                  value={subCategory}
+                  onValueChange={setSubCategory}
+                  disabled={!category}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select sub‑category" />
+                  </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="web-dev">Web Development</SelectItem>
-                    <SelectItem value="ui-ux">UI/UX</SelectItem>
-                    <SelectItem value="saas">SaaS</SelectItem>
-                    <SelectItem value="mobile-apps">Mobile Apps</SelectItem>
+                    {subCategoryOptions.map((sub: any) => (
+                      <SelectItem key={sub.subcategory_id} value={sub.subcategory_id}>
+                        {sub.subcategory_name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -271,14 +295,21 @@ const BlogEditorBody: React.FC = () => {
                     onChange={(e) => setCurrentTag(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && addTag()}
                   />
-                  <Button onClick={addTag} size="sm">Add</Button>
+                  <Button onClick={addTag} size="sm">
+                    Add
+                  </Button>
                 </div>
                 {tags.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-2">
                     {tags.map((tag) => (
-                      <span key={tag} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs flex items-center">
+                      <span
+                        key={tag}
+                        className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs flex items-center"
+                      >
                         {tag}
-                        <button onClick={() => removeTag(tag)} className="ml-1 text-blue-500">×</button>
+                        <button onClick={() => removeTag(tag)} className="ml-1 text-blue-500">
+                          ×
+                        </button>
                       </span>
                     ))}
                   </div>
@@ -310,7 +341,6 @@ const BlogEditorBody: React.FC = () => {
           <DialogHeader>
             <DialogTitle>Preview</DialogTitle>
           </DialogHeader>
-
           <div className="space-y-4 max-h-[70vh] overflow-y-auto invisible-scrollbar">
             {title && <h1 className="text-3xl font-bold">{title}</h1>}
             {subheading && <h2 className="text-xl font-semibold">{subheading}</h2>}
@@ -327,7 +357,7 @@ const BlogEditorBody: React.FC = () => {
         </DialogContent>
       </Dialog>
     </>
-  )
-}
+  );
+};
 
-export default BlogEditorBody
+export default BlogEditorBody;

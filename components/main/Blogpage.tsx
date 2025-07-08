@@ -7,14 +7,17 @@ import Overlay from "./overlay";
 import CategoryPage from "./category/Category";
 import SubCategory from "./SubCategory/subCategoryBlogs";
 import CategoryProductSection from "./CategoryProduct";
+import { useRouter } from "next/navigation";
 
 
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
   const [breadcrumbs, setBreadcrumbs] = useState([{ label: "BLOGS", href: "#" }]);
+  const router = useRouter();
 
-  const handleProductClick = (category: string) => {
+  const handleProductClick = (category: string , category_id:string) => {
+    router.push(`/Blog?categoryId=${category_id}`);
     setSelectedCategory(category);
     setSelectedSubcategory(null);
     setBreadcrumbs([
@@ -23,7 +26,8 @@ export default function BlogPage() {
     ]);
   };
 
-  const handleSubcategoryClick = (subcategory: string) => {
+  const handleSubcategoryClick = (subcategory: string , subcategory_id:string) => {
+    router.push(`/Blog?subcategoryId=${subcategory_id}`);
     setSelectedSubcategory(subcategory);
     setBreadcrumbs((prev) => [
       ...prev,
@@ -36,6 +40,7 @@ export default function BlogPage() {
       setSelectedCategory(null);
       setSelectedSubcategory(null);
       setBreadcrumbs([{ label: "BLOGS", href: "#" }]);
+      router.push("/Blog");
     } else if (index === 1) {
       setSelectedSubcategory(null);
       setBreadcrumbs(breadcrumbs.slice(0, 2));

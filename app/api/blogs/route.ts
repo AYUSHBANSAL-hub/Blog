@@ -1,5 +1,5 @@
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
+import { GetCommand, PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { NextRequest, NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
@@ -8,6 +8,7 @@ import { s3 } from "@/lib/s3";
 
 const region = process.env.AWS_REGION!;
 const blogsTableName = "blogs";
+const categoriesTableName = "blog_categories";
 const bucketName = process.env.S3_BUCKET_NAME!;
 const usersTableName = "users";
 const emailIndex = "email-index";
@@ -129,26 +130,54 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
- 
-  const url   = new URL(req.url);
+  const url = new URL(req.url);
   const limit = Math.max(1, Number(url.searchParams.get("limit") || 10));
-  const page  = Math.max(1, Number(url.searchParams.get("page")  || 1));
+  const page = Math.max(1, Number(url.searchParams.get("page") || 1));
 
   try {
-   
+    // 1. Fetch all blogs
     const data = await dynamoDb.send(
       new ScanCommand({ TableName: blogsTableName })
     );
 
-    
-    const items = (data.Items || []) as { views?: number }[];
+    let items = data.Items || [];
     items.sort((a, b) => (b.views ?? 0) - (a.views ?? 0));
 
-    
-    const total       = items.length;
-    const totalPages  = Math.ceil(total / limit);
-    const offset      = (page - 1) * limit;
-    const blogs       = items.slice(offset, offset + limit);
+    // 2. Pagination
+    const total = items.length;
+    const totalPages = Math.ceil(total / limit);
+    const offset = (page - 1) * limit;
+    const blogs = items.slice(offset, offset + limit);
+
+    // 3. Get unique category_ids from paginated blogs
+    const categoryIds = Array.from(new Set(blogs.map((blog) => blog.category)));
+
+    // 4. Fetch all corresponding category names
+    const categoryMap: Record<string, string> = {};
+
+    await Promise.all(
+      categoryIds.map(async (id) => {
+        try {
+          const categoryRes = await dynamoDb.send(
+            new GetCommand({
+              TableName: categoriesTableName,
+              Key: { category_id: id },
+            })
+          );
+          if (categoryRes.Item?.category_name) {
+            categoryMap[id] = categoryRes.Item.category_name;
+          }
+        } catch (error) {
+          console.error(`Failed to fetch category ${id}`, error);
+        }
+      })
+    );
+
+    // 5. Add category_name to each blog
+    const enrichedBlogs = blogs.map((blog) => ({
+      ...blog,
+      category_name: categoryMap[blog.category] || "Unknown",
+    }));
 
     return NextResponse.json({
       status: true,
@@ -156,7 +185,7 @@ export async function GET(req: NextRequest) {
       limit,
       total,
       totalPages,
-      blogs
+      blogs: enrichedBlogs,
     });
   } catch (err) {
     console.error("Paginated fetch error:", err);

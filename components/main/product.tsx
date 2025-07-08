@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 type Blog = {
   blog_id: string;
-  category: string;
+  category_name: string;
   title: string;
   coverImageUrl: string;
 };
@@ -56,7 +56,7 @@ const ProductSection = () => {
       if (data.status) {
         const newBlogs: Blog[] = (data.blogs || []).map((b: any) => ({
           blog_id: b.blog_id,
-          category: (b.category || "BLOG").toUpperCase(),
+          category_name: (b.category_name || "BLOG").toUpperCase(),
           title: b.title,
           coverImageUrl: b.coverImageUrl || "/images/landing/Product-1.svg",
         }));
@@ -106,7 +106,7 @@ const ProductSection = () => {
                 style={{ fontFamily: "var(--font-roboto)" }}
               >
                 <p className="text-[#1A73E8] !font-roboto cursor-default text-[14px] font-[500] uppercase leading-[48px] tracking-[0.25px]">
-                  {blog.category}
+                  {blog.category_name}
                 </p>
                 <p className="
                   text-[#202124] cursor-default

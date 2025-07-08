@@ -22,7 +22,7 @@ type BlogItem = {
   title: string;
   subHeading?: string;
   content: string;
-  category: string;
+  category_name: string;
   createdAt: string;
   views?: number;
 };
@@ -189,13 +189,13 @@ const ProfilePage = () => {
             ) : (
               <div className="space-y-[25px] px-2 sm:px-0">
                 {blogs.map((b) => {
-                  const color = getColor(b.category);
+                  const color = getColor(b.category_name.toLowerCase());
                   return (
                     <Card key={b.blog_id} className="overflow-hidden">
                       <CardContent className="pl-4 pr-4 sm:pl-[24px] sm:pr-[20.5px]">
                         <div className="flex flex-wrap justify-between items-center">
                           <span className={`${color.bg} ${color.text} capitalize rounded-full px-[7px] py-[3px] text-[12px] font-[500]`}>
-                            {b.category}
+                            {b.category_name}
                           </span>
                           <span className="text-[14px] font-[900] text-[#6B7280]" style={{ fontFamily: "var(--font-roboto)" }}>
                             {new Date(b.createdAt).toLocaleDateString("en-US", {

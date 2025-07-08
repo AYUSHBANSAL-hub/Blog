@@ -95,8 +95,12 @@ const BlogEditorBodyEdit: React.FC = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [categories, setCategories] = useState<any[]>([]);
+  const [subCategories, setSubCategories] = useState<any[]>([]);
+
   const imageInputRef = useRef<HTMLInputElement | null>(null);
 
+  // Fetch blog details on load
   useEffect(() => {
     if (!blogId) return;
     (async () => {
@@ -122,6 +126,30 @@ const BlogEditorBodyEdit: React.FC = () => {
       }
     })();
   }, [blogId, router]);
+
+  // Fetch categories and subcategories
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const res = await fetch("/api/blogs/categories");
+      const data = await res.json();
+      if (data.status) setCategories(data.categories);
+    };
+    fetchCategories();
+  }, []);
+
+  // Fetch subcategories when category changes
+  useEffect(() => {
+    const fetchSubcategories = async () => {
+      if (!category) {
+        setSubCategories([]);
+        return;
+      }
+      const res = await fetch(`/api/blogs/subCategories?categoryId=${category}`);
+      const data = await res.json();
+      if (data.status) setSubCategories(data.subcategories);
+    };
+    fetchSubcategories();
+  }, [category]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -195,13 +223,12 @@ const BlogEditorBodyEdit: React.FC = () => {
   };
 
   const stripHtml = (html: string) => html.replace(/<[^>]+>/g, "").trim();
-
-const isFormComplete =
-  title.trim() &&
-  stripHtml(content) &&
-  category &&
-  subCategory &&
-  (imagePreview || featuredImage);
+  const isFormComplete =
+    title.trim() &&
+    stripHtml(content) &&
+    category &&
+    subCategory &&
+    (imagePreview || featuredImage);
 
   return (
     <>
@@ -282,24 +309,31 @@ const isFormComplete =
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="technology">Technology</SelectItem>
-                    <SelectItem value="design">Design</SelectItem>
-                    <SelectItem value="startup">Startup</SelectItem>
-                    <SelectItem value="lifestyle">Lifestyle</SelectItem>
+                    {categories.map((cat) => (
+                      <SelectItem key={cat.category_id} value={cat.category_id}>
+                        {cat.category_name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
+
               <div>
                 <label className="text-sm font-medium">Sub‑Category</label>
-                <Select value={subCategory} onValueChange={setSubCategory}>
+                <Select
+                  value={subCategory}
+                  onValueChange={setSubCategory}
+                  disabled={!category}
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select sub‑category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="web-dev">Web Development</SelectItem>
-                    <SelectItem value="ui-ux">UI/UX</SelectItem>
-                    <SelectItem value="saas">SaaS</SelectItem>
-                    <SelectItem value="mobile-apps">Mobile Apps</SelectItem>
+                    {subCategories.map((sub) => (
+                      <SelectItem key={sub.subcategory_id} value={sub.subcategory_id}>
+                        {sub.subcategory_name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -318,10 +352,7 @@ const isFormComplete =
                 {tags.length > 0 && (
                   <div className="flex flex-wrap gap-2 mt-2">
                     {tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs flex items-center"
-                      >
+                      <span key={tag} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs flex items-center">
                         {tag}
                         <button onClick={() => removeTag(tag)} className="ml-1 text-blue-500">×</button>
                       </span>

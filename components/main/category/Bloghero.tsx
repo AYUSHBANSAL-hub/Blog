@@ -4,10 +4,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton"; // import from shadcn
+import { useRouter } from "next/navigation";
 
 type Blog = {
   blog_id: string;
-  category: string;
+  category_name: string;
   title: string;
   content: string;
   subHeading?: string;
@@ -17,6 +19,7 @@ type Blog = {
 export default function BlogHero() {
   const [pinnedBlog, setPinnedBlog] = useState<Blog | null>(null);
   const controls = useAnimation();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -36,7 +39,6 @@ export default function BlogHero() {
 
   useEffect(() => {
     if (pinnedBlog) {
-      // Wait for next paint before animating (to ensure layout is ready)
       requestAnimationFrame(() => {
         controls.start({
           opacity: 1,
@@ -47,8 +49,37 @@ export default function BlogHero() {
     }
   }, [pinnedBlog, controls]);
 
-  if (!pinnedBlog) return null; // Or show loader
+  // === Skeleton Loader ===
+  if (!pinnedBlog) {
+    return (
+      <section className="relative flex flex-col items-start justify-center px-4 py-6 md:px-1 overflow-x-hidden">
+        <div className="relative w-full max-w-screen-xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start">
+          {/* Skeleton Image */}
+          <div className="relative w-full md:-ml-10 h-[300px] sm:h-[360px] md:h-[507.67px] md:w-[950px] rounded-[16px] overflow-hidden">
+            <Skeleton className="w-full h-full" />
+          </div>
 
+          {/* Skeleton Card */}
+          <div
+            className={`w-full sm:w-[90%] max-w-md mt-6 md:mt-0 md:absolute md:-right-[-200px] lg:-right-[-100px] xl:-right-[10px] 2xl:-right-[35px] md:top-1/2 md:-translate-y-1/2 z-10`}
+          >
+            <Card className="rounded-2xl h-full w-full md:w-[476px] pt-6 shadow-xl px-8 pb-6 bg-white">
+              <CardContent className="px-0 space-y-4">
+                <Skeleton className="h-4 w-24" />
+                <Skeleton className="h-8 w-full" />
+                <Skeleton className="h-4 w-3/4" />
+                <div className="flex justify-end pt-10">
+                  <Skeleton className="h-5 w-5 rounded-full" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // === Actual Content ===
   return (
     <section className="relative flex flex-col items-start justify-center px-4 py-6 md:px-1 overflow-x-hidden">
       <div className="relative w-full max-w-screen-xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-center md:justify-start">
@@ -73,16 +104,25 @@ export default function BlogHero() {
             md:absolute md:-right-[-200px] lg:-right-[-100px] xl:-right-[10px] 2xl:-right-[35px] md:top-1/2 md:-translate-y-1/2 
             z-10
           `}
+          onClick={() => {
+            router.push(`/blog-open?blogId=${pinnedBlog.blog_id}`);
+          }}
         >
           <Card className="rounded-2xl h-full w-full md:w-[476px] pt-6 shadow-xl px-8 pb-6 bg-white">
             <CardContent className="px-0">
-              <div className="text-[#1A73E8] capitalize py-4 md:pt-4 text-sm font-medium" style={{ fontFamily: 'var(--font-roboto)' }}>
-                {pinnedBlog.category}
+              <div
+                className="text-[#1A73E8] capitalize py-4 md:pt-4 text-sm font-medium"
+                style={{ fontFamily: "var(--font-roboto)" }}
+              >
+                {pinnedBlog.category_name}
               </div>
-              <h2 className="text-xl  cursor-default md:text-[35.58px] font-medium text-[#202124] md:pt-1 text-center md:text-left">
+              <h2 className="text-xl cursor-default md:text-[35.58px] font-medium text-[#202124] md:pt-1 text-center md:text-left">
                 {pinnedBlog.title}
               </h2>
-              <p className="text-sm md:text-base line-clamp-1 md:mt-3 text-[#5F6368] mt-2 text-center md:text-left" style={{ fontFamily: 'var(--font-roboto)' }}>
+              <p
+                className="text-sm md:text-base line-clamp-1 md:mt-3 text-[#5F6368] mt-2 text-center md:text-left"
+                style={{ fontFamily: "var(--font-roboto)" }}
+              >
                 {pinnedBlog.subHeading || ""}
               </p>
               <div className="flex justify-center md:justify-end pt-10">
