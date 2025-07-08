@@ -119,7 +119,7 @@ const ProfilePage = () => {
     <>
       <div className="flex flex-col md:flex-row px-4 sm:px-6 md:px-[69px] gap-9 w-full mt-16 mb-20 md:pt-5">
         {/* Profile Card */}
-        <div className="w-full md:w-[384px] md:sticky md:top-28 self-start">
+        <div className="w-full max-w-[384px] md:sticky md:top-28 self-start">
           <Card className="p-2 border-[#E5E7EB] border-2 rounded-[12px]">
             <CardContent className="px-7 pt-5 flex flex-col items-center">
               <Avatar className="w-20 h-20">
@@ -168,7 +168,7 @@ const ProfilePage = () => {
         </div>
 
         {/* Blog List */}
-        <div className="w-full md:w-[798px] flex flex-col gap-4">
+        <div className="w-full  flex flex-col gap-4">
           <Card>
             <CardContent className="px-4 sm:px-8 flex flex-col gap-[15.1px]">
               <h2 className="text-[20px] font-[900] text-[#111827]">My Blog Posts</h2>
