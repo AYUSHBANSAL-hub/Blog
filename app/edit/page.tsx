@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -399,7 +399,7 @@ const BlogEditorBodyEdit: React.FC = () => {
           </div>
         </DialogContent>
       </Dialog>
-    </>
+      </>
   );
 };
 
