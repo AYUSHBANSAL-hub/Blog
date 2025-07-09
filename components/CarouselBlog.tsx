@@ -104,7 +104,7 @@ const SubscriptionSection = () => {
                   className="md:basis-1/2 lg:basis-1/3 px-2.5 flex-shrink-0"
                 >
                   <motion.div
-                    variants={cardVariants }
+                    variants={cardVariants as any}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}

@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
-  const [breadcrumbs, setBreadcrumbs] = useState([{ label: "BLOGS", href: "#" }]);
+  const [breadcrumbs, setBreadcrumbs] = useState([{ label: "", href: "" }]);
   const router = useRouter();
 
   const handleProductClick = (category: string , category_id:string) => {
@@ -21,31 +21,41 @@ export default function BlogPage() {
     setSelectedCategory(category);
     setSelectedSubcategory(null);
     setBreadcrumbs([
-      { label: "BLOGS", href: "" },
       { label: category.toUpperCase(), href: "" },
     ]);
   };
 
-  const handleSubcategoryClick = (subcategory: string , subcategory_id:string) => {
-    router.push(`/Blog?subcategoryId=${subcategory_id}`);
-    setSelectedSubcategory(subcategory);
-    setBreadcrumbs((prev) => [
-      ...prev,
-      { label: subcategory.toUpperCase(), href: "#" },
-    ]);
-  };
+  const handleSubcategoryClick = (subcategory: string, subcategory_id: string) => {
+  const currentUrl = new URL(window.location.href);
+  currentUrl.searchParams.set("subcategoryId", subcategory_id); 
 
-  const handleBreadcrumbClick = (index: number) => {
-    if (index === 0) {
-      setSelectedCategory(null);
-      setSelectedSubcategory(null);
-      setBreadcrumbs([{ label: "BLOGS", href: "#" }]);
-      router.push("/Blog");
-    } else if (index === 1) {
-      setSelectedSubcategory(null);
-      setBreadcrumbs(breadcrumbs.slice(0, 2));
-    }
-  };
+  router.push(currentUrl.pathname + "?" + currentUrl.searchParams.toString());
+
+  setSelectedSubcategory(subcategory);
+  setBreadcrumbs((prev) => [
+    ...prev,
+    { label: subcategory.toUpperCase(), href: "#" },
+  ]);
+};
+
+ const handleBreadcrumbClick = (index: number) => {
+  if (index === 0) {
+    
+    setSelectedCategory(null);
+    setSelectedSubcategory(null);
+    setBreadcrumbs([]);
+    router.push("/Blog");
+  } else if (index === 1) {
+  
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.delete("subcategoryId");
+
+    router.push(currentUrl.pathname + "?" + currentUrl.searchParams.toString());
+
+    setSelectedSubcategory(null);
+    setBreadcrumbs(breadcrumbs.slice(0, 1));
+  }
+};
 
   return (
     <div>

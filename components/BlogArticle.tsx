@@ -207,7 +207,7 @@ const ArticleSection = () => {
         ) : (
           <img
             src={blog?.coverImageUrl || "/images/blog-img.svg"}
-            className="w-full h-auto rounded-lg object-cover"
+            className="w-full h-auto max-h-[436.17px] rounded-lg object-cover"
           />
         )}
       </div>

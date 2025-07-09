@@ -13,8 +13,7 @@ const BlogSection = () => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  /* ---------- helpers ---------- */
-
+  
   const handleClick = async (id: string) => {
     try {
       await fetch(`/api/blogs/${id}/view`, { method: "POST" });
@@ -58,7 +57,7 @@ const BlogSection = () => {
     })();
   }, []);
 
-  /* ---------- skeletons ---------- */
+  
 
   const SkeletonFeatured = (
     <div className="flex-1 pt-12 flex flex-col gap-[16px]">
@@ -89,7 +88,7 @@ const BlogSection = () => {
     </div>
   );
 
-  /* ---------- render ---------- */
+ 
 
   return (
     <section className="w-full max-w-[1296px] mt-4 pb-6 px-4 sm:px-6 md:px-8 mx-auto">
@@ -152,7 +151,7 @@ const BlogSection = () => {
                     fill
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-[#00000017]" />
+                  
                 </div>
               </div>
             </div>

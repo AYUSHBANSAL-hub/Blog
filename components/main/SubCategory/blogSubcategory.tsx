@@ -21,6 +21,7 @@ const SubCategoryBlogs = () => {
 
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(true);
+  const [subcategory, setSubCategory] = useState<string | null>(null);
 
   useEffect(() => {
     if (!subcategoryId) return;
@@ -32,6 +33,7 @@ const SubCategoryBlogs = () => {
 
         if (data.status) {
           setBlogs(data.blogs);
+          setSubCategory(data.subcategory_name || null);
         } else {
           console.error("Failed to fetch blogs:", data.error);
         }
@@ -71,7 +73,7 @@ const SubCategoryBlogs = () => {
                 <div className="flex flex-col justify-between h-full">
                   <div className="flex flex-col gap-[16px] px-[24px] flex-1">
                     <div className="text-[#1A73E8] text-[13.67px] font-[500] tracking-[0.25px] leading-[48px] uppercase">
-                      {blog.category}
+                      {subcategory}
                     </div>
 
                     <div className="flex flex-col gap-[16px]">

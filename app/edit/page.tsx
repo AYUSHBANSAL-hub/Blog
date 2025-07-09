@@ -386,7 +386,7 @@ const BlogEditorBodyEdit: React.FC = () => {
           <DialogHeader>
             <DialogTitle>Preview</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 overflow-y-auto max-h-[70vh]">
+          <div className="space-y-4 overflow-y-auto max-h-[70vh]  invisible-scrollbar">
             {title && <h1 className="text-3xl font-bold">{title}</h1>}
             {subheading && <h2 className="text-xl font-semibold">{subheading}</h2>}
             {imagePreview && <img src={imagePreview} alt="cover" className="w-full h-auto rounded" />}
