@@ -42,8 +42,7 @@ const Navbar = () => {
     { label: "Product", href: "/modal" },
     { label: "Create", href: "/manageblog" },
     { label: "Blogs", href: "/Blog" },
-    ...(user?.id ? [{ label: "Profile", href: "/profile" }] : []),
-    { label: "About", href: "/signup" },
+    { label: "About", href: "/404" },
   ];
 
   useEffect(() => {
@@ -220,18 +219,30 @@ const Navbar = () => {
                 </button>
 
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-32 bg-white border border-stone-200 rounded-md shadow-lg z-50">
+                  <div className="absolute right-0 mt-2 w-36 bg-white border border-stone-200 rounded-md shadow-lg z-50">
                     <button
                       onMouseDown={(e) => {
-                        e.stopPropagation();   // keep outside‑click handler from closing early
-                        handleLogout();        // ← call your logout
+                        e.stopPropagation();
+                        setDropdownOpen(false);
+                        router.push("/profile");
                       }}
-                      className="block w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-stone-100 transition-colors"
+                      className="flex items-center w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-stone-100 transition-colors"
                     >
-                      Logout
+                      <span className="mr-2">👤</span> Profile
+                    </button>
+                    <button
+                      onMouseDown={(e) => {
+                        e.stopPropagation();
+                        handleLogout();
+                      }}
+                      className="flex items-center w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-stone-100 transition-colors"
+                    >
+                      <span className="mr-2">🚪</span> Logout
                     </button>
                   </div>
                 )}
+
+
               </div>
             ) : (
               <Link href="/login">
@@ -254,15 +265,25 @@ const Navbar = () => {
               </button>
 
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 w-28 bg-white border border-stone-200 rounded-md shadow-lg z-50">
+                <div className="absolute right-0 mt-2 w-36 bg-white border border-stone-200 rounded-md shadow-lg z-50">
+                  <button
+                    onClick={() => {
+                      setDropdownOpen(false);
+                      router.push("/profile");
+                    }}
+                    className="flex items-center w-full text-left px-3 py-2 text-sm text-stone-700 hover:bg-stone-100 transition-colors"
+                  >
+                    <span className="mr-2">👤</span> Profile
+                  </button>
                   <button
                     onClick={handleLogout}
-                    className="block w-full text-left px-3 py-2 text-sm text-stone-700 hover:bg-stone-100 transition-colors"
+                    className="flex items-center w-full text-left px-3 py-2 text-sm text-stone-700 hover:bg-stone-100 transition-colors"
                   >
-                    Logout
+                    <span className="mr-2">🚪</span> Logout
                   </button>
                 </div>
               )}
+
             </div>
           )}
 

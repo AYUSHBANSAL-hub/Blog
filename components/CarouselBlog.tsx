@@ -21,6 +21,13 @@ type RelatedBlog = {
   coverImageUrl?: string;
 };
 
+const categoryValue = {  
+  "6127b7b9-fcc8-4ed8-9890-09ce60c29db7": "Startup",
+  "dc743317-c69c-44a9-abd5-65898ac16ede": "Technology",
+  "a58f7e32-a97f-4349-a4d3-c02ab5e978ac": "Lifestyle",
+  "cace7d4c-4b01-4de8-8184-418b67eb18df": "Design"
+}
+
 const SubscriptionSection = () => {
   const searchParams = useSearchParams();
   const blogId = searchParams.get("blogId");
@@ -32,6 +39,8 @@ const SubscriptionSection = () => {
   const lastIndex = Math.max(blogs.length - slidesPerView, 0);
 
   const router = useRouter();
+
+  
 
   useEffect(() => {
     if (!blogId) return;
@@ -136,10 +145,10 @@ const SubscriptionSection = () => {
                               <Skeleton className="w-20 h-4" />
                             ) : (
                               <span
-                                className="text-[14px] font-[500] leading-[44px] tracking-[1.5px] text-[#202124]"
+                                className="text-[14px] uppercase font-[500] leading-[44px] tracking-[1.5px] text-[#202124]"
                                 style={{ fontFamily: "var(--font-roboto)" }}
-                              >
-                                {post!.category}
+                              >                               
+                                {categoryValue[post?.category.toLowerCase() as keyof typeof categoryValue]}
                               </span>
                             )}
                           </div>

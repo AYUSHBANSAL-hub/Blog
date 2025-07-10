@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Blog {
   blog_id: string;
@@ -15,8 +17,18 @@ interface Blog {
   coverImageUrl?: string;
 }
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.4 },
+  }),
+};
+
 const SubCategoryBlogs = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const subcategoryId = searchParams.get("subcategoryId");
 
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -47,42 +59,74 @@ const SubCategoryBlogs = () => {
     fetchBlogs();
   }, [subcategoryId]);
 
-  if (loading) return <div className="text-center py-10">Loading...</div>;
-
-  if (!blogs.length)
-    return (
-      <div className="text-center py-10 text-gray-500">
-        No blogs found for this subcategory.
-      </div>
-    );
+  const loadingCards = Array.from({ length: 6 });
 
   return (
     <section className="py-12 px-4 sm:px-6">
       <div className="max-w-[1260px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 md:gap-x-[84px] gap-y-8 md:gap-y-[47px]">
-          {blogs.map((blog) => (
-            <div key={blog.blog_id} className="flex justify-center">
-              <div className="flex flex-col gap-[24px] w-full max-w-full sm:max-w-[338.22px] h-full rounded-2xl overflow-hidden border border-[#dadce0] shadow-sm hover:shadow-md transition-shadow duration-300">
+          {(loading ? loadingCards : blogs).map((blog: any, index: number) => (
+            <motion.div
+              key={blog?.blog_id || index}
+              className="flex justify-center cursor-pointer"
+              custom={index}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={cardVariants}
+              onClick={() => !loading && router.push(`/blog-open?blogId=${blog.blog_id}`)}
+            >
+              <motion.div
+                whileHover={{
+                  scale: 1.01,
+                  y: -4,
+                  transition: { type: "spring", stiffness: 300 },
+                }}
+                className="flex flex-col gap-[24px] w-full max-w-full sm:max-w-[338.22px] h-full rounded-2xl overflow-hidden border border-[#dadce0] shadow-sm hover:shadow-md transition-shadow duration-300 bg-white"
+              >
                 {/* Image */}
-                <div
-                  className="h-[187.98px] w-full bg-cover bg-center"
-                  style={{ backgroundImage: `url(${blog.coverImageUrl || "/images/placeholder.svg"})` }}
-                />
+                <div className="h-[187.98px] w-full bg-cover bg-center">
+                  {loading ? (
+                    <Skeleton className="w-full h-full rounded-none" />
+                  ) : (
+                    <div
+                      style={{
+                        backgroundImage: `url(${blog.coverImageUrl || "/images/placeholder.svg"})`,
+                      }}
+                      className="h-full w-full bg-cover bg-center"
+                    />
+                  )}
+                </div>
 
                 {/* Content */}
                 <div className="flex flex-col justify-between h-full">
                   <div className="flex flex-col gap-[16px] px-[24px] flex-1">
                     <div className="text-[#1A73E8] text-[13.67px] font-[500] tracking-[0.25px] leading-[48px] uppercase">
-                      {subcategory}
+                      {loading ? <Skeleton className="h-4 w-24" /> : subcategory}
                     </div>
 
                     <div className="flex flex-col gap-[16px]">
-                      <h3 className="text-[#202124] text-[19.84px] font-[500] leading-[28px]">
-                        {blog.title}
+                      <h3 className="text-[#202124] text-[19.84px] font-[500] leading-[28px] line-clamp-2">
+                        {loading ? (
+                          <>
+                            <Skeleton className="h-5 w-full mb-1" />
+                            <Skeleton className="h-5 w-3/4" />
+                          </>
+                        ) : (
+                          blog.title
+                        )}
                       </h3>
 
                       <p className="text-[#5F6368] text-[13.89px] font-[400] leading-[24px] tracking-[0.25px] line-clamp-4">
-                        {blog.subHeading}
+                        {loading ? (
+                          <>
+                            <Skeleton className="h-4 w-full mb-1" />
+                            <Skeleton className="h-4 w-[90%] mb-1" />
+                            <Skeleton className="h-4 w-[80%]" />
+                          </>
+                        ) : (
+                          blog.subHeading
+                        )}
                       </p>
                     </div>
                   </div>
@@ -91,29 +135,36 @@ const SubCategoryBlogs = () => {
                   <div className="pb-[37px] px-[24px] flex flex-wrap items-start justify-between gap-2">
                     <div className="flex flex-col sm:flex-row gap-2">
                       <div className="text-[#5f6368] text-[14px] font-[500] leading-[20px]">
-                        Posted <br />by
+                        {loading ? <Skeleton className="h-4 w-[40px]" /> : "Posted by"}
                       </div>
                       <div className="text-[#5f6368] text-[14px] font-[500] leading-[20px]">
-                        <span>
+                        {loading ? (
+                          <Skeleton className="h-4 w-[120px]" />
+                        ) : (
+                          <span>
                             Roma Jain -{" "}
-                            
                             {new Date(blog?.createdAt || "").toLocaleDateString("en-GB", {
                               day: "2-digit",
                               month: "short",
                               year: "numeric",
                             })}
                           </span>
+                        )}
                       </div>
                     </div>
-                    <img
-                      src="/images/blackArrow.svg"
-                      alt="Arrow Icon"
-                      className="w-[16px] h-[16px] my-auto"
-                    />
+                    {loading ? (
+                      <Skeleton className="w-[16px] h-[16px] rounded-full" />
+                    ) : (
+                      <img
+                        src="/images/blackArrow.svg"
+                        alt="Arrow Icon"
+                        className="w-[16px] h-[16px] my-auto"
+                      />
+                    )}
                   </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           ))}
         </div>
       </div>

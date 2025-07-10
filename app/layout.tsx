@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { Figtree } from 'next/font/google';
 import { Roboto } from 'next/font/google';
 import UserProvider from "./UserProvider";
-import { Suspense } from "react";
+import Providers from "./provider/page"; // ← should be a client component
 
 const figtree = Figtree({
   subsets: ['latin'],
@@ -32,20 +32,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={` ${figtree.variable} ${roboto.variable}`}>
-      <Suspense>
-      <UserProvider>
+    <html lang="en" className={`${figtree.variable} ${roboto.variable}`}>
       <body className="antialiased font-figtree h-full flex flex-col">
-        <div className="fixed top-0 left-0 right-0 z-50">
-          <Navbar />
-        </div>
+        <Providers>
+          <UserProvider>
+            <div className="fixed top-0 left-0 right-0 z-50">
+              <Navbar />
+            </div>
 
-        <main className="flex-1 mt-8">{children}</main>
+            <main className="flex-1 mt-8">{children}</main>
 
-        <Footer />
+            <Footer />
+          </UserProvider>
+        </Providers>
       </body>
-      </UserProvider>
-      </Suspense>
     </html>
   );
 }

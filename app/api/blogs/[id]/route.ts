@@ -12,6 +12,7 @@ const blogsTableName = "blogs";
 
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   const blogId = params.id;
+  console.log("Fetching blog with ID:", blogId);
 
   if (!blogId) {
     return NextResponse.json({ status: false, error: "Missing blog id" }, { status: 400 });
@@ -30,13 +31,39 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
     );
 
     const blog = data.Items?.[0];
+    console.log("Blog data:", blog);
 
     if (!blog) {
       return NextResponse.json({ status: false, error: "Blog not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ status: true, blog });
-  } catch {
+    const userId = blog.user_id;
+
+    if (!userId) {
+      return NextResponse.json({ status: false, error: "User ID missing in blog data" }, { status: 500 });
+    }
+
+    // 2. Fetch user_details by user_id
+    const userDetailsData = await dynamoDb.send(
+      new QueryCommand({
+        TableName: "user_details",
+        KeyConditionExpression: "user_id = :uid",
+        ExpressionAttributeValues: {
+          ":uid":  userId ,
+        },
+        Limit: 1,
+      })
+    );
+
+    const userDetails = userDetailsData.Items?.[0] || null;
+
+    return NextResponse.json({
+      status: true,
+      blog,
+      user: userDetails,
+    });
+  } catch (error) {
+    console.error("Error in GET /blogs/:id =>", error);
     return NextResponse.json({ status: false, error: "Failed to fetch blog" }, { status: 500 });
   }
 }

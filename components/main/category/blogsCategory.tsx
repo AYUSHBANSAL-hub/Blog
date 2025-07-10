@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useRouter } from "next/navigation";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 20 },
@@ -14,9 +15,9 @@ const cardVariants = {
 
 const CategoryBlogs = ({ blogs }: { blogs: any[] }) => {
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    // Simulate loading or replace this logic based on your actual fetch
     const timeout = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timeout);
   }, []);
@@ -30,12 +31,13 @@ const CategoryBlogs = ({ blogs }: { blogs: any[] }) => {
           {(loading ? skeletons : blogs).map((blog: any, index: number) => (
             <motion.div
               key={blog?.blog_id || index}
-              className="flex justify-center"
+              className="flex justify-center cursor-pointer"
               custom={index}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.2 }}
               variants={cardVariants}
+              onClick={() => !loading && blog?.blog_id && router.push(`/blog-open?blogId=${blog.blog_id}`)}
             >
               <motion.div
                 whileHover={{

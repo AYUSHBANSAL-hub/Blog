@@ -16,14 +16,15 @@ const MegaMenuContent = ({ activeLabel }: { activeLabel: string }) => {
       ],
     },
     Create: {
-      heading: "Our Services",
-      description: "Tailored solutions for your business needs.",
+      heading: "Start Your Blog",
+      description: "Share your thoughts, stories, and expertise with the world.",
       links: [
-        { text: "Consulting", href: "#" },
-        { text: "Custom Development", href: "#" },
-        { text: "Cloud Integration", href: "#" },
+        { text: "Write a New Blog", href: "#" },
+        { text: "Manage Posts", href: "#" },
+        { text: "View Analytics", href: "#" },
       ],
-    },
+    }
+    ,
     Blogs: {
       heading: "From the Blog",
       description: "Insights, tutorials, and industry news.",

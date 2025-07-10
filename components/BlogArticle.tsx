@@ -14,11 +14,19 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card, CardContent } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
 
+const categoryValue = {  
+  "6127b7b9-fcc8-4ed8-9890-09ce60c29db7": "Startup",
+  "dc743317-c69c-44a9-abd5-65898ac16ede": "Technology",
+  "a58f7e32-a97f-4349-a4d3-c02ab5e978ac": "Lifestyle",
+  "cace7d4c-4b01-4de8-8184-418b67eb18df": "Design"
+}
+
 const ArticleSection = () => {
   const searchParams = useSearchParams();
   const blogId = searchParams.get("blogId");
   const [blog, setBlog] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [userDetail, setUserDetail] = useState<any>(null);
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -28,6 +36,7 @@ const ArticleSection = () => {
         const data = await res.json();
         if (data.status) {
           setBlog(data.blog);
+          setUserDetail(data.user);
         }
       } catch (err) {
         console.error("Failed to fetch blog:", err);
@@ -61,22 +70,10 @@ const ArticleSection = () => {
                 <BreadcrumbItem>
                   <BreadcrumbLink
                     href="#"
-                    className="text-[#1a73e8] text-sm tracking-[0.25px] font-medium"
+                    className="text-[#1a73e8] uppercase text-sm tracking-[0.25px] font-medium"
                     style={{ fontFamily: "var(--font-roboto)" }}
                   >
-                    PRODUCT
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator>
-                  <ChevronRightIcon className="w-4 h-4" />
-                </BreadcrumbSeparator>
-                <BreadcrumbItem>
-                  <BreadcrumbLink
-                    href="#"
-                    className="font-medium text-[#1a73e8] text-sm tracking-[0.25px]"
-                    style={{ fontFamily: "var(--font-roboto)" }}
-                  >
-                    GOOGLE AI
+                    {categoryValue[blog?.category as keyof typeof categoryValue]}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </BreadcrumbList>
@@ -89,7 +86,7 @@ const ArticleSection = () => {
             {loading ? (
               <Skeleton className="h-[60px] w-full rounded-md" />
             ) : (
-              <h1 className="text-[32px] sm:text-[44px] md:text-[59.8px] font-normal text-[#202124] tracking-[-0.3px] md:tracking-[-0.5px] leading-tight md:leading-[72px]">
+              <h1 className="text-[32px]  md:text-[59.8px] font-normal text-[#202124] tracking-[-0.3px] md:tracking-[-0.5px] leading-tight md:leading-[72px]">
                 {blog?.title}
               </h1>
             )}
@@ -99,23 +96,24 @@ const ArticleSection = () => {
 
       {/* Blog Info */}
       <div className="w-full max-w-[1260px] px-2 sm:px-6 md:px-[60px] lg:px-[107px] pb-9">
-        <div className="flex item-center gap-2 justify-center md:flex-row">
-          <div className="pr-1 md:pr-6 border-r md:border-r border-[#dadce0]">
+        <div className="flex flex-col item-center gap-2 justify-center md:flex-row">
+          <div className="pr-1 md:pr-6  md:border-r border-[#dadce0]">
             {loading ? (
               <Skeleton className="h-4 w-24 mb-2" />
             ) : (
+              <div className="flex flex-row md:flex-col items-start md:items-center gap-2">
               <p
-                className="text-[#5f6368] text-[13.9px] leading-6"
+                className="text-[#5f6368] text-[13.9px]  leading-6"
                 style={{ fontFamily: "var(--font-roboto)" }}
               >
                 {new Date(blog.createdAt).toLocaleDateString("en-US", {
                   day: "numeric",
                   month: "short",
                   year: "numeric",
-                })}
-                <br />
-                {readTime} min read
+                })}                
               </p>
+              <p className="text-[#5f6368] text-[13.9px]  leading-6" style={{ fontFamily: "var(--font-roboto)" }}>{readTime} min read</p>
+              </div>
             )}
           </div>
           <div className="flex-1  md:mt-0 md:ml-6">
@@ -168,7 +166,7 @@ const ArticleSection = () => {
           <div className="flex items-start mb-6 md:mb-0">
             <Avatar className="w-10 h-10 border border-[#e8eaed] rounded-full mr-4">
               <AvatarImage
-                src="/images/dp-1.svg"
+                src={userDetail?.profile_image || "/images/profile/img-1.svg"}
                 className="w-10 h-10 rounded-full object-cover"
               />
               <AvatarFallback>XYZ</AvatarFallback>
@@ -178,7 +176,7 @@ const ArticleSection = () => {
                 className="text-sm font-bold text-[#202124]"
                 style={{ fontFamily: "var(--font-roboto)" }}
               >
-                Neha Gupta
+                {userDetail?.username || "Anonymous"}
               </h3>
               <p
                 className="text-xs md:text-sm font-medium text-[#5f6368] tracking-[0.25px] leading-[20.2px]"

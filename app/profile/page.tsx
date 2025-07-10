@@ -16,6 +16,7 @@ import {
   DialogTitle,
   DialogClose,
 } from "@/components/ui/dialog";
+import { ProfileCard } from "@/components/profileCard";
 
 type BlogItem = {
   blog_id: string;
@@ -119,53 +120,7 @@ const ProfilePage = () => {
     <>
       <div className="flex flex-col md:flex-row px-4 sm:px-6 md:px-[69px] gap-9 w-full mt-16 mb-20 md:pt-5">
         {/* Profile Card */}
-        <div className="w-full max-w-[384px] md:sticky md:top-28 self-start">
-          <Card className="p-2 border-[#E5E7EB] border-2 rounded-[12px]">
-            <CardContent className="px-7 pt-5 flex flex-col items-center">
-              <Avatar className="w-20 h-20">
-                <img src="/images/profile/img.svg" alt="Profile" className="object-cover w-full h-full rounded-full" />
-              </Avatar>
-
-              <div className="flex flex-col gap-[7.8px] mt-[12.24px] justify-center items-center">
-                <h2 className="font-black text-2xl text-gray-900 leading-7">{profileData.name}</h2>
-                <p className="text-lg font-bold text-[#4B5563] mb-4">{profileData.username}</p>
-              </div>
-
-              <div className="flex justify-center w-full gap-1 mb-4">
-                {profileData.stats.map((stat, i) => (
-                  <div key={i} className="flex flex-col items-center w-20">
-                    <span className="font-black text-2xl text-gray-900">{stat.value}</span>
-                    <span className="text-sm font-bold text-[#4B5563]">{stat.label}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="w-full space-y-3 mt-4 py-5 flex flex-col gap-2 border-t-[1px] border-[#F3F4F6] mb-3">
-                {profileData.details.map((detail, i) => (
-                  <div key={i} className="flex items-center gap-1">
-                    <img className="w-4 h-4 mr-3" src={detail.icon} alt="" />
-                    <span className={`text-sm font-bold ${detail.isLink ? "text-blue-600" : "text-gray-600"}`} style={{ fontFamily: "var(--font-roboto)" }}>
-                      {detail.text}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="w-full border-t-[1px] border-[#F3F4F6] flex flex-col gap-2">
-                <h3 className="text-lg font-semibold text-gray-900 mt-5 mb-1">About</h3>
-                <p className="text-sm font-bold text-gray-600" style={{ fontFamily: "var(--font-roboto)" }}>
-                  {profileData.about}
-                </p>
-              </div>
-            </CardContent>
-
-            <div className="w-full px-4 pb-4">
-              <Button className="w-full py-4 text-[16px] font-[500] bg-[#2563EB] hover:bg-blue-700">
-                Edit Profile
-              </Button>
-            </div>
-          </Card>
-        </div>
+        <ProfileCard views={blogs.length.toString()} post={totalViews.toLocaleString()}/>
 
         {/* Blog List */}
         <div className="w-full  flex flex-col gap-4">
@@ -284,5 +239,4 @@ const ProfilePage = () => {
     </>
   );
 };
-
 export default ProfilePage;
