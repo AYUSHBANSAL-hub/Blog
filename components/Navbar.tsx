@@ -132,7 +132,7 @@ const Navbar = () => {
 
 
   return (
-    <header className="bg-white w-full h-[71px] pt-2 relative" onMouseLeave={handleNavContainerMouseLeave}>
+    <header className="bg-white w-full h-[71px] relative" onMouseLeave={handleNavContainerMouseLeave}>
       <div className="flex items-center justify-between px-6 md:px-20 py-3">
 
         <div className="flex items-center gap-8">
@@ -206,8 +206,6 @@ const Navbar = () => {
                 <ResultList />
               </div>
             )}
-
-
             {user?.id ? (
               <div className="relative" ref={avatarRef}>
                 <button

@@ -12,12 +12,10 @@ const BlogSection = () => {
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingBlogId, setLoadingBlogId] = useState<string | null>(null);
-
   const router = useRouter();
 
-
   const handleClick = async (id: string) => {
-    setLoadingBlogId(id); // <-- set loading state
+    setLoadingBlogId(id);
     try {
       await fetch(`/api/blogs/${id}/view`, { method: "POST" });
     } catch (err) {
@@ -27,18 +25,15 @@ const BlogSection = () => {
     }
   };
 
-
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
 
   const featuredMarginTop = Math.min(80, scrollY * 0.2);
 
@@ -61,8 +56,6 @@ const BlogSection = () => {
     })();
   }, []);
 
-
-
   const SkeletonFeatured = (
     <div className="flex-1 pt-12 flex flex-col gap-[16px]">
       <Skeleton className="h-[48px] w-[80%] sm:w-[70%]" />
@@ -71,7 +64,7 @@ const BlogSection = () => {
         <Skeleton className="h-4 w-20" />
         <Skeleton className="h-9 w-[106px] rounded-[100px]" />
       </div>
-      <Skeleton className="mt-[25px] h-[300px] sm:h-[400px] md:h-[622px] max-w-[622px] rounded-[16px]" />
+      <Skeleton className="mt-[25px] h-[240px] sm:h-[300px] md:h-[400px] lg:h-[622px] max-w-[622px] rounded-[16px]" />
     </div>
   );
 
@@ -92,24 +85,20 @@ const BlogSection = () => {
     </div>
   );
 
-
-
   return (
     <section className="w-full max-w-[1296px] mt-4 pb-6 px-4 sm:px-6 md:px-8 mx-auto">
       <div className="flex flex-col md:flex-row gap-[48px] min-h-[700px]">
-        {/* ───── Featured blog – sticky column ───── */}
-        <div className="flex-1 md:sticky md:top-0 md:self-start md:h-screen md:overflow-hidden">
+        {/* Featured Blog */}
+        <div className="flex-1 md:sticky md:top-0 md:self-start md:h-[1200px] ">
           {loading || !featuredBlog ? (
             SkeletonFeatured
           ) : (
             <div
-              className="pt-[46px] flex flex-col gap-[16px] h-full ransition-all duration-200 ease-out"
+              className="pt-[46px] flex flex-col gap-[16px] h-full transition-all duration-200 ease-out"
               style={{ marginTop: `${featuredMarginTop}px` }}
             >
-
-              {/* title / meta */}
               <div className="flex flex-col gap-4">
-                <h2 className="font-[600] text-black text-[32px] sm:text-[36px] md:text-[40px] tracking-[-0.51px] leading-[1.2]">
+                <h2 className="font-[600] text-black text-[24px] sm:text-[28px] md:text-[32px] lg:text-[36px] xl:text-[40px] tracking-[-0.51px] leading-[1.2]">
                   {featuredBlog.title}
                 </h2>
 
@@ -148,108 +137,105 @@ const BlogSection = () => {
                       </span>
                     )}
                   </Button>
-
                 </div>
               </div>
 
-              {/* image */}
-              <div className="mt-[25px] rounded-[16px] overflow-hidden flex-1 min-h-0">
-                <div className="relative w-full h-full max-w-[622px]">
+              {/* Image */}
+              <div className="mt-[25px] rounded-[16px] overflow-hidden">
+                <div className="relative w-full h-[240px] sm:h-[300px] md:h-[400px] md:w-[400px] lg:h-[622px] lg:w-[622px]">
                   <Image
                     src={featuredBlog.coverImageUrl || "/images/Overlay.svg"}
                     alt={featuredBlog.title}
                     fill
                     className="object-cover"
                   />
-
                 </div>
               </div>
             </div>
           )}
         </div>
 
-        {/* ───── Blog list – scrolls with page ───── */}
-        <div className="flex-1 pt-10">
+        {/* Blog List */}
+        <div className="flex-1  pt-10">
           <div className="flex flex-col gap-10">
             {loading
               ? Array.from({ length: 4 }).map((_, i) => (
-                <React.Fragment key={i}>{SkeletonListItem}</React.Fragment>
-              ))
+                  <React.Fragment key={i}>{SkeletonListItem}</React.Fragment>
+                ))
               : blogPosts.map((post, index) => (
-                <div
-                  key={post.blog_id}
-                  className="relative cursor-pointer"
-                  onClick={() =>
-                    setFeaturedBlog({
-                      ...post,
-                      title: post.title,
-                      date: post.createdAt,
-                      category_name: post.category_name,
-                      image: post.coverImageUrl,
-                    })
-                  }
-                >
-                  <div className="flex flex-col sm:flex-row w-full pb-10 gap-4 sm:gap-[48px]">
-                    <div className="flex-1">
-                      <h3 className="font-[600] mt-3 text-black text-[24px] sm:text-[28px] md:text-[30.8px] tracking-[-0.51px] leading-[1.1] mb-4">
-                        {post.title}
-                      </h3>
+                  <div
+                    key={post.blog_id}
+                    className="relative cursor-pointer"
+                    onClick={() =>
+                      setFeaturedBlog({
+                        ...post,
+                        title: post.title,
+                        date: post.createdAt,
+                        category_name: post.category_name,
+                        image: post.coverImageUrl,
+                      })
+                    }
+                  >
+                    <div className="flex flex-col sm:flex-row w-full pb-10 gap-4 sm:gap-[48px]">
+                      <div className="flex-1">
+                        <h3 className="font-[600] mt-3 line-clamp-3 text-black text-[20px] sm:text-[24px] md:text-[28px] lg:text-[30.8px] tracking-[-0.51px] leading-[1.1] mb-4">
+                          {post.title}
+                        </h3>
 
-                      <div className="flex flex-wrap items-center gap-4">
-                        <span
-                          className="text-[13.6px] font-[300] text-[#232323] tracking-[0.16px] leading-[21px]"
-                          style={{ fontFamily: "var(--font-roboto)" }}
-                        >
-                          {new Date(post.createdAt).toLocaleDateString(
-                            "en-US",
-                            { month: "long", year: "numeric" }
-                          )}
-                        </span>
+                        <div className="flex flex-wrap items-center gap-4">
+                          <span
+                            className="text-[13.6px] font-[300] text-[#232323] tracking-[0.16px] leading-[21px]"
+                            style={{ fontFamily: "var(--font-roboto)" }}
+                          >
+                            {new Date(post.createdAt).toLocaleDateString(
+                              "en-US",
+                              { month: "long", year: "numeric" }
+                            )}
+                          </span>
 
-                        <span
-                          className="text-[14.06px] capitalize font-light text-[#232323] tracking-[0.16px] leading-[21px]"
-                          style={{ fontFamily: "var(--font-roboto)" }}
-                        >
-                          {post.category_name}
-                        </span>
+                          <span
+                            className="text-[14.06px] capitalize font-light text-[#232323] tracking-[0.16px] leading-[21px]"
+                            style={{ fontFamily: "var(--font-roboto)" }}
+                          >
+                            {post.category_name}
+                          </span>
 
-                        <Button
-                          variant="link"
-                          className="p-0 h-9 text-[#004FCF]"
-                          onClick={() => handleClick(post.blog_id)}
-                          disabled={loadingBlogId === post.blog_id}
-                        >
-                          {loadingBlogId === post.blog_id ? (
-                            <span className="animate-spin h-4 w-4 border-2 border-t-transparent border-[#004FCF] rounded-full" />
-                          ) : (
-                            <span
-                              className="font-[600] text-[13.9px] tracking-[0.11px] leading-[21px]"
-                              style={{ fontFamily: "var(--font-roboto)" }}
-                            >
-                              Learn more
-                            </span>
-                          )}
-                        </Button>
+                          <Button
+                            variant="link"
+                            className="p-0 h-9 text-[#004FCF]"
+                            onClick={() => handleClick(post.blog_id)}
+                            disabled={loadingBlogId === post.blog_id}
+                          >
+                            {loadingBlogId === post.blog_id ? (
+                              <span className="animate-spin h-4 w-4 border-2 border-t-transparent border-[#004FCF] rounded-full" />
+                            ) : (
+                              <span
+                                className="font-[600] text-[13.9px] tracking-[0.11px] leading-[21px]"
+                                style={{ fontFamily: "var(--font-roboto)" }}
+                              >
+                                Learn more
+                              </span>
+                            )}
+                          </Button>
+                        </div>
+                      </div>
 
+                      <div className="w-full sm:w-[176px] h-[176px] rounded-[16px] overflow-hidden relative min-w-0">
+                        <Image
+                          src={post.coverImageUrl || "/images/Overlay.svg"}
+                          alt={post.title}
+                          fill
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-[#00000017]" />
                       </div>
                     </div>
 
-                    <div className="w-full sm:w-[176px] h-[176px] rounded-[16px] overflow-hidden relative">
-                      <Image
-                        src={post.coverImageUrl || "/images/Overlay.svg"}
-                        alt={post.title}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-[#00000017]" />
-                    </div>
+                    {index < blogPosts.length - 1 && (
+                      <Separator className="w-full h-px bg-[#00000017]" />
+                    )}
                   </div>
-
-                  {index < blogPosts.length - 1 && (
-                    <Separator className="w-full h-px bg-[#00000017]" />
-                  )}
-                </div>
-              ))}
+                ))}
           </div>
         </div>
       </div>

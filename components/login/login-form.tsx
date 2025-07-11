@@ -60,7 +60,7 @@ const LoginFormSection = () => {
 
         {/* Email Field */}
         <div className="flex flex-col gap-[6px] sm:gap-[8px]">
-          <label htmlFor="email" className="font-semibold text-sm text-zinc-800 leading-5">
+          <label htmlFor="email" className="font-[700] text-sm text-zinc-800 leading-5">
             Email
           </label>
           <Input
@@ -125,6 +125,7 @@ const LoginFormSection = () => {
         )}
 
         {/* Login Button */}
+        <div>
         <div className="w-full">
           <Button
             type="submit"
@@ -157,6 +158,7 @@ const LoginFormSection = () => {
         <p className="text-xs mt-[16px] text-center text-[#71717b] leading-4 px-2">
           By clicking Continue, you agree to our Terms of Service and Privacy Policy.
         </p>
+        </div>
       </form>
     </div>
   );
