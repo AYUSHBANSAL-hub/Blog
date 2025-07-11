@@ -159,5 +159,15 @@ body {
   width: 0;
   height: 0;
 }
+@media (width: 412px) and (height: 914px) {
+  .custom-style {
+    top: -200px;
+    right: -100px;
+    width: 90%;
+    height: 2px;
+    font-size: 1.25rem;
+    
+  }
+}
 
 

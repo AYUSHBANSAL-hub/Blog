@@ -72,6 +72,8 @@ const BlogEditorBody: React.FC = () => {
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [tags, setTags] = useState<string[]>([]);
+  const [categoryName, setCategoryName] = useState<any>("");
+  const [subCategoryName, setSubCategoryName] = useState<any>("");
   const [currentTag, setCurrentTag] = useState("");
   const [isPublishing, setIsPublishing] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
@@ -163,6 +165,9 @@ const BlogEditorBody: React.FC = () => {
     fd.append("tags", JSON.stringify(tags));
     fd.append("category", category);
     fd.append("subCategory", subCategory);
+    fd.append("categoryName", categoryName); 
+    fd.append("subCategoryName", subCategoryName); 
+
     if (featuredImage) fd.append("coverImage", featuredImage);
 
     try {
@@ -181,11 +186,11 @@ const BlogEditorBody: React.FC = () => {
 
   const canPublish = Boolean(
     email &&
-      title.trim() &&
-      content.trim() &&
-      category &&
-      subCategory &&
-      featuredImage
+    title.trim() &&
+    content.trim() &&
+    category &&
+    subCategory &&
+    featuredImage
   );
 
   return (
@@ -252,7 +257,14 @@ const BlogEditorBody: React.FC = () => {
             <div className="bg-white rounded-lg shadow border p-4 flex flex-col gap-y-4">
               <div>
                 <label className="text-sm font-medium">Category</label>
-                <Select value={category} onValueChange={setCategory}>
+                <Select
+                  value={category}
+                  onValueChange={(val) => {
+                    setCategory(val);
+                    const selected = categoryOptions.find((c: any) => c.category_id === val);
+                    setCategoryName(selected?.category_name || ""); // ✨
+                  }}>
+
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
@@ -270,9 +282,12 @@ const BlogEditorBody: React.FC = () => {
                 <label className="text-sm font-medium">Sub‑Category</label>
                 <Select
                   value={subCategory}
-                  onValueChange={setSubCategory}
-                  disabled={!category}
-                >
+                  onValueChange={(val) => {
+                    setSubCategory(val);
+                    const selected = subCategoryOptions.find((s: any) => s.subcategory_id === val);
+                    setSubCategoryName(selected?.subcategory_name || ""); // ✨
+                  }}>
+
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select sub‑category" />
                   </SelectTrigger>

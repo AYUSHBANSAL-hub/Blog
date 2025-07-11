@@ -14,7 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card, CardContent } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
 
-const categoryValue = {  
+const categoryValue = {
   "6127b7b9-fcc8-4ed8-9890-09ce60c29db7": "Startup",
   "dc743317-c69c-44a9-abd5-65898ac16ede": "Technology",
   "a58f7e32-a97f-4349-a4d3-c02ab5e978ac": "Lifestyle",
@@ -54,8 +54,8 @@ const ArticleSection = () => {
   return (
     <section className="flex flex-col items-center w-full">
       {/* Top Container */}
-      <div className="w-full max-w-[1324px] flex flex-col items-start py-9">
-        <div className="w-full flex justify-center mb-6 px-4 sm:px-6 md:px-0">
+      <div className="w-full px-4  md:px-[60px] lg:px-[107px]  max-w-[1324px] flex flex-col items-start py-9">
+        <div className="w-full flex justify-center mb-6 md:px-0">
           <div className="w-full max-w-[1046px]">
             <Breadcrumb className="overflow-x-auto">
               <BreadcrumbList>
@@ -81,7 +81,7 @@ const ArticleSection = () => {
           </div>
         </div>
 
-        <div className="w-full flex justify-center px-4 sm:px-6 md:px-0">
+        <div className="w-full flex justify-center  md:px-0">
           <div className="w-full max-w-[1046px]">
             {loading ? (
               <Skeleton className="h-[60px] w-full rounded-md" />
@@ -95,26 +95,33 @@ const ArticleSection = () => {
       </div>
 
       {/* Blog Info */}
-      <div className="w-full max-w-[1260px] px-2 sm:px-6 md:px-[60px] lg:px-[107px] pb-9">
+      <div className="w-full max-w-[1260px] px-4  md:px-[60px] lg:px-[107px] mb:pb-9">
         <div className="flex flex-col item-center gap-2 justify-center md:flex-row">
-          <div className="pr-1 md:pr-6  md:border-r border-[#dadce0]">
-            {loading ? (
-              <Skeleton className="h-4 w-24 mb-2" />
-            ) : (
-              <div className="flex flex-row md:flex-col items-start md:items-center gap-2">
-              <p
-                className="text-[#5f6368] text-[13.9px]  leading-6"
-                style={{ fontFamily: "var(--font-roboto)" }}
-              >
-                {new Date(blog.createdAt).toLocaleDateString("en-US", {
-                  day: "numeric",
-                  month: "short",
-                  year: "numeric",
-                })}                
-              </p>
-              <p className="text-[#5f6368] text-[13.9px]  leading-6" style={{ fontFamily: "var(--font-roboto)" }}>{readTime} min read</p>
-              </div>
-            )}
+          <div className="flex justify-between items-center">
+            <div className="pr-1  md:pr-6  md:border-r border-[#dadce0]">
+              {loading ? (
+                <Skeleton className="h-4 w-24 mb-2" />
+              ) : (
+                <div className="flex flex-row lg:flex-col items-start md:items-center gap-2">
+                  <p
+                    className="text-[#5f6368] text-[13.9px]  leading-6"
+                    style={{ fontFamily: "var(--font-roboto)" }}
+                  >
+                    {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
+                  </p>
+                  <p className="text-[#5f6368] text-[13.9px]  leading-6" style={{ fontFamily: "var(--font-roboto)" }}>{readTime} min read</p>
+                </div>
+              )}
+            </div>
+            <div>
+              <button className="flex  md:hidden items-center">
+                <img src="/images/share.svg" className="w-[19px] h-[18px]" />
+              </button>
+            </div>
           </div>
           <div className="flex-1  md:mt-0 md:ml-6">
             {loading ? (
@@ -138,7 +145,7 @@ const ArticleSection = () => {
             <Skeleton className="h-6 w-14 rounded-full" />
           </div>
         ) : (
-          <div className="flex flex-wrap gap-[13px] mt-7 md:mt-[13px]">
+          <div className="flex flex-wrap gap-[13px] mt-7 mb-2 md:mt-[13px]">
             {(blog?.tags || []).map((tag: string, index: number) => (
               <span
                 key={index}
@@ -153,7 +160,7 @@ const ArticleSection = () => {
       </div>
 
       {/* Author Section */}
-      <div className="w-full max-w-[1260px] flex  md:flex-row justify-between items-start md:items-center px-4 sm:px-6 md:px-[60px] lg:px-[107px] mb-6">
+      <div className="w-full max-w-[1260px] flex mt-3 sm:mt-0  md:flex-row justify-between items-start md:items-center px-4 sm:px-6 md:px-[60px] lg:px-[107px] mb-6">
         {loading ? (
           <div className="flex items-center gap-4">
             <Skeleton className="w-10 h-10 rounded-full" />
@@ -163,7 +170,7 @@ const ArticleSection = () => {
             </div>
           </div>
         ) : (
-          <div className="flex items-start mb-6 md:mb-0">
+          <div className="flex items-start mb-6 mt-1 md:mb-0">
             <Avatar className="w-10 h-10 border border-[#e8eaed] rounded-full mr-4">
               <AvatarImage
                 src={userDetail?.profile_image || "/images/profile/img-1.svg"}
@@ -187,7 +194,7 @@ const ArticleSection = () => {
             </div>
           </div>
         )}
-        <button className="flex items-center">
+        <div className="flex-row hidden md:flex gap-1 items-center">
           <img src="/images/share.svg" className="w-[19px] h-[18px]" />
           <span
             className="ml-2.5 text-base text-[#202124]"
@@ -195,17 +202,17 @@ const ArticleSection = () => {
           >
             Share
           </span>
-        </button>
+        </div>
       </div>
 
       {/* Cover Image */}
-      <div className="w-full max-w-[1260px] px-4 sm:px-6 md:px-[60px] lg:px-[107px]">
+      <div className="w-full max-w-[1260px] md:px-4 sm:px-6 md:px-[60px] lg:px-[107px]">
         {loading ? (
-          <Skeleton className="w-full h-[300px] rounded-lg" />
+          <Skeleton className="w-full h-[300px] md:rounded-lg" />
         ) : (
           <img
             src={blog?.coverImageUrl || "/images/blog-img.svg"}
-            className="w-full h-auto max-h-[436.17px] rounded-lg object-cover"
+            className="w-full h-auto max-h-[436.17px] md:rounded-lg object-cover"
           />
         )}
       </div>

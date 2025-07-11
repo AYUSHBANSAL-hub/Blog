@@ -3,12 +3,12 @@ import { Button } from '../ui/button';
 
 const Overlay = () => {
   return (
-   <div className="flex flex-col items-center w-full px-4 sm:px-6 pb-7 mb-7 gap-10 relative">
+   <div className="flex flex-col items-center w-full md:px-4 sm:px-6 pb-7 mb-7 gap-10 relative">
   {/* ─── Banner Shell ─── */}
   <div
     className="
       w-full max-w-[1200px]
-      h-[280px] xs:h-[320px] sm:h-[360px] md:h-[383.43px]
+      h-full xs:h-[320px] sm:h-[360px] md:h-[383.43px]
       rounded-[32px] overflow-hidden relative
     "
   >
@@ -28,7 +28,7 @@ const Overlay = () => {
         <h2
           className="
             font-bold text-white
-            text-[20px]  md:mt-0 xs:text-[26px] sm:text-[32px] md:text-[58px]
+            text-[20px]  md:mt-0 xs:text-[26px] text-[48px] sm:text-[32px] md:text-[58px]
             leading-tight
           "
         >
@@ -53,7 +53,7 @@ const Overlay = () => {
       </div>
 
       {/* ─── Button ─── */}
-      <div className="mt-0 sm:mt-10">
+      <div className="mt-7 sm:mt-10">
         <Button
           className="
             bg-[#00b6ff] text-white text-sm sm:text-base md:text-lg

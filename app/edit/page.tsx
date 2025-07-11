@@ -186,41 +186,49 @@ const BlogEditorBodyEdit: React.FC = () => {
   };
 
   const handleUpdate = async () => {
-    if (!title.trim() || !content.trim()) {
-      alert("Title and content are required.");
-      return;
-    }
-    if (!email) {
-      alert("You must be logged in.");
-      return;
-    }
+  if (!title.trim() || !content.trim()) {
+    alert("Title and content are required.");
+    return;
+  }
+  if (!email) {
+    alert("You must be logged in.");
+    return;
+  }
 
-    const fd = new FormData();
-    fd.append("title", title);
-    fd.append("subHeading", subheading);
-    fd.append("content", content);
-    fd.append("email", email);
-    fd.append("tags", JSON.stringify(tags));
-    fd.append("category", category);
-    fd.append("subCategory", subCategory);
-    if (featuredImage) fd.append("coverImage", featuredImage);
+  const selectedCategory = categories.find((cat) => cat.category_id === category);
+  const selectedSubCategory = subCategories.find((sub) => sub.subcategory_id === subCategory);
+  const categoryName = selectedCategory?.category_name || "";
+  const subCategoryName = selectedSubCategory?.subcategory_name || "";
 
-    try {
-      setIsUpdating(true);
-      const res = await fetch(`/api/blogs/${blogId}`, {
-        method: "PUT",
-        body: fd,
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Update failed");
-      alert("Blog updated 🎉");
-      router.push(`/blog-open?blogId=${blogId}`);
-    } catch (err: any) {
-      alert(err.message || "Server error");
-    } finally {
-      setIsUpdating(false);
-    }
-  };
+  const fd = new FormData();
+  fd.append("title", title);
+  fd.append("subHeading", subheading);
+  fd.append("content", content);
+  fd.append("email", email);
+  fd.append("tags", JSON.stringify(tags));
+  fd.append("category", category);
+  fd.append("categoryName", categoryName); // ✅ New
+  fd.append("subCategory", subCategory);
+  fd.append("subCategoryName", subCategoryName); // ✅ New
+  if (featuredImage) fd.append("coverImage", featuredImage);
+
+  try {
+    setIsUpdating(true);
+    const res = await fetch(`/api/blogs/${blogId}`, {
+      method: "PUT",
+      body: fd,
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Update failed");
+    alert("Blog updated 🎉");
+    router.push(`/blog-open?blogId=${blogId}`);
+  } catch (err: any) {
+    alert(err.message || "Server error");
+  } finally {
+    setIsUpdating(false);
+  }
+};
+
 
   const stripHtml = (html: string) => html.replace(/<[^>]+>/g, "").trim();
   const isFormComplete =

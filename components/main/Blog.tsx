@@ -11,10 +11,13 @@ const BlogSection = () => {
   const [featuredBlog, setFeaturedBlog] = useState<any>(null);
   const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingBlogId, setLoadingBlogId] = useState<string | null>(null);
+
   const router = useRouter();
 
-  
+
   const handleClick = async (id: string) => {
+    setLoadingBlogId(id); // <-- set loading state
     try {
       await fetch(`/api/blogs/${id}/view`, { method: "POST" });
     } catch (err) {
@@ -23,6 +26,7 @@ const BlogSection = () => {
       router.push(`/blog-open?blogId=${id}`);
     }
   };
+
 
   const [scrollY, setScrollY] = useState(0);
 
@@ -35,7 +39,7 @@ const BlogSection = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  
+
   const featuredMarginTop = Math.min(80, scrollY * 0.2);
 
   useEffect(() => {
@@ -57,7 +61,7 @@ const BlogSection = () => {
     })();
   }, []);
 
-  
+
 
   const SkeletonFeatured = (
     <div className="flex-1 pt-12 flex flex-col gap-[16px]">
@@ -88,7 +92,7 @@ const BlogSection = () => {
     </div>
   );
 
- 
+
 
   return (
     <section className="w-full max-w-[1296px] mt-4 pb-6 px-4 sm:px-6 md:px-8 mx-auto">
@@ -131,14 +135,20 @@ const BlogSection = () => {
                     variant="outline"
                     className="h-9 rounded-[100px] pt-[6.5px] pb-[7.48px] pr-[9px] pl-[16px] backdrop-blur-[10px] border-[#00000029]"
                     onClick={() => handleClick(featuredBlog.blog_id)}
+                    disabled={loadingBlogId === featuredBlog.blog_id}
                   >
-                    <span
-                      className="font-[500] text-[#232323] text-[13.9px] tracking-[0.11px] leading-[21px]"
-                      style={{ fontFamily: "var(--font-roboto)" }}
-                    >
-                      Learn more
-                    </span>
+                    {loadingBlogId === featuredBlog.blog_id ? (
+                      <span className="animate-spin h-4 w-4 border-2 border-t-transparent border-[#232323] rounded-full" />
+                    ) : (
+                      <span
+                        className="font-[500] text-[#232323] text-[13.9px] tracking-[0.11px] leading-[21px]"
+                        style={{ fontFamily: "var(--font-roboto)" }}
+                      >
+                        Learn more
+                      </span>
+                    )}
                   </Button>
+
                 </div>
               </div>
 
@@ -151,7 +161,7 @@ const BlogSection = () => {
                     fill
                     className="object-cover"
                   />
-                  
+
                 </div>
               </div>
             </div>
@@ -207,14 +217,20 @@ const BlogSection = () => {
                           variant="link"
                           className="p-0 h-9 text-[#004FCF]"
                           onClick={() => handleClick(post.blog_id)}
+                          disabled={loadingBlogId === post.blog_id}
                         >
-                          <span
-                            className="font-[600] text-[13.9px] tracking-[0.11px] leading-[21px]"
-                            style={{ fontFamily: "var(--font-roboto)" }}
-                          >
-                            Learn more
-                          </span>
+                          {loadingBlogId === post.blog_id ? (
+                            <span className="animate-spin h-4 w-4 border-2 border-t-transparent border-[#004FCF] rounded-full" />
+                          ) : (
+                            <span
+                              className="font-[600] text-[13.9px] tracking-[0.11px] leading-[21px]"
+                              style={{ fontFamily: "var(--font-roboto)" }}
+                            >
+                              Learn more
+                            </span>
+                          )}
                         </Button>
+
                       </div>
                     </div>
 

@@ -24,6 +24,8 @@ export async function POST(req: NextRequest) {
   const raw = formData.get("tags");
   const category = formData.get("category");
   const subCategory = formData.get("subCategory");
+  const categoryName = formData.get("categoryName");
+  const subCategoryName = formData.get("subCategoryName");
 
   if (!email) {
     return NextResponse.json(
@@ -43,14 +45,14 @@ export async function POST(req: NextRequest) {
     new QueryCommand({
       TableName : usersTableName,
       IndexName: emailIndex,
-     KeyConditionExpression: "#e = :emailVal",
-     ExpressionAttributeNames: {
+      KeyConditionExpression: "#e = :emailVal",
+      ExpressionAttributeNames: {
         "#e": "email",
       },
-        ExpressionAttributeValues: {
-          ":emailVal":  email ,
-        },
-        Limit: 1,
+      ExpressionAttributeValues: {
+        ":emailVal": email,
+      },
+      Limit: 1,
     })
   );
 
@@ -61,7 +63,6 @@ export async function POST(req: NextRequest) {
   }
 
   const userId = user.user_id;
-
   const blogId = uuidv4();
   let coverImageUrl: string | null = null;
 
@@ -90,20 +91,21 @@ export async function POST(req: NextRequest) {
     }
   }
 
-
   // Save blog in DynamoDB
   const blogItem = {
     blog_id: blogId,
-    user_id : userId,
+    user_id: userId,
     title,
     subHeading,
     tags: JSON.parse(raw as string) as string[] | [],
     category,
     subCategory,
+    categoryName,
+    subCategoryName,
     content,
     coverImageUrl,
-    isPinned:false,
-    views:0,
+    isPinned: false,
+    views: 0,
     createdAt: new Date().toISOString(),
   };
 
@@ -128,6 +130,7 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
