@@ -67,10 +67,11 @@ const CategoryPage = ({
 
   return (
     <div>
+      <div className="ml-12">
       <NavigationBreadcrumbSection
         items={breadcrumbs}
         onBreadcrumbClick={onBreadcrumbClick}
-      />
+      /></div>
 
       
        <BlogHero  />

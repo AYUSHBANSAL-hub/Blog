@@ -93,7 +93,7 @@ const SubCategoryBlogs = () => {
                       style={{
                         backgroundImage: `url(${blog.coverImageUrl || "/images/placeholder.svg"})`,
                       }}
-                      className="h-full w-full bg-cover bg-center"
+                      className="h-[189px] w-full bg-cover bg-center"
                     />
                   )}
                 </div>
@@ -125,14 +125,14 @@ const SubCategoryBlogs = () => {
                             <Skeleton className="h-4 w-[80%]" />
                           </>
                         ) : (
-                          blog.subHeading
+                          blog.content.replace(/<[^>]+>/g, "").substring(0, 200) + "..."
                         )}
                       </p>
                     </div>
                   </div>
 
                   {/* Footer */}
-                  <div className="pb-[37px] px-[24px] flex flex-wrap items-start justify-between gap-2">
+                  <div className="pb-[37px] px-[24px] flex flex-wrap items-start mt-7 justify-between gap-2">
                     <div className="flex flex-col sm:flex-row gap-2">
                       <div className="text-[#5f6368] text-[14px] font-[500] leading-[20px]">
                         {loading ? <Skeleton className="h-4 w-[40px]" /> : "Posted by"}

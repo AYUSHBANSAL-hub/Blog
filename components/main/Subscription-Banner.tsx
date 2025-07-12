@@ -29,7 +29,7 @@ const SubscriptionBanner = () => {
         w-[240px] h-[240px]  top-[-90px] xs:top-[-50px] right-[50%] transform translate-x-1/2
         sm:w-[280px] sm:h-[280px] sm:right-[20px] sm:top-[-70px] sm:translate-none
         md:w-[300px] md:h-[300px] md:right-[10px]
-        lg:w-[500px] md:h-[500px] lg:right-[60px] lg:top-[-50px]
+        lg:w-[500px] lg:h-[500px] lg:right-[60px] lg:top-[-50px]
         custom-style
       "
       priority

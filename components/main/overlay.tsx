@@ -28,7 +28,7 @@ const Overlay = () => {
         <h2
           className="
             font-bold text-white
-            text-[20px]  md:mt-0 xs:text-[26px] text-[48px] sm:text-[32px] md:text-[58px]
+            md:mt-0 xs:text-[26px] text-[48px] sm:text-[32px] md:text-[58px]
             leading-tight
           "
         >

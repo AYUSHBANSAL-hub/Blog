@@ -38,7 +38,7 @@ const SubcategoryList = ({
             ? Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
                 <div
                   key={index}
-                  className="flex flex-col justify-between border min-h-[420px] border-[#dadce0] rounded-[8px] overflow-hidden bg-white"
+                  className="flex flex-col justify-between border min-h-[420px] border-[#dadce0] rounded-[8px] overflow-hidden bg-white animate-fadeIn"
                 >
                   <div className="px-9 pt-5 flex flex-col gap-4">
                     <Skeleton className="h-4 w-32" />
@@ -58,7 +58,15 @@ const SubcategoryList = ({
                       subcategory.subcategory_id
                     )
                   }
-                  className="flex flex-col font-normal justify-between border min-h-[420px] border-[#dadce0] rounded-[8px] overflow-hidden hover:shadow-md transition-shadow bg-white"
+                  className="
+                    group
+                    flex flex-col font-normal justify-between
+                    border min-h-[420px] border-[#dadce0]
+                    rounded-[8px] overflow-hidden bg-white
+                    hover:shadow-lg hover:scale-[1.015]
+                    transition-all duration-300 ease-in-out
+                    cursor-pointer animate-fadeIn
+                  "
                 >
                   <div
                     className="px-9 pt-5 flex flex-col gap-4"
@@ -71,12 +79,12 @@ const SubcategoryList = ({
                       {subcategory.subcategory_description}
                     </p>
                   </div>
-                  <div className="relative border-t-2 w-full mt-2 h-[182px]">
+                  <div className="relative border-t-2 w-full mt-2 h-[182px] overflow-hidden group">
                     <Image
                       src={subcategory.subcategory_image}
                       alt={subcategory.subcategory_name}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                     />
                   </div>
                 </div>
@@ -88,7 +96,7 @@ const SubcategoryList = ({
         <Button
           onClick={hasMore ? handleShowMore : handleShowLess}
           variant="outline"
-          className="min-w-[250px] mt-[22px] font-[500] font-figtree text-[16px] max-w-[380px] min-h-12 px-[58.44px] py-[12px] rounded-full border border-[#5F6368] text-[#1A73E8] hover:bg-[#f1f3f4]"
+          className="min-w-[250px] mt-[22px] font-[500] font-figtree text-[16px] max-w-[380px] min-h-12 px-[58.44px] py-[12px] rounded-full border border-[#5F6368] text-[#1A73E8] hover:bg-[#f1f3f4] transition-all duration-300"
         >
           {hasMore ? "Load more Categories" : "Show less"}
         </Button>
