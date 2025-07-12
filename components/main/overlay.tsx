@@ -3,7 +3,7 @@ import { Button } from '../ui/button';
 
 const Overlay = () => {
   return (
-   <div className="flex flex-col items-center w-full md:px-4 sm:px-6 pb-7 mb-7 gap-10 relative">
+   <div className="flex flex-col items-center px-1 w-full md:px-4 sm:px-6 pb-7 mb-7 gap-10 relative">
   {/* ─── Banner Shell ─── */}
   <div
     className="

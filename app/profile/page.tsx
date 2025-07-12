@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/lib/hook";
 
-import { Avatar } from "@radix-ui/react-avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Edit, Trash } from "lucide-react";
 import {
   Dialog,
@@ -27,6 +27,25 @@ type BlogItem = {
   createdAt: string;
   views?: number;
 };
+
+const BlogSkeleton = () => (
+  <Card className="animate-fadeIn">
+    <CardContent className="pl-4 pr-4 sm:pl-[24px] sm:pr-[20.5px] py-6 space-y-4">
+      <Skeleton className="w-24 h-4 rounded-full" />
+      <Skeleton className="w-2/3 h-5 rounded-md" />
+      <Skeleton className="w-full h-4 rounded" />
+      <Skeleton className="w-full h-4 rounded" />
+      <div className="flex justify-between mt-4">
+        <Skeleton className="w-1/3 h-4 rounded" />
+        <div className="flex gap-2">
+          <Skeleton className="w-6 h-6 rounded-full" />
+          <Skeleton className="w-6 h-6 rounded-full" />
+          <Skeleton className="w-6 h-6 rounded-full" />
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+);
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -118,12 +137,12 @@ const ProfilePage = () => {
 
   return (
     <>
-      <div className="flex flex-col md:flex-row px-4 sm:px-6 md:px-[69px] gap-9 w-full mt-16 mb-20 md:pt-5">
+      <div className="flex flex-col sm:flex-row px-4 sm:px-6 md:px-[69px] gap-9 w-full mt-16 mb-20 md:pt-5">
         {/* Profile Card */}
-        <ProfileCard views={blogs.length.toString()} post={totalViews.toLocaleString()}/>
+        <ProfileCard views={blogs.length.toString()} post={totalViews.toLocaleString()} />
 
         {/* Blog List */}
-        <div className="w-full  flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-4">
           <Card>
             <CardContent className="px-4 sm:px-8 flex flex-col gap-[15.1px]">
               <h2 className="text-[20px] font-[900] text-[#111827]">My Blog Posts</h2>
@@ -139,14 +158,20 @@ const ProfilePage = () => {
           </Card>
 
           <div className="flex-1 overflow-y-auto pr-1 invisible-scrollbar max-h-[calc(100vh-8rem)]">
-            {loading ? (
-              <p className="text-center mt-6">Loading...</p>
+            {loading  ? (
+              <div className="space-y-6 px-2 sm:px-0">
+                <BlogSkeleton />
+                <BlogSkeleton />
+              </div>
             ) : (
               <div className="space-y-[25px] px-2 sm:px-0">
                 {blogs.map((b) => {
                   const color = getColor(b.category_name.toLowerCase());
                   return (
-                    <Card key={b.blog_id} className="overflow-hidden">
+                    <Card
+                      key={b.blog_id}
+                      className="overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-[1.01] animate-fadeIn"
+                    >
                       <CardContent className="pl-4 pr-4 sm:pl-[24px] sm:pr-[20.5px]">
                         <div className="flex flex-wrap justify-between items-center">
                           <span className={`${color.bg} ${color.text} capitalize rounded-full px-[7px] py-[3px] text-[12px] font-[500]`}>
@@ -184,19 +209,19 @@ const ProfilePage = () => {
 
                           <div className="flex gap-3">
                             <button
-                              className="text-[#2563EB] text-[14px] font-[500] p-0"
+                              className="text-[#2563EB] text-[14px] font-[500] p-0 transition-transform duration-200 hover:scale-110"
                               onClick={() => router.push(`/blog-open?blogId=${b.blog_id}`)}
                             >
                               Read More
                             </button>
                             <button
-                              className="text-[#2563EB] text-[14px] font-[500] p-0"
+                              className="text-[#2563EB] text-[14px] font-[500] p-0 transition-transform duration-200 hover:scale-110"
                               onClick={() => router.push(`/edit?blogId=${b.blog_id}`)}
                             >
                               <Edit className="w-4 h-4" />
                             </button>
                             <button
-                              className="text-red-600 text-[14px] font-[500] p-0"
+                              className="text-red-600 text-[14px] font-[500] p-0 transition-transform duration-200 hover:scale-110"
                               onClick={() => {
                                 setBlogToDelete(b);
                                 setDeleteDialogOpen(true);
@@ -216,7 +241,7 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      {/* Custom Confirmation Dialog */}
+      {/* Delete Confirmation Dialog */}
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -239,4 +264,5 @@ const ProfilePage = () => {
     </>
   );
 };
+
 export default ProfilePage;

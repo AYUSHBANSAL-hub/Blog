@@ -54,7 +54,7 @@ const CategoryBlogs = ({ blogs }: { blogs: any[] }) => {
                   ) : (
                     <div
                       style={{ backgroundImage: `url(${blog.coverImageUrl})` }}
-                      className="h-full w-full bg-cover bg-center"
+                      className="h-[189px] w-full bg-cover bg-center"
                     />
                   )}
                 </div>

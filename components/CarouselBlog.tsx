@@ -113,7 +113,7 @@ const SubscriptionSection = () => {
         </div>
 
         {/* Carousel */}
-        <div className="relative w-full px-2 sm:px-4">
+        <div className="relative w-full px-0 sm:px-4">
           <Carousel className="w-full max-w-[1920px]">
             <CarouselContent
               className="flex transition-transform duration-500 ease-out"
@@ -137,8 +137,8 @@ const SubscriptionSection = () => {
                     className="h-full cursor-pointer"
                     onClick={() => !loading && post && router.push(`/blog-open?blogId=${post.blog_id}`)}
                   >
-                    <Card className="h-[380px] sm:h-[420px] md:h-[480px] py-0 border border-[#dadce0] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                      <CardContent className="h-full flex flex-col justify-between p-0">
+                    <Card className="h-[380px] sm:h-[420px] md:h-[480px] max-w-screen ml-4 py-0 border border-[#dadce0] rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                      <CardContent className="h-full  flex flex-col justify-between p-0">
                         <div>
                           <motion.div
                             variants={imgVariants}

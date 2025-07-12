@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";   // ← shadcn skeleton
+import { Skeleton } from "@/components/ui/skeleton"; // shadcn skeleton
 import { useRouter } from "next/navigation";
 
 type Blog = {
@@ -21,6 +21,7 @@ const SkeletonCard = () => (
       border min-h-[420px] border-[#dadce0]
       rounded-[8px] overflow-hidden
       bg-white
+      animate-fadeIn
     "
   >
     <div className="px-4 sm:px-6 md:px-9 pt-5 flex flex-col gap-4">
@@ -35,8 +36,8 @@ const ProductSection = () => {
   const LIMIT = 3;
   const router = useRouter();
 
-  const [page, setPage]     = useState(1);
-  const [blogs, setBlogs]   = useState<Blog[]>([]);
+  const [page, setPage] = useState(1);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
@@ -50,7 +51,7 @@ const ProductSection = () => {
     setLoading(true);
 
     try {
-      const res  = await fetch(`/api/blogs/?page=${pageNum}&limit=${LIMIT}`);
+      const res = await fetch(`/api/blogs/?page=${pageNum}&limit=${LIMIT}`);
       const data = await res.json();
 
       if (data.status) {
@@ -93,12 +94,14 @@ const ProductSection = () => {
               key={blog.blog_id}
               onClick={() => router.push(`/blog-open?blogId=${blog.blog_id}`)}
               className="
+                group
                 flex flex-col justify-between
                 font-normal
                 border min-h-[420px] border-[#dadce0]
                 rounded-[8px] overflow-hidden
-                hover:shadow-md transition-shadow
-                bg-white
+                transition-all duration-300 ease-in-out
+                hover:shadow-xl hover:scale-[1.015]
+                bg-white cursor-pointer opacity-0 animate-fadeIn
               "
             >
               <div
@@ -108,23 +111,26 @@ const ProductSection = () => {
                 <p className="text-[#1A73E8] !font-roboto cursor-default text-[14px] font-[500] uppercase leading-[48px] tracking-[0.25px]">
                   {blog.category_name}
                 </p>
-                <p className="
-                  text-[#202124] cursor-default
-                  w-full sm:w-[330px]
-                  text-[18px] sm:text-[20px]
-                  font-roboto font-[400]
-                  leading-[1.4]
-                ">
+                <p
+                  className="
+                    text-[#202124] cursor-default
+                    w-full sm:w-[330px]
+                    text-[18px] sm:text-[20px]
+                    font-roboto font-[400]
+                    leading-[1.4]
+                    transition-transform duration-300 group-hover:-translate-y-[2px]
+                  "
+                >
                   {blog.title}
                 </p>
               </div>
 
-              <div className="relative border-t-2 w-full mt-2 h-[182px]">
+              <div className="relative border-t-2 w-full mt-2 h-[182px] overflow-hidden group">
                 <Image
                   src={blog.coverImageUrl}
                   alt={blog.title}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                 />
               </div>
             </div>
@@ -149,7 +155,7 @@ const ProductSection = () => {
             min-h-[48px] px-[32px] sm:px-[58.44px] py-[12px]
             rounded-full border border-[#5F6368]
             text-[#1A73E8] font-[500] font-figtree text-[16px]
-            hover:bg-[#f1f3f4]
+            transition-all duration-300 transform hover:scale-[1.02] hover:bg-[#f1f3f4]
           "
         >
           {loading && blogs.length > 0 ? "Loading..." : "Load more Blogs"}

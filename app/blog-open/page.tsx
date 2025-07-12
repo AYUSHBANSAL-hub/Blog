@@ -10,7 +10,9 @@ const BlogOpenPage = () => {
     <div className='mt-10'>
       <ArticleSection/>
       <SubscriptionBanner/>
-        <SubscriptionSection />
+      
+        <SubscriptionSection/>
+     
       <div className='md:mt-24'>
         <Overlay/>
       </div>

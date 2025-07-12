@@ -7,7 +7,7 @@ import { Checkbox } from "../ui/checkbox"
 
 const SubscriptionBanner = () => {
   return (
-    <div className="w-full flex justify-center mb-10 sm:mb-0 md:px-4">
+    <div className="w-full flex justify-center px-1 mb-10 sm:mb-0 md:px-4">
   {/* ——— Banner Wrapper ——— */}
   <div
     className="

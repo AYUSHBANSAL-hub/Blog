@@ -89,7 +89,7 @@ const BlogSection = () => {
     <section className="w-full max-w-[1296px] mt-4 pb-6 px-4 sm:px-6 md:px-8 mx-auto">
       <div className="flex flex-col md:flex-row gap-[48px] min-h-[700px]">
         {/* Featured Blog */}
-        <div className="flex-1 md:sticky md:top-0 md:self-start md:h-[1200px] ">
+        <div className="flex-1 md:sticky md:top-[58px] pb-12 md:self-start ">
           {loading || !featuredBlog ? (
             SkeletonFeatured
           ) : (
@@ -142,7 +142,7 @@ const BlogSection = () => {
 
               {/* Image */}
               <div className="mt-[25px] rounded-[16px] overflow-hidden">
-                <div className="relative w-full h-[240px] sm:h-[300px] md:h-[400px] md:w-[400px] lg:h-[622px] lg:w-[622px]">
+                <div className="relative w-full h-full aspect-square">
                   <Image
                     src={featuredBlog.coverImageUrl || "/images/Overlay.svg"}
                     alt={featuredBlog.title}
